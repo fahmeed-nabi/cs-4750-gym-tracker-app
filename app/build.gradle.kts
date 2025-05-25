@@ -8,6 +8,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+    java
 }
 
 repositories {
@@ -16,11 +17,18 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit test framework.
-    testImplementation(libs.junit)
-
     // This dependency is used by the application.
     implementation(libs.guava)
+
+    // JavaFX
+    implementation("org.openjfx:javafx-controls:20")
+    implementation("org.openjfx:javafx-fxml:20")
+
+    // MySQL Connector
+    implementation("mysql:mysql-connector-java:8.0.33")
+
+    // JUnit for testing
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
