@@ -32,3 +32,5 @@ build
 
 # file for environment variables
 *.env
+
+/app/build
