@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.ManagerDashboard"
+      spacing="15" padding="20">
+
+    <Label text="Manager Dashboard" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <Button text="Manage Students" onAction="#handleManageStudents"/>
+    <Button text="Manage Gyms" onAction="#handleManageGyms"/>
+    <Button text="Manage Facilities" onAction="#handleManageFacilities"/>
+    <Button text="Manage Classes" onAction="#handleManageClasses"/>
+    <Button text="Manage Trainers" onAction="#handleManageTrainers"/>
+    <Button text="Manage Instructors" onAction="#handleManageInstructors"/>
+    <Button text="Manage Check-Ins / Occupancy"
+        onAction="#handleManageActivity"
+        prefWidth="200"/>
+
+</VBox>

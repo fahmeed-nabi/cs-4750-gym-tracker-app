@@ -1,16 +1,12 @@
 package org.example.models;
 
-public class Trainer {
+public class TrainerSpecialty {
     private int trainerId;
-    private String name;
     private String specialty;
-    private String email;
 
-    public Trainer(int trainerId, String name, String specialty, String email) {
+    public TrainerSpecialty(int trainerId, String specialty) {
         this.trainerId = trainerId;
-        this.name = name;
         this.specialty = specialty;
-        this.email = email;
     }
 
     public int getTrainerId() {
@@ -21,14 +17,6 @@ public class Trainer {
         this.trainerId = trainerId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getSpecialty() {
         return specialty;
     }
@@ -37,16 +25,8 @@ public class Trainer {
         this.specialty = specialty;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     @Override
     public String toString() {
-        return name + " (" + specialty + ")";
+        return "TrainerID: " + trainerId + ", Specialty: " + specialty;
     }
 }
