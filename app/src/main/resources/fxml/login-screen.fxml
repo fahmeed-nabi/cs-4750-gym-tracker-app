@@ -1,43 +1,42 @@
-package com.uva.gymtracker.ui;
+<?xml version="1.0" encoding="UTF-8"?>
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-public class LoginView extends VBox {
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.LoginView"
+      alignment="CENTER"
+      spacing="15"
+      padding="40">
 
-    public LoginView() {
-        setSpacing(15);
-        setPadding(new Insets(40));
-        setAlignment(Pos.CENTER);
+    <Label text="Welcome to UVA Gym Tracker">
+        <VBox.margin>
+            <Insets top="0" bottom="10"/>
+        </VBox.margin>
+        <style>
+            -fx-font-size: 20px;
+            -fx-font-weight: bold;
+        </style>
+    </Label>
 
-        Label title = new Label("Welcome to UVA Gym Tracker");
-        title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+    <TextField fx:id="usernameField" promptText="Username or Email"/>
+    <PasswordField fx:id="passwordField" promptText="Password"/>
+    <ComboBox fx:id="roleBox" promptText="Select Role">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Student"/>
+                <String fx:value="Employee"/>
+                <String fx:value="Manager"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
 
-        TextField usernameField = new TextField();
-        usernameField.setPromptText("Username or Email");
+    <Label fx:id="errorLabel" textFill="red"/>
 
-        PasswordField passwordField = new PasswordField();
-        passwordField.setPromptText("Password");
-
-        ComboBox<String> roleDropdown = new ComboBox<>();
-        roleDropdown.getItems().addAll("Student", "Employee", "Manager");
-        roleDropdown.setPromptText("Select Role");
-
-        Button loginBtn = new Button("Log In");
-        Button createBtn = new Button("Create Account");
-
-        HBox buttons = new HBox(10, loginBtn, createBtn);
-        buttons.setAlignment(Pos.CENTER);
-
-        getChildren().addAll(
-            title,
-            usernameField,
-            passwordField,
-            roleDropdown,
-            buttons
-        );
-    }
-}
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="loginButton" text="Log In"/>
+        <Button fx:id="createButton" text="Create Account"/>
+    </HBox>
+</VBox>

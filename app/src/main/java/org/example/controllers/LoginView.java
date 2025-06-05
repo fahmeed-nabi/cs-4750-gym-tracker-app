@@ -1,8 +1,37 @@
 package org.example.controllers;
 
-import javafx.fxml.*;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
-public class LoginView {
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LoginView implements Initializable {
+
+    @FXML
+    private TextField usernameField;
+
+    @FXML
+    private PasswordField passwordField;
+
+    @FXML
+    private ComboBox<String> roleBox;
+
+    @FXML
+    private Label errorLabel;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // Populate roles
+        roleBox.getItems().addAll("Student", "Trainer", "Manager");
+    }
+
     @FXML
     private void handleLogin() {
         String username = usernameField.getText().trim();
@@ -14,34 +43,39 @@ public class LoginView {
             return;
         }
 
-        // For now: allow anyone through, role determines view
+        String fxmlPath;
+        String title;
+
         switch (role) {
             case "Student":
-                navigateTo("student-dashboard.fxml", "Student Dashboard");
+                fxmlPath = "/org/example/views/StudentDashboard.fxml";
+                title = "Student Dashboard";
                 break;
-            case "Employee":
-                navigateTo("employee-dashboard.fxml", "Employee Dashboard");
+            case "Trainer":
+                fxmlPath = "/org/example/views/TrainerDashboard.fxml";
+                title = "Trainer Dashboard";
                 break;
             case "Manager":
-                navigateTo("manager-dashboard.fxml", "Manager Dashboard");
+                fxmlPath = "/org/example/views/ManagerDashboard.fxml";
+                title = "Manager Dashboard";
                 break;
             default:
                 errorLabel.setText("Unrecognized role.");
+                return;
         }
-    }
-    private void navigateTo(String fxmlPath, String title) {
+
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/" + fxmlPath));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
             Scene scene = new Scene(root, 800, 600);
+
             Stage stage = (Stage) usernameField.getScene().getWindow();
-            stage.setScene(scene);
             stage.setTitle(title);
+            stage.setScene(scene);
             stage.show();
-        } catch (Exception e) {
-            errorLabel.setText("Failed to load " + title);
+        } catch (IOException e) {
             e.printStackTrace();
+            errorLabel.setText("Failed to load " + title);
         }
     }
 }
-

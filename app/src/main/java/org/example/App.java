@@ -11,8 +11,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            // Load the login screen FXML from the resources/ui folder
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/login-screen.fxml"));
+            // Corrected FXML path
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/resources/fxml/login-screen.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root, 600, 400);
@@ -27,7 +27,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        launch(); // Launch the JavaFX application
+        launch();
     }
 }
 
