@@ -9,6 +9,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
     java
+    id("org.openjfx.javafxplugin") version "0.0.13"
 }
 
 repositories {
@@ -16,13 +17,15 @@ repositories {
     mavenCentral()
 }
 
+val javafxVersion = "21"
+
 dependencies {
     // This dependency is used by the application.
     implementation(libs.guava)
 
     // JavaFX
-    implementation("org.openjfx:javafx-controls:20")
-    implementation("org.openjfx:javafx-fxml:20")
+    implementation("org.openjfx:javafx-controls:$javafxVersion")
+    implementation("org.openjfx:javafx-fxml:$javafxVersion")
 
     // MySQL Connector
     implementation("mysql:mysql-connector-java:8.0.33")
@@ -36,6 +39,11 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+javafx {
+    version = javafxVersion
+    modules = listOf("javafx.controls", "javafx.fxml")
 }
 
 application {
