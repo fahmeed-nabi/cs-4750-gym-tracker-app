@@ -12,7 +12,9 @@ public class App extends Application {
     public void start(Stage stage) {
         try {
             // Corrected FXML path
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/resources/fxml/login-screen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login-screen.fxml"));
+
+
             Parent root = loader.load();
 
             Scene scene = new Scene(root, 600, 400);

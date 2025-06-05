@@ -3,13 +3,18 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.controllers.LoginView"
       alignment="CENTER"
-      spacing="15"
-      padding="40">
+      spacing="15">
+    
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
 
     <Label text="Welcome to UVA Gym Tracker">
         <VBox.margin>
@@ -23,11 +28,12 @@
 
     <TextField fx:id="usernameField" promptText="Username or Email"/>
     <PasswordField fx:id="passwordField" promptText="Password"/>
+
     <ComboBox fx:id="roleBox" promptText="Select Role">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="Student"/>
-                <String fx:value="Employee"/>
+                <String fx:value="Trainer"/>
                 <String fx:value="Manager"/>
             </FXCollections>
         </items>

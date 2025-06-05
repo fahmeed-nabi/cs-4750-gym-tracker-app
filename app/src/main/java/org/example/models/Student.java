@@ -45,4 +45,8 @@ public class Student {
     public StringProperty roleProperty() {
         return role;
     }
+    public StringProperty usernameProperty() {
+        return username;
+}
+
 }

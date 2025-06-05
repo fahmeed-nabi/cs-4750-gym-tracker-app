@@ -28,8 +28,7 @@ public class LoginView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Populate roles
-        roleBox.getItems().addAll("Student", "Trainer", "Manager");
+        //intetionally left blank, if we delete it though will need to touch up Initizlaizable above
     }
 
     @FXML
