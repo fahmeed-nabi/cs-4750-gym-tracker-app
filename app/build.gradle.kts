@@ -32,6 +32,9 @@ dependencies {
 
     // JUnit for testing
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+
+    // Library to load .env files
+    implementation("io.github.cdimascio:dotenv-java:3.0.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -50,3 +53,4 @@ application {
     // Define the main class for the application.
     mainClass = "org.example.App"
 }
+
