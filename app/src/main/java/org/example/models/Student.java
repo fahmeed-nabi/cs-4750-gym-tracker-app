@@ -1,30 +1,48 @@
 package org.example.models;
 
-public class Student {
-    private int studentId;
-    private String name;
-    private String email;
-    private String role;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-    public Student(int studentId, String name, String email, String role) {
-        this.studentId = studentId;
-        this.name = name;
-        this.email = email;
-        this.role = role;
+public class Student {
+    private final SimpleIntegerProperty studentId;
+    private final StringProperty name;
+    private final StringProperty username;
+    private final StringProperty role;
+
+    public Student(int studentId, String name, String username, String role) {
+        this.studentId = new SimpleIntegerProperty(studentId);
+        this.name = new SimpleStringProperty(name);
+        this.username = new SimpleStringProperty(username);
+        this.role = new SimpleStringProperty(role);
     }
 
-    public int getStudentId() { return studentId; }
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public String getRole() { return role; }
+    public int getStudentId() {
+        return studentId.get();
+    }
 
-    public void setStudentId(int studentId) { this.studentId = studentId; }
-    public void setName(String name) { this.name = name; }
-    public void setEmail(String email) { this.email = email; }
-    public void setRole(String role) { this.role = role; }
+    public String getName() {
+        return name.get();
+    }
 
-    @Override
-    public String toString() {
-        return name + " (" + role + ")";
+    public String getUsername() {
+        return username.get();
+    }
+
+    public String getRole() {
+        return role.get();
+    }
+
+    // JavaFX Property Methods
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public StringProperty studentIdProperty() {
+        return new SimpleStringProperty(String.valueOf(studentId.get()));
+    }
+
+    public StringProperty roleProperty() {
+        return role;
     }
 }

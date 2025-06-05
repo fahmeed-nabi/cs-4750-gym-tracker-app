@@ -1,52 +1,48 @@
 package org.example.models;
 
-public class Trainer {
-    private int trainerId;
-    private String name;
-    private String specialty;
-    private String email;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-    public Trainer(int trainerId, String name, String specialty, String email) {
-        this.trainerId = trainerId;
-        this.name = name;
-        this.specialty = specialty;
-        this.email = email;
+public class Trainer {
+    private final SimpleIntegerProperty trainerId;
+    private final StringProperty name;
+    private final StringProperty specialty;
+    private final StringProperty availability;
+
+    public Trainer(int trainerId, String name, String specialty, String availability) {
+        this.trainerId = new SimpleIntegerProperty(trainerId);
+        this.name = new SimpleStringProperty(name);
+        this.specialty = new SimpleStringProperty(specialty);
+        this.availability = new SimpleStringProperty(availability);
     }
 
     public int getTrainerId() {
-        return trainerId;
-    }
-
-    public void setTrainerId(int trainerId) {
-        this.trainerId = trainerId;
+        return trainerId.get();
     }
 
     public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        return name.get();
     }
 
     public String getSpecialty() {
+        return specialty.get();
+    }
+
+    public String getAvailability() {
+        return availability.get();
+    }
+
+    // JavaFX Property Methods
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public StringProperty specialtyProperty() {
         return specialty;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return name + " (" + specialty + ")";
+    public StringProperty availabilityProperty() {
+        return availability;
     }
 }
