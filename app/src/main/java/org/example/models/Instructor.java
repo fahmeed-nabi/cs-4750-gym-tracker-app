@@ -1,52 +1,48 @@
 package org.example.models;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Instructor {
-    private int instructorId;
-    private String name;
-    private String certification;
-    private String email;
+    private final SimpleIntegerProperty instructorId;
+    private final SimpleStringProperty name;
+    private final SimpleStringProperty certification;
+    private final SimpleStringProperty classAssignments;
 
-    public Instructor(int instructorId, String name, String certification, String email) {
-        this.instructorId = instructorId;
-        this.name = name;
-        this.certification = certification;
-        this.email = email;
+    public Instructor(int instructorId, String name, String certification, String classAssignments) {
+        this.instructorId = new SimpleIntegerProperty(instructorId);
+        this.name = new SimpleStringProperty(name);
+        this.certification = new SimpleStringProperty(certification);
+        this.classAssignments = new SimpleStringProperty(classAssignments);
     }
 
-    public int getInstructorId() {
-        return instructorId;
-    }
-
-    public void setInstructorId(int instructorId) {
-        this.instructorId = instructorId;
-    }
-
-    public String getName() {
+    // Property methods for TableView bindings
+    public StringProperty nameProperty() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCertification() {
+    public StringProperty certificationProperty() {
         return certification;
     }
 
-    public void setCertification(String certification) {
-        this.certification = certification;
+    public StringProperty classAssignmentsProperty() {
+        return classAssignments;
     }
 
-    public String getEmail() {
-        return email;
+    public int getInstructorId() {
+        return instructorId.get();
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getName() {
+        return name.get();
     }
 
-    @Override
-    public String toString() {
-        return name + " (" + certification + ")";
+    public String getCertification() {
+        return certification.get();
+    }
+
+    public String getClassAssignments() {
+        return classAssignments.get();
     }
 }
