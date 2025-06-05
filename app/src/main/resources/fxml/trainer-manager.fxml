@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.TrainerManager"
+      spacing="15" padding="20">
+
+    <Label text="Manage Trainers" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="trainerNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Specialty:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="specialtyField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Availability:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="availabilityField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="10">
+        <Button text="Add" onAction="#handleAdd"/>
+        <Button text="Delete" onAction="#handleDelete"/>
+    </HBox>
+
+    <TableView fx:id="trainerTable" prefHeight="250">
+        <columns>
+            <TableColumn text="Name" fx:id="nameColumn"/>
+            <TableColumn text="Specialty" fx:id="specialtyColumn"/>
+            <TableColumn text="Availability" fx:id="availabilityColumn"/>
+        </columns>
+    </TableView>
+
+</VBox>

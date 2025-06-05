@@ -1,0 +1,43 @@
+package com.uva.gymtracker.ui;
+
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+
+public class LoginView extends VBox {
+
+    public LoginView() {
+        setSpacing(15);
+        setPadding(new Insets(40));
+        setAlignment(Pos.CENTER);
+
+        Label title = new Label("Welcome to UVA Gym Tracker");
+        title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+
+        TextField usernameField = new TextField();
+        usernameField.setPromptText("Username or Email");
+
+        PasswordField passwordField = new PasswordField();
+        passwordField.setPromptText("Password");
+
+        ComboBox<String> roleDropdown = new ComboBox<>();
+        roleDropdown.getItems().addAll("Student", "Employee", "Manager");
+        roleDropdown.setPromptText("Select Role");
+
+        Button loginBtn = new Button("Log In");
+        Button createBtn = new Button("Create Account");
+
+        HBox buttons = new HBox(10, loginBtn, createBtn);
+        buttons.setAlignment(Pos.CENTER);
+
+        getChildren().addAll(
+            title,
+            usernameField,
+            passwordField,
+            roleDropdown,
+            buttons
+        );
+    }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.GymManager"
+      spacing="10" padding="20">
+
+    <Label text="Manage Gyms" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+    <HBox spacing="10">
+        <TextField fx:id="gymNameField" promptText="Enter Gym Name"/>
+        <Button text="Add" onAction="#handleAdd"/>
+        <Button text="Delete" onAction="#handleDelete"/>
+    </HBox>
+
+    <ListView fx:id="gymList" prefHeight="200"/>
+
+</VBox>
