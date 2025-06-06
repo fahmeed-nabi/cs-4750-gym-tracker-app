@@ -46,3 +46,4 @@
         <Button fx:id="createButton" text="Create Account"/>
     </HBox>
 </VBox>
+
