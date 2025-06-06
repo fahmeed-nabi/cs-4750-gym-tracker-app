@@ -30,8 +30,8 @@ dependencies {
     // MySQL Connector
     implementation("mysql:mysql-connector-java:8.0.33")
 
-    // JUnit for testing
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    // JUnit 4 for testing
+    testImplementation("junit:junit:4.13.2")
 
     // Library to load .env files
     implementation("io.github.cdimascio:dotenv-java:3.0.0")

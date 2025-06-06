@@ -4,7 +4,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.*;
 
 public class DBManager {
-    private final String mysqlFilename = "crowd_ctrl.db";
     private Connection connection;
 
     public void connect() throws SQLException {
@@ -231,6 +230,39 @@ public class DBManager {
                 System.out.println(e.getMessage());
             }
 
+        }
+    }
+
+    public boolean authenticateStudent(String email, String password) throws SQLException {
+        String query = "SELECT 1 FROM Student WHERE Email = ? AND Password = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public boolean authenticateTrainer(String email, String password) throws SQLException {
+        String query = "SELECT 1 FROM Trainer WHERE Email = ? AND Password = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public boolean authenticateAdmin(String email, String password) throws SQLException {
+        String query = "SELECT 1 FROM Admin WHERE Email = ? AND Password = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
         }
     }
 
