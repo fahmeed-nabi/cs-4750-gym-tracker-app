@@ -7,28 +7,34 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.example.database.DBManager;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class LoginView implements Initializable {
 
-    @FXML
-    private TextField usernameField;
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;
+    @FXML private ComboBox<String> roleBox;
+    @FXML private Label errorLabel;
+    @FXML private Button createButton;
 
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private ComboBox<String> roleBox;
-
-    @FXML
-    private Label errorLabel;
+    private Connection connection;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //intetionally left blank, if we delete it though will need to touch up Initizlaizable above
+        createButton.setOnAction(e -> showCreateAccount());
+        try {
+            DBManager dbManager = new DBManager();
+            dbManager.connect();
+            connection = dbManager.getConnection();
+        } catch (SQLException e) {
+            errorLabel.setText("Database connection failed.");
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -39,6 +45,11 @@ public class LoginView implements Initializable {
 
         if (username.isEmpty() || password.isEmpty() || role == null) {
             errorLabel.setText("All fields are required.");
+            return;
+        }
+
+        if (!authenticate(username, password, role)) {
+            errorLabel.setText("Invalid credentials.");
             return;
         }
 
@@ -59,22 +70,60 @@ public class LoginView implements Initializable {
                 title = "Manager Dashboard";
                 break;
             default:
-                errorLabel.setText("Unrecognized role.");
+                errorLabel.setText("Unknown role.");
                 return;
         }
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 800, 600);
-
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setTitle(title);
-            stage.setScene(scene);
+            stage.setScene(new Scene(root, 800, 600));
             stage.show();
         } catch (IOException e) {
+            errorLabel.setText("Could not load " + title);
             e.printStackTrace();
-            errorLabel.setText("Failed to load " + title);
         }
     }
+
+    private boolean authenticate(String username, String password, String role) {
+        String table = switch (role) {
+            case "Student" -> "Student";
+            case "Trainer" -> "Trainer";
+            case "Manager" -> "Admin";
+            default -> null;
+        };
+
+        if (table == null) return false;
+
+        String query = "SELECT * FROM " + table + " WHERE Email = ? AND Password = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public void showCreateAccount() {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/create-account.fxml"));
+        Parent root = loader.load();
+
+
+        Stage stage = new Stage();
+        stage.setTitle("Create Account");
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+
+
 }
