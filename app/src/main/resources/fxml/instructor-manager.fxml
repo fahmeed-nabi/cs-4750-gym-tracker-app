@@ -11,22 +11,34 @@
     <Label text="Manage Instructors" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
 
     <GridPane hgap="10" vgap="10">
-        <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="instructorNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <Label text="First Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="firstNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-        <Label text="Certification:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="certificationField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Label text="Last Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="lastNameField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="emailField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Certification:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="certificationField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Focus Area:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="focusAreaField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
     </GridPane>
 
     <HBox spacing="10">
-        <Button text="Add" onAction="#handleAdd"/>
-        <Button text="Delete" onAction="#handleDelete"/>
+        <Button text="Add" onAction="#handleAddInstructor"/>
+        <Button text="Delete" onAction="#handleDeleteInstructor"/>
     </HBox>
 
     <TableView fx:id="instructorTable" prefHeight="250">
         <columns>
-            <TableColumn fx:id="nameColumn" text="Name"/>
+            <TableColumn fx:id="firstNameColumn" text="First Name"/>
+            <TableColumn fx:id="lastNameColumn" text="Last Name"/>
+            <TableColumn fx:id="emailColumn" text="Email"/>
             <TableColumn fx:id="certColumn" text="Certification"/>
+            <TableColumn fx:id="focusColumn" text="Focus Area"/>
         </columns>
     </TableView>
 

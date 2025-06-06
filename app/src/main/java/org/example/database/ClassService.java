@@ -91,4 +91,47 @@ public class ClassService {
 
         return classes;
     }
+
+    public boolean addClass(String name, LocalDateTime startTime, LocalDateTime endTime,
+                            int gymId, int instructorId) throws SQLException {
+        String insert = """
+        INSERT INTO Class (Name, StartTime, EndTime, GymID, InstructorID)
+        VALUES (?, ?, ?, ?, ?)
+    """;
+        try (PreparedStatement stmt = connection.prepareStatement(insert)) {
+            stmt.setString(1, name);
+            stmt.setTimestamp(2, Timestamp.valueOf(startTime));
+            stmt.setTimestamp(3, Timestamp.valueOf(endTime));
+            stmt.setInt(4, gymId);
+            stmt.setInt(5, instructorId);
+            return stmt.executeUpdate() == 1;
+        }
+    }
+
+    public boolean deleteClass(int classId) throws SQLException {
+        String delete = "DELETE FROM Class WHERE ClassID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(delete)) {
+            stmt.setInt(1, classId);
+            return stmt.executeUpdate() == 1;
+        }
+    }
+
+    public boolean updateClass(int classId, String name, LocalDateTime startTime,
+                               LocalDateTime endTime, int gymId, int instructorId) throws SQLException {
+        String update = """
+        UPDATE Class
+        SET Name = ?, StartTime = ?, EndTime = ?, GymID = ?, InstructorID = ?
+        WHERE ClassID = ?
+    """;
+        try (PreparedStatement stmt = connection.prepareStatement(update)) {
+            stmt.setString(1, name);
+            stmt.setTimestamp(2, Timestamp.valueOf(startTime));
+            stmt.setTimestamp(3, Timestamp.valueOf(endTime));
+            stmt.setInt(4, gymId);
+            stmt.setInt(5, instructorId);
+            stmt.setInt(6, classId);
+            return stmt.executeUpdate() == 1;
+        }
+    }
+
 }
