@@ -41,4 +41,15 @@ public class UserService {
             return stmt.executeUpdate() == 1;
         }
     }
+
+    public boolean emailExists(String table, String email) throws SQLException {
+        String query = "SELECT 1 FROM " + table + " WHERE Email = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
 }

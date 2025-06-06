@@ -54,27 +54,39 @@ public class CreateAccountView {
         }
 
         boolean success = false;
+        String table = switch (role) {
+            case "Student" -> "Student";
+            case "Trainer" -> "Trainer";
+            case "Manager" -> "Admin";
+            default -> null;
+        };
+
+        if (table == null) {
+            messageLabel.setText("Invalid role selected.");
+            return;
+        }
 
         try {
+            if (userService.emailExists(table, email)) {
+                messageLabel.setText("An account with this email already exists.");
+                return;
+            }
+
             switch (role) {
                 case "Student" -> success = userService.createStudent(firstName, lastName, email, password);
                 case "Trainer" -> success = userService.createTrainer(firstName, lastName, email, password);
                 case "Manager" -> success = userService.createAdmin(firstName, lastName, email, password);
-                default -> {
-                    messageLabel.setText("Invalid role selected.");
-                    return;
-                }
             }
 
             if (success) {
                 dbManager.commit();
                 dbManager.disconnect();
-                showLogin();
+                showSuccessAndClose("Account created successfully!");
             } else {
                 messageLabel.setText("Account creation failed.");
             }
 
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             messageLabel.setText("Account creation failed.");
             e.printStackTrace();
             try {
@@ -93,6 +105,17 @@ public class CreateAccountView {
         stage.setScene(scene);
         stage.setTitle("Login");
         stage.show();
+    }
+
+    private void showSuccessAndClose(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+
+        Stage stage = (Stage) messageLabel.getScene().getWindow();
+        stage.close();
     }
 
 }
