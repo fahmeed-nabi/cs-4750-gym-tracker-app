@@ -1,52 +1,41 @@
 package org.example.models;
 
+import java.time.LocalDateTime;
+
 public class ClassSession {
     private int classId;
     private String name;
-    private String classType;
-    private String description;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private int gymId;
+    private int instructorId;
 
-    public ClassSession(int classId, String name, String classType, String description) {
+    public ClassSession(int classId, String name, LocalDateTime startTime,
+                        LocalDateTime endTime, int gymId, int instructorId) {
         this.classId = classId;
         this.name = name;
-        this.classType = classType;
-        this.description = description;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.gymId = gymId;
+        this.instructorId = instructorId;
     }
 
-    public int getClassId() {
-        return classId;
-    }
+    public int getClassId() { return classId; }
+    public String getName() { return name; }
+    public LocalDateTime getStartTime() { return startTime; }
+    public LocalDateTime getEndTime() { return endTime; }
+    public int getGymId() { return gymId; }
+    public int getInstructorId() { return instructorId; }
 
-    public void setClassId(int classId) {
-        this.classId = classId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getClassType() {
-        return classType;
-    }
-
-    public void setClassType(String classType) {
-        this.classType = classType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public void setClassId(int classId) { this.classId = classId; }
+    public void setName(String name) { this.name = name; }
+    public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }
+    public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
+    public void setGymId(int gymId) { this.gymId = gymId; }
+    public void setInstructorId(int instructorId) { this.instructorId = instructorId; }
 
     @Override
     public String toString() {
-        return name + " (" + classType + ")";
+        return name + " (" + startTime.toLocalTime() + " - " + endTime.toLocalTime() + ")";
     }
 }
