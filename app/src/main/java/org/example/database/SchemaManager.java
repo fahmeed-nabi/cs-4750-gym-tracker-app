@@ -21,7 +21,7 @@ public class SchemaManager {
 
                 """
         CREATE TABLE IF NOT EXISTS Facility (
-            FacilityID INT PRIMARY KEY,
+            FacilityID INT PRIMARY KEY AUTO_INCREMENT,
             Name VARCHAR(100) NOT NULL,
             MaxConcurrentUsers INT NOT NULL CHECK (MaxConcurrentUsers > 0),
             GymID INT,
