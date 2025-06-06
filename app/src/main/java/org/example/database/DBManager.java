@@ -233,5 +233,9 @@ public class DBManager {
 
         }
     }
+    public Connection getConnection() {
+        return connection;
+}
+
 
 }
