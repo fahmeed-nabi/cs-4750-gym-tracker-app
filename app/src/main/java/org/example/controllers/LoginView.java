@@ -99,15 +99,15 @@ public class LoginView implements Initializable {
 
         switch (role) {
             case "Student" -> {
-                fxmlPath = "/org/example/views/StudentDashboard.fxml";
+                fxmlPath = "/fxml/student-dashboard.fxml";
                 title = "Student Dashboard";
             }
             case "Trainer" -> {
-                fxmlPath = "/org/example/views/TrainerDashboard.fxml";
+                fxmlPath = "/fxml/trainer-dashboard.fxml";
                 title = "Trainer Dashboard";
             }
             case "Manager" -> {
-                fxmlPath = "/org/example/views/ManagerDashboard.fxml";
+                fxmlPath = "/fxml/manager-dashboard.fxml";
                 title = "Manager Dashboard";
             }
             default -> {

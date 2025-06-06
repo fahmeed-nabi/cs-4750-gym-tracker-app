@@ -42,7 +42,7 @@
     <Label fx:id="errorLabel" textFill="red"/>
 
     <HBox spacing="10" alignment="CENTER">
-        <Button fx:id="loginButton" text="Log In"/>
+        <Button fx:id="loginButton" text="Log In" onAction="#handleLogin"/>
         <Button fx:id="createButton" text="Create Account"/>
     </HBox>
 </VBox>
