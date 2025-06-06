@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.database.DBManager;
+import org.example.database.UserService;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -22,11 +23,21 @@ public class CreateAccountView {
     @FXML private ComboBox<String> roleBox;
     @FXML private Label messageLabel;
 
-    private final DBManager dbManager = new DBManager();
+    private DBManager dbManager;
+    private UserService userService;
 
     @FXML
     public void initialize() {
         roleBox.getItems().addAll("Student", "Trainer", "Manager");
+
+        try {
+            dbManager = new DBManager();
+            dbManager.connect();
+            userService = new UserService(dbManager.getConnection());
+        } catch (SQLException e) {
+            messageLabel.setText("Failed to connect to database.");
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -42,45 +53,35 @@ public class CreateAccountView {
             return;
         }
 
+        boolean success = false;
+
         try {
-            dbManager.connect();
-            Connection connection = dbManager.getConnection();
-
-            String sql = switch (role) {
-                case "Student" -> "INSERT INTO Student (StudentID, FirstName, LastName, Email, Password) VALUES (?, ?, ?, ?, ?)";
-                case "Trainer" -> "INSERT INTO Trainer (TrainerID, FirstName, LastName, Email, Password) VALUES (?, ?, ?, ?, ?)";
-                case "Manager" -> "INSERT INTO Admin (FirstName, LastName, Email, Password) VALUES (?, ?, ?, ?)";
-                default -> null;
-            };
-
-            if (sql == null) {
-                messageLabel.setText("Invalid role selected.");
-                return;
+            switch (role) {
+                case "Student" -> success = userService.createStudent(firstName, lastName, email, password);
+                case "Trainer" -> success = userService.createTrainer(firstName, lastName, email, password);
+                case "Manager" -> success = userService.createAdmin(firstName, lastName, email, password);
+                default -> {
+                    messageLabel.setText("Invalid role selected.");
+                    return;
+                }
             }
 
-            try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-                if (!role.equals("Manager")) {
-                    pstmt.setInt(1, (int) (Math.random() * 1000000)); // Generate ID
-                    pstmt.setString(2, firstName);
-                    pstmt.setString(3, lastName);
-                    pstmt.setString(4, email);
-                    pstmt.setString(5, password);
-                } else {
-                    pstmt.setString(1, firstName);
-                    pstmt.setString(2, lastName);
-                    pstmt.setString(3, email);
-                    pstmt.setString(4, password);
-                }
-
-                pstmt.executeUpdate();
+            if (success) {
                 dbManager.commit();
                 dbManager.disconnect();
                 showLogin();
+            } else {
+                messageLabel.setText("Account creation failed.");
             }
 
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
             messageLabel.setText("Account creation failed.");
+            e.printStackTrace();
+            try {
+                dbManager.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.example.database.AuthService;
 import org.example.database.DBManager;
 
 import java.io.IOException;
@@ -22,15 +23,17 @@ public class LoginView implements Initializable {
     @FXML private Label errorLabel;
     @FXML private Button createButton;
 
-    private Connection connection;
+    // Classes for database querying
+    private DBManager dbManager;
+    private AuthService authService;  // for authenticate methods
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         createButton.setOnAction(e -> showCreateAccount());
         try {
-            DBManager dbManager = new DBManager();
+            dbManager = new DBManager();
             dbManager.connect();
-            connection = dbManager.getConnection();
+            authService = new AuthService(dbManager.getConnection());
         } catch (SQLException e) {
             errorLabel.setText("Database connection failed.");
             e.printStackTrace();
@@ -39,39 +42,78 @@ public class LoginView implements Initializable {
 
     @FXML
     private void handleLogin() {
-        String username = usernameField.getText().trim();
+        String email = usernameField.getText().trim();
         String password = passwordField.getText();
         String role = roleBox.getValue();
 
-        if (username.isEmpty() || password.isEmpty() || role == null) {
+        if (email.isEmpty() || password.isEmpty() || role == null) {
             errorLabel.setText("All fields are required.");
             return;
         }
 
-        if (!authenticate(username, password, role)) {
+        boolean authenticated = switch (role) {
+            case "Student" -> authenticateStudent(email, password);
+            case "Trainer" -> authenticateTrainer(email, password);
+            case "Manager" -> authenticateAdmin(email, password);
+            default -> false;
+        };
+
+        if (!authenticated) {
             errorLabel.setText("Invalid credentials.");
             return;
         }
 
+        loadDashboard(role);
+    }
+
+    private boolean authenticateStudent(String email, String password) {
+        try {
+            return authService.authenticateStudent(email, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean authenticateTrainer(String email, String password) {
+        try {
+            return authService.authenticateTrainer(email, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean authenticateAdmin(String email, String password) {
+        try {
+            return authService.authenticateAdmin(email, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private void loadDashboard(String role) {
         String fxmlPath;
         String title;
 
         switch (role) {
-            case "Student":
+            case "Student" -> {
                 fxmlPath = "/org/example/views/StudentDashboard.fxml";
                 title = "Student Dashboard";
-                break;
-            case "Trainer":
+            }
+            case "Trainer" -> {
                 fxmlPath = "/org/example/views/TrainerDashboard.fxml";
                 title = "Trainer Dashboard";
-                break;
-            case "Manager":
+            }
+            case "Manager" -> {
                 fxmlPath = "/org/example/views/ManagerDashboard.fxml";
                 title = "Manager Dashboard";
-                break;
-            default:
+            }
+            default -> {
                 errorLabel.setText("Unknown role.");
                 return;
+            }
         }
 
         try {
@@ -87,43 +129,18 @@ public class LoginView implements Initializable {
         }
     }
 
-    private boolean authenticate(String username, String password, String role) {
-        String table = switch (role) {
-            case "Student" -> "Student";
-            case "Trainer" -> "Trainer";
-            case "Manager" -> "Admin";
-            default -> null;
-        };
+    public void showCreateAccount() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/create-account.fxml"));
+            Parent root = loader.load();
 
-        if (table == null) return false;
-
-        String query = "SELECT * FROM " + table + " WHERE Email = ? AND Password = ?";
-
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-            ResultSet rs = stmt.executeQuery();
-            return rs.next();
-        } catch (SQLException e) {
+            Stage stage = new Stage();
+            stage.setTitle("Create Account");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
     }
-    public void showCreateAccount() {
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/create-account.fxml"));
-        Parent root = loader.load();
-
-
-        Stage stage = new Stage();
-        stage.setTitle("Create Account");
-        stage.setScene(new Scene(root));
-        stage.show();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
 }
 
-
-
-}
