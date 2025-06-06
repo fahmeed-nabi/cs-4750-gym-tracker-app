@@ -232,10 +232,10 @@ public class DBManager {
 
         }
     }
+
     public Connection getConnection() {
         return connection;
-}
-
+    }
 
     public boolean authenticateStudent(String email, String password) throws SQLException {
         String query = "SELECT 1 FROM Student WHERE Email = ? AND Password = ?";
