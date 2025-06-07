@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.ManagerActivityDashboard"
+      fx:controller="org.example.controllers.admin.ManagerActivityDashboard"
       spacing="20" padding="20">
 
     <!-- Title -->

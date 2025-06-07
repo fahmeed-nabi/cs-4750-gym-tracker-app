@@ -1,62 +1,65 @@
 package org.example.models;
 
+import javafx.beans.property.*;
+
 public class TrainerAvailability {
-    private int availabilityId;
-    private int trainerId;
-    private String dayOfWeek;
-    private String startTime;
-    private String endTime;
+
+    private final IntegerProperty availabilityId = new SimpleIntegerProperty();
+    private final IntegerProperty trainerId = new SimpleIntegerProperty();
+    private final StringProperty dayOfWeek = new SimpleStringProperty();
+    private final StringProperty startTime = new SimpleStringProperty();
+    private final StringProperty endTime = new SimpleStringProperty();
 
     public TrainerAvailability(int availabilityId, int trainerId, String dayOfWeek, String startTime, String endTime) {
-        this.availabilityId = availabilityId;
-        this.trainerId = trainerId;
-        this.dayOfWeek = dayOfWeek;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.availabilityId.set(availabilityId);
+        this.trainerId.set(trainerId);
+        this.dayOfWeek.set(dayOfWeek);
+        this.startTime.set(startTime);
+        this.endTime.set(endTime);
     }
 
     public int getAvailabilityId() {
+        return availabilityId.get();
+    }
+
+    public IntegerProperty availabilityIdProperty() {
         return availabilityId;
     }
 
-    public void setAvailabilityId(int availabilityId) {
-        this.availabilityId = availabilityId;
+    public int getTrainerId() {
+        return trainerId.get();
     }
 
-    public int getTrainerId() {
+    public IntegerProperty trainerIdProperty() {
         return trainerId;
     }
 
-    public void setTrainerId(int trainerId) {
-        this.trainerId = trainerId;
+    public String getDayOfWeek() {
+        return dayOfWeek.get();
     }
 
-    public String getDayOfWeek() {
+    public StringProperty dayOfWeekProperty() {
         return dayOfWeek;
     }
 
-    public void setDayOfWeek(String dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
+    public String getStartTime() {
+        return startTime.get();
     }
 
-    public String getStartTime() {
+    public StringProperty startTimeProperty() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
     public String getEndTime() {
-        return endTime;
+        return endTime.get();
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public StringProperty endTimeProperty() {
+        return endTime;
     }
 
     @Override
     public String toString() {
-        return dayOfWeek + ": " + startTime + " - " + endTime;
+        return getDayOfWeek() + ": " + getStartTime() + " - " + getEndTime();
     }
 }

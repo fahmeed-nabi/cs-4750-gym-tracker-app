@@ -6,7 +6,7 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.StudentDashboard"
+      fx:controller="org.example.controllers.student.StudentDashboard"
       spacing="15" alignment="TOP_CENTER">
 
     <padding>

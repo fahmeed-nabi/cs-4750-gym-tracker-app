@@ -5,7 +5,7 @@
 <?import javafx.geometry.Insets?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.TrainerManager"
+      fx:controller="org.example.controllers.admin.TrainerManager"
       spacing="15" padding="20">
 
     <Label text="Manage Trainers" style="-fx-font-size: 16px; -fx-font-weight: bold;" />

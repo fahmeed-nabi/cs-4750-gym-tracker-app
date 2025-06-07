@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.trainer.TrainerSpecialtyController"
+      spacing="15" alignment="TOP_CENTER">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Manage Your Specialties" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10">
+        <ComboBox fx:id="specialtyComboBox" promptText="Select Specialty"/>
+        <Button text="Add Specialty" onAction="#handleAdd"/>
+    </HBox>
+
+    <TableView fx:id="specialtyTable" prefWidth="400">
+        <columns>
+            <TableColumn fx:id="specialtyColumn" text="Specialty" prefWidth="300" />
+        </columns>
+    </TableView>
+
+    <Button text="Remove Selected" onAction="#handleRemove"/>
+</VBox>

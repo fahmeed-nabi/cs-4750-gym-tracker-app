@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.trainer.RescheduleAppointment"
+      spacing="10" alignment="TOP_LEFT">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label fx:id="infoLabel" style="-fx-font-size: 14px;"/>
+
+    <DatePicker fx:id="datePicker" promptText="Select New Date"/>
+
+    <HBox spacing="10">
+        <TextField fx:id="startField" promptText="Start Time (HH:MM)"/>
+        <TextField fx:id="endField" promptText="End Time (HH:MM)"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Button text="Save Changes" onAction="#handleSave"/>
+        <Button text="Cancel" onAction="#handleCancel"/>
+    </HBox>
+</VBox>

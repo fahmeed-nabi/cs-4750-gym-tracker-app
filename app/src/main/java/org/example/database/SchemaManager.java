@@ -128,7 +128,7 @@ public class SchemaManager {
 
                 """
         CREATE TABLE IF NOT EXISTS Specialty (
-            SpecialtyID INT PRIMARY KEY,
+            SpecialtyID INT PRIMARY KEY AUTO_INCREMENT,
             Name VARCHAR(100) NOT NULL
         );
         """,
@@ -148,15 +148,24 @@ public class SchemaManager {
         """,
 
                 """
-        CREATE TABLE IF NOT EXISTS TrainerAvailability (
-            AvailabilityID INT PRIMARY KEY AUTO_INCREMENT,
+        CREATE TABLE IF NOT EXISTS TrainerAppointment (
+            AppointmentID INT PRIMARY KEY AUTO_INCREMENT,
+            StudentID INT,
             TrainerID INT,
-            DayOfWeek ENUM('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun') NOT NULL,
+            LocationID INT,
+            Date DATE NOT NULL,
             StartTime TIME NOT NULL,
-            EndTime TIME NOT NULL CHECK (EndTime > StartTime),
+            EndTime TIME NOT NULL,
+            FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+                ON DELETE CASCADE
+                ON UPDATE CASCADE,
             FOREIGN KEY (TrainerID) REFERENCES Trainer(TrainerID)
                 ON DELETE CASCADE
-                ON UPDATE CASCADE
+                ON UPDATE CASCADE,
+        	FOREIGN KEY (LocationID) REFERENCES Gym(GymID)
+        		ON DELETE CASCADE
+                ON UPDATE CASCADE,
+        	CHECK (EndTime > StartTime)
         );
         """,
 

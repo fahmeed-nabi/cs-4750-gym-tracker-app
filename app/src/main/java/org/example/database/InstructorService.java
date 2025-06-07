@@ -24,8 +24,15 @@ public class InstructorService {
             stmt.setString(3, email);
             stmt.setString(4, certification);
             stmt.setString(5, focusArea);
-            return stmt.executeUpdate() == 1;
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
         }
+        return false;
     }
 
     public boolean updateInstructor(int instructorId, String firstName, String lastName, String email,
@@ -42,16 +49,30 @@ public class InstructorService {
             stmt.setString(4, certification);
             stmt.setString(5, focusArea);
             stmt.setInt(6, instructorId);
-            return stmt.executeUpdate() == 1;
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
         }
+        return false;
     }
 
     public boolean deleteInstructor(int instructorId) throws SQLException {
         String delete = "DELETE FROM Instructor WHERE InstructorID = ?";
         try (PreparedStatement stmt = connection.prepareStatement(delete)) {
             stmt.setInt(1, instructorId);
-            return stmt.executeUpdate() == 1;
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
         }
+        return false;
     }
 
     public List<Instructor> getAllInstructors() throws SQLException {

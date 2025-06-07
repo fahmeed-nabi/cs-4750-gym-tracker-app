@@ -4,17 +4,17 @@
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.GymManager"
+      fx:controller="org.example.controllers.admin.ClassManager"
       spacing="10" padding="20">
 
-    <Label text="Manage Gyms" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <Label text="Manage Classes" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
 
     <HBox spacing="10">
-        <TextField fx:id="gymNameField" promptText="Enter Gym Name"/>
+        <TextField fx:id="classNameField" promptText="Enter Class Name"/>
         <Button text="Add" onAction="#handleAdd"/>
         <Button text="Delete" onAction="#handleDelete"/>
     </HBox>
 
-    <ListView fx:id="gymList" prefHeight="200"/>
+    <ListView fx:id="classList" prefHeight="200"/>
 
 </VBox>

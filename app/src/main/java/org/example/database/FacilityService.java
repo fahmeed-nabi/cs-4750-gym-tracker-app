@@ -52,8 +52,15 @@ public class FacilityService {
         try (PreparedStatement stmt = connection.prepareStatement(insert)) {
             stmt.setInt(1, facilityId);
             stmt.setInt(2, studentId);
-            return stmt.executeUpdate() == 1;
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
         }
+        return false;
     }
 
     public boolean createFacility(String name, int maxConcurrentUsers, int gymId) throws SQLException {
@@ -66,16 +73,30 @@ public class FacilityService {
             stmt.setString(1, name);
             stmt.setInt(2, maxConcurrentUsers);
             stmt.setInt(3, gymId);
-            return stmt.executeUpdate() == 1;
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
         }
+        return false;
     }
 
     public boolean deleteFacility(int facilityId) throws SQLException {
         String delete = "DELETE FROM Facility WHERE FacilityID = ?";
         try (PreparedStatement stmt = connection.prepareStatement(delete)) {
             stmt.setInt(1, facilityId);
-            return stmt.executeUpdate() == 1;
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
         }
+        return false;
     }
 
     public boolean updateFacility(int facilityId, String newName, int newMaxConcurrentUsers) throws SQLException {
@@ -88,8 +109,15 @@ public class FacilityService {
             stmt.setString(1, newName);
             stmt.setInt(2, newMaxConcurrentUsers);
             stmt.setInt(3, facilityId);
-            return stmt.executeUpdate() == 1;
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
         }
+        return false;
     }
 
     public Integer getFacilityIdByNameAndGym(String name, int gymId) throws SQLException {

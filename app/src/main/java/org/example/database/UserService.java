@@ -65,5 +65,26 @@ public class UserService {
         return null; // not found
     }
 
+    public Integer getUserId(String table, String email) throws SQLException {
+        String idColumn;
 
+        // Determine the correct ID column based on table name
+        switch (table) {
+            case "Student" -> idColumn = "StudentID";
+            case "Trainer" -> idColumn = "TrainerID";
+            case "Admin"   -> idColumn = "AdminID";
+            default -> throw new IllegalArgumentException("Invalid table name: " + table);
+        }
+
+        String query = "SELECT " + idColumn + " FROM " + table + " WHERE Email = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(idColumn);
+                }
+            }
+        }
+        return null; // not found
+    }
 }

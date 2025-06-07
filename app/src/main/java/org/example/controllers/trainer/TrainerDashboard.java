@@ -1,15 +1,15 @@
-package org.example.controllers;
+package org.example.controllers.trainer;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.stage.StageStyle;
+import org.example.controllers.trainer.TrainerAppointmentsController;
 import org.example.database.DBManager;
 import org.example.database.UserService;
 
@@ -26,6 +26,7 @@ public class TrainerDashboard implements Initializable {
     private DBManager dbManager;
     private UserService userService;
     private String trainerEmail;
+    private int trainerId;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,6 +47,8 @@ public class TrainerDashboard implements Initializable {
         if (userService != null && welcomeLabel != null) {
             try {
                 String fullName = userService.getFullName("Trainer", trainerEmail);
+                trainerId = userService.getUserId("Trainer", trainerEmail);
+
                 if (fullName != null && !fullName.isBlank()) {
                     String firstName = fullName.split(" ")[0];
                     welcomeLabel.setText("Welcome, " + firstName + "!");
@@ -77,13 +80,46 @@ public class TrainerDashboard implements Initializable {
 
     @FXML
     private void handleViewAppointments() {
-        openModal("trainer-appointments.fxml", "Your Appointments");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/trainer/trainer-appointments.fxml"));
+            Parent root = loader.load();
+
+            TrainerAppointmentsController controller = loader.getController();
+            controller.setTrainerId(trainerId);
+
+            Stage stage = new Stage();
+            stage.setTitle("Your Appointments");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UTILITY);
+            stage.setResizable(true);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     private void handleUpdateAvailability() {
-        openModal("update-availability.fxml", "Update Availability");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/trainer/update-availability.fxml"));
+            Parent root = loader.load();
+
+            org.example.controllers.trainer.UpdateAvailabilityController controller = loader.getController();
+            controller.setTrainerId(trainerId);
+
+            Stage stage = new Stage();
+            stage.setTitle("Update Availability");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(true);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     private void handleLogout() {
@@ -101,8 +137,43 @@ public class TrainerDashboard implements Initializable {
     }
 
     @FXML
-    private void handleManageSpecialty() {
-        openModal("trainer-specialty.fxml", "Manage Specialty");
+    private void handleManageSpecialties() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/trainer/trainer-specialty.fxml"));
+            Parent root = loader.load();
+
+            TrainerSpecialtyController controller = loader.getController();
+            controller.setTrainerId(trainerId);
+
+            Stage stage = new Stage();
+            stage.setTitle("Manage Specialty");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(true);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    @FXML
+    private void handleViewHistory() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/trainer/trainer-appointment-history.fxml"));
+            Parent root = loader.load();
+
+            AppointmentHistoryController controller = loader.getController();
+            controller.setTrainerId(trainerId); // assumes you have this field set
+
+            Stage stage = new Stage();
+            stage.setTitle("Appointment History");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

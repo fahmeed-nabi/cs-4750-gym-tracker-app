@@ -7,6 +7,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.example.controllers.admin.ManagerDashboard;
+import org.example.controllers.student.StudentDashboard;
+import org.example.controllers.trainer.TrainerDashboard;
 import org.example.database.AuthService;
 import org.example.database.DBManager;
 
@@ -99,15 +102,15 @@ public class LoginView implements Initializable {
 
         switch (role) {
             case "Student" -> {
-                fxmlPath = "/fxml/student-dashboard.fxml";
+                fxmlPath = "/fxml/student/student-dashboard.fxml";
                 title = "Student Dashboard";
             }
             case "Trainer" -> {
-                fxmlPath = "/fxml/trainer-dashboard.fxml";
+                fxmlPath = "/fxml/trainer/trainer-dashboard.fxml";
                 title = "Trainer Dashboard";
             }
             case "Manager" -> {
-                fxmlPath = "/fxml/manager-dashboard.fxml";
+                fxmlPath = "/fxml/admin/manager-dashboard.fxml";
                 title = "Manager Dashboard";
             }
             default -> {
@@ -121,7 +124,7 @@ public class LoginView implements Initializable {
             Parent root = loader.load();
 
             if (role.equals("Student")) {
-                org.example.controllers.StudentDashboard controller = loader.getController();
+                StudentDashboard controller = loader.getController();
                 controller.setStudentEmail(usernameField.getText().trim()); // pass the logged-in student email
             }
             else if (role.equals("Manager")) {

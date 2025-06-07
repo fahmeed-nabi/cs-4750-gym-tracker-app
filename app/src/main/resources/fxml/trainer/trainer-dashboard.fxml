@@ -6,7 +6,7 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.TrainerDashboard"
+      fx:controller="org.example.controllers.trainer.TrainerDashboard"
       spacing="20" alignment="TOP_CENTER">
 
     <padding>
@@ -19,9 +19,10 @@
     <Separator/>
 
     <VBox spacing="10" alignment="CENTER">
-        <Button text="View Appointments" onAction="#handleViewAppointments" />
+        <Button text="View Upcoming Appointments" onAction="#handleViewAppointments" />
         <Button text="Update Availability" onAction="#handleUpdateAvailability" />
-        <Button text="Manage Specialty" onAction="#handleManageSpecialty" />
+        <Button text="Manage Specialties" onAction="#handleManageSpecialties" />
+        <Button text="View Appointment History" onAction="#handleViewHistory" />
     </VBox>
 
     <Separator/>

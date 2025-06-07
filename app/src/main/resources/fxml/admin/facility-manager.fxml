@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.FacilityManager"
+      fx:controller="org.example.controllers.admin.FacilityManager"
       spacing="10" padding="20">
 
     <Label text="Manage Facilities" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
