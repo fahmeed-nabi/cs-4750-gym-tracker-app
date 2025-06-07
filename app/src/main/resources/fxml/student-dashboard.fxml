@@ -23,13 +23,11 @@
 
     <Separator/>
 
-    <GridPane hgap="15" vgap="10" alignment="CENTER">
-        <Button text="Manage Classes" onAction="#handleManageClasses" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="3"/>
-
-        <Button text="Manage Trainer Appointments" onAction="#handleManageTrainerAppointments" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
-
-        <Button text="Check Into Gym" onAction="#handleCheckIn" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-    </GridPane>
+    <VBox spacing="10" alignment="CENTER">
+        <Button text="Manage Classes" onAction="#handleManageClasses" />
+        <Button text="Manage Trainer Appointments" onAction="#handleManageTrainerAppointments" />
+        <Button text="Check Into Gym" onAction="#handleCheckIn" />
+    </VBox>
 
     <Separator/>
 
