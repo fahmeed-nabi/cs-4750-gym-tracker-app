@@ -111,7 +111,7 @@ public class LoginView implements Initializable {
                 title = "Manager Dashboard";
             }
             default -> {
-                errorLabel.setText("Unknown role.");
+                errorLabel.setText("Unknown role");
                 return;
             }
         }
@@ -119,6 +119,16 @@ public class LoginView implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
+
+            if (role.equals("Student")) {
+                org.example.controllers.StudentDashboard controller = loader.getController();
+                controller.setStudentEmail(usernameField.getText().trim()); // pass the logged-in student email
+            }
+            else if (role.equals("Manager")) {
+                ManagerDashboard controller = loader.getController();
+                controller.setManagerEmail(usernameField.getText().trim()); // email from login field
+            }
+
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setTitle(title);
             stage.setScene(new Scene(root, 800, 600));

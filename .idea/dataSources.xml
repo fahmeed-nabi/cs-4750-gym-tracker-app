@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Railway MySQL" uuid="02ce31a8-f8fd-400c-8e34-66b05bc13fe9">
+    <data-source source="LOCAL" name="Railway MySQL" uuid="c842645b-ab38-45e9-81c0-8f284b2b8366">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

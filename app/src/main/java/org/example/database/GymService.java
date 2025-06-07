@@ -24,7 +24,7 @@ public class GymService {
         }
     }
 
-    public int getCurrentOccupancyPct(int gymId) throws SQLException {
+    public double getCurrentOccupancyPct(int gymId) throws SQLException {
         int currentOccupancy = getCurrentOccupancy(gymId);
         int maxCapacity;
         String query = "SELECT MaxCapacity FROM Gym WHERE GymID = ?";
@@ -34,7 +34,7 @@ public class GymService {
                 maxCapacity = rs.next() ? rs.getInt(1) : -1;
             }
         }
-        return currentOccupancy / maxCapacity;
+        return Math.round(( (double) (currentOccupancy / maxCapacity) * 100) / 100);
     }
 
     public Map<String, Integer> getOccupancyForAllGyms() throws SQLException {
@@ -56,6 +56,39 @@ public class GymService {
 
         return result;
     }
+
+    public Map<String, Double> getOccupancyPctForAllGyms() throws SQLException {
+        Map<String, Double> result = new HashMap<>();
+
+        String query = """
+        SELECT g.Name AS GymName, g.MaxCapacity, COUNT(c.CheckInID) AS CurrentOccupancy
+        FROM Gym g
+        LEFT JOIN CheckIn c ON g.GymID = c.GymID AND c.CheckOutTime IS NULL
+        GROUP BY g.GymID, g.Name, g.MaxCapacity
+    """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                String name = rs.getString("GymName");
+                int max = rs.getInt("MaxCapacity");
+                int current = rs.getInt("CurrentOccupancy");
+
+                double percent = 0.0;
+                if (max > 0) {
+                    percent = (current * 100.0) / max;
+                    percent = Math.round(percent * 100.0) / 100.0; // Round to 2 decimal places
+                }
+
+                result.put(name, percent);
+            }
+        }
+
+        return result;
+    }
+
+
 
     public boolean canStudentCheckIn(int studentId, int gymId) throws SQLException {
         // 1. Is the student already checked in?

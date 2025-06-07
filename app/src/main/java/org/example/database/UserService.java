@@ -52,4 +52,18 @@ public class UserService {
         }
     }
 
+    public String getFullName(String table, String email) throws SQLException {
+        String query = "SELECT FirstName, LastName FROM " + table + " WHERE Email = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("FirstName") + " " + rs.getString("LastName");
+                }
+            }
+        }
+        return null; // not found
+    }
+
+
 }

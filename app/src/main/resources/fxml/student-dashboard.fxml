@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml">
-    <center>
-        <Label text="Welcome to the Student Dashboard!" />
-    </center>
-</BorderPane>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.StudentDashboard"
+      spacing="15" alignment="TOP_CENTER">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Student Dashboard" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+    <Label fx:id="welcomeLabel" text="Welcome!" style="-fx-font-size: 16px;" />
+
+    <VBox spacing="10" fx:id="gymOccupancyContainer" alignment="CENTER_LEFT">
+        <Label text="Loading gym occupancy..." />
+    </VBox>
+
+    <Separator/>
+
+    <GridPane hgap="15" vgap="10" alignment="CENTER">
+        <Button text="Manage Classes" onAction="#handleManageClasses" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="3"/>
+
+        <Button text="Manage Trainer Appointments" onAction="#handleManageTrainerAppointments" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+        <Button text="Check Into Gym" onAction="#handleCheckIn" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    </GridPane>
+
+    <Separator/>
+
+    <Button text="Log Out" onAction="#handleLogout" />
+</VBox>
