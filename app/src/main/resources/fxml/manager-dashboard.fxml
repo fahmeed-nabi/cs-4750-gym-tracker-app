@@ -26,21 +26,17 @@
     <Separator/>
 
     <!-- Buttons Grid -->
-    <GridPane hgap="15" vgap="15" alignment="CENTER">
-        <Button text="Manage Students" onAction="#handleManageStudents" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <Button text="Manage Gyms" onAction="#handleManageGyms" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-        <Button text="Manage Facilities" onAction="#handleManageFacilities" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+    <VBox spacing="10" alignment="CENTER">
+        <Button text="Manage Students" onAction="#handleManageStudents" />
+        <Button text="Manage Gyms" onAction="#handleManageGyms" />
+        <Button text="Manage Facilities" onAction="#handleManageFacilities" />
 
-        <Button text="Manage Classes" onAction="#handleManageClasses" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <Button text="Manage Trainers" onAction="#handleManageTrainers" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-        <Button text="Manage Instructors" onAction="#handleManageInstructors" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+        <Button text="Manage Classes" onAction="#handleManageClasses" />
+        <Button text="Manage Trainers" onAction="#handleManageTrainers" />
+        <Button text="Manage Instructors" onAction="#handleManageInstructors" />
 
-        <Button text="Manage Check-Ins / Occupancy"
-                onAction="#handleManageActivity"
-                GridPane.rowIndex="2" GridPane.columnIndex="0"
-                GridPane.columnSpan="3"
-                maxWidth="Infinity"/>
-    </GridPane>
+        <Button text="Manage Check-Ins / Occupancy" onAction="#handleManageActivity" />
+    </VBox>
 
     <Separator/>
 

@@ -126,8 +126,13 @@ public class LoginView implements Initializable {
             }
             else if (role.equals("Manager")) {
                 ManagerDashboard controller = loader.getController();
-                controller.setManagerEmail(usernameField.getText().trim()); // email from login field
+                controller.setManagerEmail(usernameField.getText().trim());
             }
+            else {
+                TrainerDashboard controller = loader.getController();
+                controller.setTrainerEmail(usernameField.getText().trim());
+            }
+
 
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setTitle(title);
