@@ -1,11 +1,11 @@
 package org.example.models;
 
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ClassOverview {
-    private ClassSession classSession;
-    private String gymName;
-    private Instructor instructor;
+    private final ClassSession classSession;
+    private final String gymName;
+    private final Instructor instructor;
 
     public ClassOverview(ClassSession classSession, String gymName, Instructor instructor) {
         this.classSession = classSession;
@@ -25,9 +25,23 @@ public class ClassOverview {
         return instructor;
     }
 
+    // 🧾 Convenience Getters for TableView
+    public String getClassName() {
+        return classSession.getName();
+    }
+
+    public String getTimeRange() {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MMM dd, HH:mm");
+        return classSession.getStartTime().format(fmt) + " - " +
+                classSession.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
+
+    public String getInstructorFullName() {
+        return instructor.getFirstName() + " " + instructor.getLastName();
+    }
+
     @Override
     public String toString() {
-        return classSession.getName() + " at " + gymName + " by " +
-                instructor.getFirstName() + " " + instructor.getLastName();
+        return getClassName() + " at " + gymName + " by " + getInstructorFullName();
     }
 }

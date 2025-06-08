@@ -7,10 +7,20 @@ import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import org.example.database.ClassService;
+import org.example.database.DBManager;
+import org.example.database.UserService;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class ManageClassesMenuController {
+
+    private String studentEmail;
+
+    public void setStudentEmail(String email) {
+        this.studentEmail = email;
+    }
 
     private Stage getStage(ActionEvent event) {
         return (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -20,7 +30,7 @@ public class ManageClassesMenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/" + fxmlFile));
             Parent root = loader.load();
-            Scene newScene = new Scene(root, 800, 700);
+            Scene newScene = new Scene(root, 1200, 700); // widened
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle(title);
@@ -33,21 +43,110 @@ public class ManageClassesMenuController {
 
     @FXML
     private void handleViewUpcomingClasses(ActionEvent event) {
-        loadScene("manage-upcoming-classes.fxml", "Upcoming Classes", event);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/manage-upcoming-classes.fxml"));
+            Parent root = loader.load();
+
+            DBManager dbManager = new DBManager();
+            dbManager.connect();
+            UserService userService = new UserService(dbManager.getConnection());
+            ClassService classService = new ClassService(dbManager.getConnection());
+
+            Integer studentId = userService.getUserId("Student", studentEmail);
+            if (studentId == null) {
+                throw new IllegalStateException("Student not found for email: " + studentEmail);
+            }
+
+            ManageUpcomingClassesController controller = loader.getController();
+            controller.setDependencies(classService, userService, studentId, studentEmail);
+
+            Scene newScene = new Scene(root, 1100, 700);
+            Stage stage = getStage(event);
+            stage.setTitle("Upcoming Classes");
+            stage.setScene(newScene);
+            stage.show();
+
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void handleMyRegisteredClasses(ActionEvent event) {
-        loadScene("registered-classes.fxml", "My Registered Classes", event);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/registered-classes.fxml"));
+            Parent root = loader.load();
+
+            DBManager dbManager = new DBManager();
+            dbManager.connect();
+            UserService userService = new UserService(dbManager.getConnection());
+            ClassService classService = new ClassService(dbManager.getConnection());
+
+            Integer studentId = userService.getUserId("Student", studentEmail);
+            if (studentId == null) {
+                throw new IllegalStateException("Student not found for email: " + studentEmail);
+            }
+
+            RegisteredClassesController controller = loader.getController();
+            controller.setDependencies(classService, userService, studentId, studentEmail);
+
+            Scene newScene = new Scene(root, 1000, 650); // Adjusted window size
+            Stage stage = getStage(event);
+            stage.setTitle("My Registered Classes");
+            stage.setScene(newScene);
+            stage.show();
+
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void handleClassHistory(ActionEvent event) {
-        loadScene("class-history.fxml", "Class Attendance History", event);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/class-history.fxml"));
+            Parent root = loader.load();
+
+            DBManager dbManager = new DBManager();
+            dbManager.connect();
+            UserService userService = new UserService(dbManager.getConnection());
+            ClassService classService = new ClassService(dbManager.getConnection());
+
+            Integer studentId = userService.getUserId("Student", studentEmail);
+            if (studentId == null) {
+                throw new IllegalStateException("Student not found for email: " + studentEmail);
+            }
+
+            ClassHistoryController controller = loader.getController();
+            controller.setDependencies(classService, userService, studentId, studentEmail);
+
+            Scene newScene = new Scene(root, 1000, 600);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("Class Attendance History");
+            stage.setScene(newScene);
+            stage.show();
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     private void handleBackToDashboard(ActionEvent event) {
-        loadScene("student-dashboard.fxml", "Student Dashboard", event);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/student-dashboard.fxml"));
+            Parent root = loader.load();
+
+            StudentDashboard controller = loader.getController();
+            controller.setStudentEmail(studentEmail);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("Student Dashboard");
+            stage.setScene(new Scene(root, 800, 700));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }

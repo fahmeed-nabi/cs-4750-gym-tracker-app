@@ -18,6 +18,7 @@ import org.example.database.DBManager;
 import org.example.database.GymService;
 import org.example.database.UserService;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -116,8 +117,22 @@ public class StudentDashboard implements Initializable {
 
     @FXML
     private void handleManageClasses() {
-        openScene("manage-classes.fxml", "Manage Class Schedule");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/manage-classes.fxml"));
+            Parent root = loader.load();
+
+            ManageClassesMenuController controller = loader.getController();
+            controller.setStudentEmail(studentEmail);
+
+            Stage stage = (Stage) gymOccupancyContainer.getScene().getWindow();
+            stage.setScene(new Scene(root, 800, 700));
+            stage.setTitle("Manage Class Schedule");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     private void handleManageTrainerAppointments() {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.student.ClassHistoryController">
+
+    <top>
+        <Label text="Class Attendance History"
+               BorderPane.alignment="CENTER"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 15;" />
+    </top>
+
+    <center>
+        <TableView fx:id="classTable" prefHeight="500" prefWidth="1000">
+            <columns>
+                <TableColumn fx:id="nameColumn" text="Class Name" prefWidth="150"/>
+                <TableColumn fx:id="timeColumn" text="Time" prefWidth="200"/>
+                <TableColumn fx:id="gymColumn" text="Gym" prefWidth="150"/>
+                <TableColumn fx:id="instructorColumn" text="Instructor" prefWidth="150"/>
+                <TableColumn fx:id="emailColumn" text="Instructor Email" prefWidth="200"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button text="Back" onAction="#handleBack"/>
+        </HBox>
+    </bottom>
+</BorderPane>
