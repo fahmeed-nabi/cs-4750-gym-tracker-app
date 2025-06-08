@@ -93,7 +93,7 @@ public class ManagerDashboard implements Initializable {
 
     private void openWindow(String fxml, String title) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/" + fxml));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/" + fxml));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle(title);
@@ -111,8 +111,26 @@ public class ManagerDashboard implements Initializable {
     }
 
     @FXML private void handleManageGyms() {
-        openWindow("gym-manager.fxml", "Manage Gyms");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/gym-manager.fxml"));
+            Parent root = loader.load();
+
+            // If you want to access the controller:
+            GymManager controller = loader.getController();
+            // You can pass data to the controller here if needed.
+
+            Stage stage = new Stage();
+            stage.setTitle("Manage Gyms");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(true);
+            stage.show();
+
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
+    
 
     @FXML private void handleManageFacilities() {
         openWindow("facility-manager.fxml", "Manage Facilities");
@@ -127,7 +145,23 @@ public class ManagerDashboard implements Initializable {
     }
 
     @FXML private void handleManageInstructors() {
-        openWindow("instructor-manager.fxml", "Manage Instructors");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/instructor-manager.fxml"));
+            Parent root = loader.load();
+
+        // Access and inject state into controller
+            InstructorManager controller = loader.getController();
+            
+
+            Stage stage = new Stage();
+            stage.setTitle("Manage Instructors");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(true);
+            stage.show();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 
     @FXML private void handleManageActivity() {

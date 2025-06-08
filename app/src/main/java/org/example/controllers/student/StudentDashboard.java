@@ -24,6 +24,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.io.IOException;
+
 
 public class StudentDashboard implements Initializable {
 
@@ -103,6 +105,7 @@ public class StudentDashboard implements Initializable {
     private void openScene(String fxml, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/" + fxml));
+
             Parent root = loader.load();
 
             // Get the current stage from any component in the current scene
@@ -141,8 +144,25 @@ public class StudentDashboard implements Initializable {
 
     @FXML
     private void handleCheckIn() {
-        openScene("check-in.fxml", "Gym Check-In");
-    }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/check-in.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller and pass the email
+            StudentCheckinView controller = loader.getController();
+            controller.setEmail(studentEmail);
+
+            
+            Stage stage = new Stage();
+            stage.setTitle("Gym Check-In");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+}
+    
 
     @FXML
     private void handleLogout() {
@@ -185,3 +205,4 @@ public class StudentDashboard implements Initializable {
         loadGymOccupancy();
     }
 }
+
