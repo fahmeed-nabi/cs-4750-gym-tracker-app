@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.student.ManageClassesMenuController"
+      alignment="CENTER"
+      spacing="20">
+
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <Label text="Manage Classes" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+    <Button text="View Upcoming Classes"
+            fx:id="viewUpcomingButton"
+            onAction="#handleViewUpcomingClasses"
+            prefWidth="250"/>
+
+    <Button text="My Registered Classes"
+            fx:id="registeredButton"
+            onAction="#handleMyRegisteredClasses"
+            prefWidth="250"/>
+
+    <Button text="Class Attendance History"
+            fx:id="historyButton"
+            onAction="#handleClassHistory"
+            prefWidth="250"/>
+
+    <Separator/>
+
+    <Button text="Back to Dashboard"
+            fx:id="backButton"
+            onAction="#handleBackToDashboard"
+            prefWidth="250"/>
+
+</VBox>
