@@ -23,6 +23,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.io.IOException;
+
 
 public class StudentDashboard implements Initializable {
 
@@ -102,7 +104,8 @@ public class StudentDashboard implements Initializable {
 
     private void openModal(String fxml, String title) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + fxml));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/resources/fxml/" + fxml));
+
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle(title);
@@ -171,4 +174,8 @@ public class StudentDashboard implements Initializable {
     private void handleRefreshDashboard() {
         loadGymOccupancy();
     }
+    private void handleCheckin() {
+        openModal("student-checkin.fxml", "Gym Check-In");
+        
+}
 }
