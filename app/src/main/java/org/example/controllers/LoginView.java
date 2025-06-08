@@ -139,7 +139,7 @@ public class LoginView implements Initializable {
 
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setTitle(title);
-            stage.setScene(new Scene(root, 800, 600));
+            stage.setScene(new Scene(root, 800, 700));
             stage.show();
         } catch (IOException e) {
             errorLabel.setText("Could not load " + title);

@@ -88,7 +88,7 @@ public class TrainerService {
         FROM TrainerAppointment ta
         JOIN Student s ON ta.StudentID = s.StudentID
         JOIN Gym g ON ta.LocationID = g.GymID
-        WHERE ta.TrainerID = ?
+        WHERE ta.TrainerID = ? AND ta.Date >= CURRENT_DATE
         ORDER BY ta.Date, ta.StartTime
     """;
 
@@ -428,6 +428,46 @@ public class TrainerService {
             }
         }
         return false;
+    }
+
+    public List<TrainerAppointment> getTrainerAppointmentsForCurrentWeek(int trainerId) throws SQLException {
+        String query = """
+        SELECT ta.AppointmentID, ta.StudentID, ta.TrainerID, ta.Date, ta.StartTime, ta.EndTime,
+               s.FirstName, s.LastName
+        FROM TrainerAppointment ta
+        JOIN Student s ON ta.StudentID = s.StudentID
+        WHERE ta.TrainerID = ?
+          AND ta.Date BETWEEN ? AND ?
+        ORDER BY ta.Date, ta.StartTime
+    """;
+
+        LocalDate today = LocalDate.now();
+        LocalDate monday = today.with(java.time.DayOfWeek.MONDAY);
+        LocalDate sunday = today.with(java.time.DayOfWeek.SUNDAY);
+
+        List<TrainerAppointment> appointments = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, trainerId);
+            stmt.setDate(2, Date.valueOf(monday));
+            stmt.setDate(3, Date.valueOf(sunday));
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    appointments.add(new TrainerAppointment(
+                            rs.getInt("AppointmentID"),
+                            rs.getInt("StudentID"),
+                            rs.getInt("TrainerID"),
+                            rs.getDate("Date").toLocalDate(),
+                            rs.getTime("StartTime").toLocalTime(),
+                            rs.getTime("EndTime").toLocalTime(),
+                            rs.getString("FirstName"),
+                            rs.getString("LastName")
+                    ));
+                }
+            }
+        }
+
+        return appointments;
     }
 
 }

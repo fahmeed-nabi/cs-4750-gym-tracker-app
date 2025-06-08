@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
@@ -13,9 +16,37 @@
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="Student Dashboard" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+    <!-- Top bar with refresh button aligned right -->
+    <HBox alignment="TOP_RIGHT" prefWidth="Infinity">
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Refresh Dashboard" onAction="#handleRefreshDashboard"/>
+    </HBox>
 
+    <Label text="Student Dashboard" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
     <Label fx:id="welcomeLabel" text="Welcome!" style="-fx-font-size: 16px;" />
+
+    <Separator/>
+
+    <!-- Navigation buttons -->
+    <VBox spacing="10" alignment="CENTER">
+        <Button text="Classes" onAction="#handleManageClasses" />
+        <Button text="Trainer Appointments" onAction="#handleManageTrainerAppointments" />
+        <Button text="Check Into Gym" onAction="#handleCheckIn" />
+    </VBox>
+
+    <Separator/>
+
+    <!-- Gym occupancy section with chart and labels -->
+    <Label text="Current Gym Occupancy" style="-fx-font-weight: bold;" />
+
+    <BarChart fx:id="occupancyChart" title="Current Gym Occupancy" prefWidth="600" prefHeight="300">
+        <xAxis>
+            <CategoryAxis fx:id="gymXAxis" label="Gym" />
+        </xAxis>
+        <yAxis>
+            <NumberAxis fx:id="occupancyYAxis" label="Occupancy (%)" />
+        </yAxis>
+    </BarChart>
 
     <VBox spacing="10" fx:id="gymOccupancyContainer" alignment="CENTER_LEFT">
         <Label text="Loading gym occupancy..." />
@@ -23,13 +54,6 @@
 
     <Separator/>
 
-    <VBox spacing="10" alignment="CENTER">
-        <Button text="Manage Classes" onAction="#handleManageClasses" />
-        <Button text="Manage Trainer Appointments" onAction="#handleManageTrainerAppointments" />
-        <Button text="Check Into Gym" onAction="#handleCheckIn" />
-    </VBox>
-
-    <Separator/>
-
     <Button text="Log Out" onAction="#handleLogout" />
+
 </VBox>

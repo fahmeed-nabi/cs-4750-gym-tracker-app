@@ -4,6 +4,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -27,12 +31,16 @@ public class StudentDashboard implements Initializable {
 
     @FXML
     private Label welcomeLabel;
+    @FXML private BarChart<String, Number> occupancyChart;
+    @FXML private CategoryAxis gymXAxis;
+    @FXML private NumberAxis occupancyYAxis;
 
     private DBManager dbManager;
     private GymService gymService;
     private UserService userService;
 
     private String studentEmail;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -82,6 +90,9 @@ public class StudentDashboard implements Initializable {
                 String label = String.format("%s: %d people checked in (%.2f%%)", gym, count, pct);
                 gymOccupancyContainer.getChildren().add(new Label(label));
             }
+
+            loadOccupancyChart(pctMap);
+
         } catch (SQLException e) {
             gymOccupancyContainer.getChildren().clear();
             gymOccupancyContainer.getChildren().add(new Label("Error loading occupancy."));
@@ -133,5 +144,31 @@ public class StudentDashboard implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void loadOccupancyChart(Map<String, Double> gymOccupancyMap) {
+        gymXAxis.setLabel("Gym");
+        occupancyYAxis.setLabel("Occupancy (%)");
+        occupancyYAxis.setAutoRanging(false);
+        occupancyYAxis.setLowerBound(0);
+        occupancyYAxis.setUpperBound(100);
+        occupancyYAxis.setTickUnit(10);
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Current Occupancy");
+
+        for (Map.Entry<String, Double> entry : gymOccupancyMap.entrySet()) {
+            String gymName = entry.getKey();
+            double percent = entry.getValue();
+            series.getData().add(new XYChart.Data<>(gymName, percent));
+        }
+
+        occupancyChart.getData().clear();
+        occupancyChart.getData().add(series);
+    }
+
+    @FXML
+    private void handleRefreshDashboard() {
+        loadGymOccupancy();
     }
 }
