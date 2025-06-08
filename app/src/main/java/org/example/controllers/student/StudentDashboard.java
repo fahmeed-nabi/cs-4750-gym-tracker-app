@@ -137,7 +137,7 @@ public class StudentDashboard implements Initializable {
             StudentCheckinView controller = loader.getController();
             controller.setEmail(studentEmail);
 
-            // Open in a new window (optional: or set to current stage)
+            
             Stage stage = new Stage();
             stage.setTitle("Gym Check-In");
             stage.setScene(new Scene(root));

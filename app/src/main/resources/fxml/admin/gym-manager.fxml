@@ -2,19 +2,40 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.controllers.admin.GymManager"
-      spacing="10" padding="20">
+      spacing="15">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
 
     <Label text="Manage Gyms" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
 
+    <GridPane hgap="10" vgap="10">
+        <Label text="Gym Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="gymNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Location:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="locationField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Capacity:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="capacityField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    </GridPane>
+
     <HBox spacing="10">
-        <TextField fx:id="gymNameField" promptText="Enter Gym Name"/>
         <Button text="Add" onAction="#handleAdd"/>
         <Button text="Delete" onAction="#handleDelete"/>
     </HBox>
 
-    <ListView fx:id="gymList" prefHeight="200"/>
+    <TableView fx:id="gymTable" prefHeight="250">
+        <columns>
+            <TableColumn fx:id="nameColumn" text="Gym Name"/>
+            <TableColumn fx:id="locationColumn" text="Location"/>
+            <TableColumn fx:id="capacityColumn" text="Capacity"/>
+        </columns>
+    </TableView>
 
 </VBox>
