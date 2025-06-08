@@ -41,7 +41,6 @@ public class StudentDashboard implements Initializable {
 
     private String studentEmail;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -100,16 +99,15 @@ public class StudentDashboard implements Initializable {
         }
     }
 
-    private void openModal(String fxml, String title) {
+    private void openScene(String fxml, String title) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + fxml));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/" + fxml));
             Parent root = loader.load();
-            Stage stage = new Stage();
+
+            // Get the current stage from any component in the current scene
+            Stage stage = (Stage) gymOccupancyContainer.getScene().getWindow();
             stage.setTitle(title);
             stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UTILITY);
-            stage.setResizable(true);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,17 +116,17 @@ public class StudentDashboard implements Initializable {
 
     @FXML
     private void handleManageClasses() {
-        openModal("class-schedule.fxml", "Manage Class Schedule");
+        openScene("manage-classes.fxml", "Manage Class Schedule");
     }
 
     @FXML
     private void handleManageTrainerAppointments() {
-        openModal("trainer-appointments.fxml", "Manage Trainer Appointments");
+        openScene("trainer-appointments.fxml", "Manage Trainer Appointments");
     }
 
     @FXML
     private void handleCheckIn() {
-        openModal("check-in.fxml", "Gym Check-In");
+        openScene("check-in.fxml", "Gym Check-In");
     }
 
     @FXML
