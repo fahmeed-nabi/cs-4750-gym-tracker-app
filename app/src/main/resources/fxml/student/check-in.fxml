@@ -6,7 +6,8 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.StudentCheckinView"
+      fx:controller="org.example.controllers.student.StudentCheckinView"
+
       alignment="CENTER"
       spacing="20">
     

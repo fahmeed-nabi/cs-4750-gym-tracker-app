@@ -103,12 +103,8 @@ public class StudentDashboard implements Initializable {
 
     private void openScene(String fxml, String title) {
         try {
-<<<<<<< HEAD
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/resources/fxml/" + fxml));
-
-=======
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/" + fxml));
->>>>>>> cf59a08e5702f2dc7db9d8d0afaef8f2c9d3617c
+
             Parent root = loader.load();
 
             // Get the current stage from any component in the current scene
@@ -133,8 +129,25 @@ public class StudentDashboard implements Initializable {
 
     @FXML
     private void handleCheckIn() {
-        openScene("check-in.fxml", "Gym Check-In");
-    }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/check-in.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller and pass the email
+            StudentCheckinView controller = loader.getController();
+            controller.setEmail(studentEmail);
+
+            // Open in a new window (optional: or set to current stage)
+            Stage stage = new Stage();
+            stage.setTitle("Gym Check-In");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+}
+    
 
     @FXML
     private void handleLogout() {
@@ -176,8 +189,5 @@ public class StudentDashboard implements Initializable {
     private void handleRefreshDashboard() {
         loadGymOccupancy();
     }
-    private void handleCheckin() {
-        openModal("student-checkin.fxml", "Gym Check-In");
-        
 }
-}
+
