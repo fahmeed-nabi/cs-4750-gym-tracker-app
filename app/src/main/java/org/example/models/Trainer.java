@@ -9,6 +9,8 @@ public class Trainer {
     private final StringProperty name;
     private final StringProperty specialty;
     private final StringProperty availability;
+    private final StringProperty firstName = new SimpleStringProperty();
+    private final StringProperty lastName = new SimpleStringProperty();
 
     public Trainer(int trainerId, String name, String specialty, String availability) {
         this.trainerId = new SimpleIntegerProperty(trainerId);
@@ -23,6 +25,14 @@ public class Trainer {
 
     public String getName() {
         return name.get();
+    }
+
+    public String getFirstName() {
+        return firstName.get();
+    }
+
+    public String getLastName() {
+        return lastName.get();
     }
 
     public String getSpecialty() {
@@ -44,5 +54,10 @@ public class Trainer {
 
     public StringProperty availabilityProperty() {
         return availability;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

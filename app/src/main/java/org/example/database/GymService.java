@@ -1,10 +1,14 @@
 package org.example.database;
 
+import org.example.models.Gym;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GymService {
@@ -12,6 +16,24 @@ public class GymService {
 
     public GymService(Connection connection) {
         this.connection = connection;
+    }
+
+    public List<Gym> getAllGyms() throws SQLException {
+        List<Gym> gyms = new ArrayList<>();
+        String query = "SELECT GymID, Name, MaxCapacity FROM Gym ORDER BY Name";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                gyms.add(new Gym(
+                        rs.getInt("GymID"),
+                        rs.getString("Name"),
+                        rs.getInt("MaxCapacity")
+                ));
+            }
+        }
+
+        return gyms;
     }
 
     public int getCurrentOccupancy(int gymId) throws SQLException {

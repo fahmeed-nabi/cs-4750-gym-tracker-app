@@ -6,10 +6,9 @@ public class Gym {
     private String location;
     private int maxOccupancy;
 
-    public Gym(int gymId, String name, String location, int maxOccupancy) {
+    public Gym(int gymId, String name, int maxOccupancy) {
         this.gymId = gymId;
         this.name = name;
-        this.location = location;
         this.maxOccupancy = maxOccupancy;
     }
 
@@ -47,6 +46,6 @@ public class Gym {
 
     @Override
     public String toString() {
-        return name + " (" + location + "), Max: " + maxOccupancy;
+        return name;
     }
 }

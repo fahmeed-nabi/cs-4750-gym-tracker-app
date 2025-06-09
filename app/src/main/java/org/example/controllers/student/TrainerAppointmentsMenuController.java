@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import org.example.database.DBManager;
+import org.example.database.GymService;
 import org.example.database.TrainerService;
 import org.example.database.UserService;
 
@@ -86,14 +87,27 @@ public class TrainerAppointmentsMenuController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/book-trainer.fxml"));
             Parent root = loader.load();
 
+            DBManager dbManager = new DBManager();
+            dbManager.connect();
+
+            TrainerService trainerService = new TrainerService(dbManager.getConnection());
+            UserService userService = new UserService(dbManager.getConnection());
+            GymService gymService = new GymService(dbManager.getConnection());
+
+            Integer studentId = userService.getUserId("Student", studentEmail);
+            if (studentId == null) {
+                throw new IllegalStateException("Student not found for email: " + studentEmail);
+            }
+
             BookTrainerController controller = loader.getController();
-            controller.setStudentEmail(studentEmail);
+            controller.setDependencies(trainerService, gymService, userService, studentId, studentEmail);
 
             Stage stage = getStage(event);
             stage.setTitle("Book a Trainer");
-            stage.setScene(new Scene(root, 900, 650));
+            stage.setScene(new Scene(root, 1000, 700));
             stage.show();
-        } catch (IOException e) {
+
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
     }

@@ -1,5 +1,6 @@
 package org.example.database;
 
+import org.example.models.Trainer;
 import org.example.models.TrainerAppointment;
 import org.example.models.TrainerAvailability;
 import org.example.models.TrainerSpecialty;
@@ -15,6 +16,30 @@ public class TrainerService {
 
     public TrainerService(Connection connection) {
         this.connection = connection;
+    }
+
+    public List<Trainer> getAllTrainers() throws SQLException {
+        String query = """
+        SELECT TrainerID, CONCAT(FirstName, ' ', LastName) AS Name, '' AS Specialty, '' AS Availability
+        FROM Trainer
+        ORDER BY LastName, FirstName
+    """;
+
+        List<Trainer> trainers = new ArrayList<>();
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Trainer trainer = new Trainer(rs.getInt("TrainerID"),
+                        rs.getString("Name"),
+                        rs.getString("Specialty"),
+                        rs.getString("Availability")
+                );
+                trainers.add(trainer);
+            }
+        }
+
+        return trainers;
     }
 
     public boolean isTrainerAvailable(int trainerId, LocalDate date, LocalTime start, LocalTime end) throws SQLException {
@@ -61,23 +86,31 @@ public class TrainerService {
         }
     }
 
-    public boolean bookTrainerAppointment(int studentId, int trainerId, LocalDate date,
-                                          LocalTime start, LocalTime end) throws SQLException {
+    public boolean bookTrainerAppointment(int studentId, int trainerId, int locationId,
+                                          LocalDate date, LocalTime start, LocalTime end) throws SQLException {
         if (!isTrainerAvailable(trainerId, date, start, end)) return false;
 
         String insert = """
-            INSERT INTO TrainerAppointment (StudentID, TrainerID, Date, StartTime, EndTime)
-            VALUES (?, ?, ?, ?, ?)
-        """;
+        INSERT INTO TrainerAppointment (StudentID, TrainerID, LocationID, Date, StartTime, EndTime)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """;
 
         try (PreparedStatement stmt = connection.prepareStatement(insert)) {
             stmt.setInt(1, studentId);
             stmt.setInt(2, trainerId);
-            stmt.setDate(3, Date.valueOf(date));
-            stmt.setTime(4, Time.valueOf(start));
-            stmt.setTime(5, Time.valueOf(end));
-            return stmt.executeUpdate() == 1;
+            stmt.setInt(3, locationId);
+            stmt.setDate(4, Date.valueOf(date));
+            stmt.setTime(5, Time.valueOf(start));
+            stmt.setTime(6, Time.valueOf(end));
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
         }
+        return false;
     }
 
     public List<TrainerAppointment> getTrainerAppointments(int trainerId) throws SQLException {
