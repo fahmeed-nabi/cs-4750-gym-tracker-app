@@ -20,7 +20,7 @@ This application was developed as a project. All data used within the app is fic
 
 ## Setup Instructions
 1. Clone the repository
-2. In the app directory (not the project root directory), create a .env file using this template and replace fields with your URL and credentials:
+2. In the app directory (not the project root directory), create a `.env` file using the following template and replace fields with your URL and credentials:
    ```
    DB_URL=jdbc:mysql://localhost:3306/yourdb
    DB_USERNAME=yourusername
