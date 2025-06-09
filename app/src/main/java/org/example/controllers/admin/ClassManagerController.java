@@ -135,6 +135,28 @@ public class ClassManagerController {
     }
 
     @FXML
+    private void handleDeleteClass() {
+        if (selectedOverview == null) {
+            showAlert("Select a class to delete.");
+            return;
+        }
+
+        try {
+            boolean success = classService.deleteClass(selectedOverview.getClassSession().getClassId());
+            if (success) {
+                showAlert("Class deleted.");
+                loadUpcomingClasses();
+                handleClearForm();
+            } else {
+                showAlert("Failed to delete class.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error occurred while deleting.");
+        }
+    }
+
+    @FXML
     private void handleClearForm() {
         selectedOverview = null;
         classNameField.clear();
