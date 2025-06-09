@@ -29,7 +29,7 @@
 
     <!-- Navigation buttons -->
     <VBox spacing="10" alignment="CENTER">
-        <Button text="Classes" onAction="#handleManageClasses" />
+        <Button text="Manage Classes" onAction="#handleManageClasses" />
         <Button text="Trainer Appointments" onAction="#handleManageTrainerAppointments" />
         <Button text="Check Into Gym" onAction="#handleCheckIn" />
     </VBox>

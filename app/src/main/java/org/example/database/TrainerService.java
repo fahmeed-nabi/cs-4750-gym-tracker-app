@@ -470,4 +470,76 @@ public class TrainerService {
         return appointments;
     }
 
+    public List<TrainerAppointment> getUpcomingAppointmentsForStudent(String studentEmail) throws SQLException {
+        String query = """
+        SELECT ta.AppointmentID, ta.StudentID, ta.TrainerID, ta.Date, ta.StartTime, ta.EndTime,
+               t.FirstName AS TrainerFirst, t.LastName AS TrainerLast,
+               g.Name AS GymName
+        FROM TrainerAppointment ta
+        JOIN Student s ON ta.StudentID = s.StudentID
+        JOIN Trainer t ON ta.TrainerID = t.TrainerID
+        JOIN Gym g ON ta.LocationID = g.GymID
+        WHERE s.Email = ? AND ta.Date >= CURRENT_DATE
+        ORDER BY ta.Date, ta.StartTime
+    """;
+
+        List<TrainerAppointment> appointments = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, studentEmail);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    TrainerAppointment appt = new TrainerAppointment(
+                            rs.getInt("AppointmentID"),
+                            rs.getInt("StudentID"),
+                            rs.getInt("TrainerID"),
+                            rs.getDate("Date").toLocalDate(),
+                            rs.getTime("StartTime").toLocalTime(),
+                            rs.getTime("EndTime").toLocalTime()
+                    );
+                    appt.setStudentFirstName(rs.getString("TrainerFirst"));
+                    appt.setStudentLastName(rs.getString("TrainerLast"));
+                    appt.setLocationName(rs.getString("GymName"));
+                    appointments.add(appt);
+                }
+            }
+        }
+        return appointments;
+    }
+
+    public List<TrainerAppointment> getAppointmentHistoryForStudent(String studentEmail) throws SQLException {
+        String query = """
+        SELECT ta.AppointmentID, ta.StudentID, ta.TrainerID, ta.Date, ta.StartTime, ta.EndTime,
+               t.FirstName AS TrainerFirst, t.LastName AS TrainerLast,
+               g.Name AS GymName
+        FROM TrainerAppointment ta
+        JOIN Student s ON ta.StudentID = s.StudentID
+        JOIN Trainer t ON ta.TrainerID = t.TrainerID
+        JOIN Gym g ON ta.LocationID = g.GymID
+        WHERE s.Email = ? AND ta.Date < CURRENT_DATE
+        ORDER BY ta.Date DESC, ta.StartTime DESC
+    """;
+
+        List<TrainerAppointment> history = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, studentEmail);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    TrainerAppointment appt = new TrainerAppointment(
+                            rs.getInt("AppointmentID"),
+                            rs.getInt("StudentID"),
+                            rs.getInt("TrainerID"),
+                            rs.getDate("Date").toLocalDate(),
+                            rs.getTime("StartTime").toLocalTime(),
+                            rs.getTime("EndTime").toLocalTime()
+                    );
+                    appt.setStudentFirstName(rs.getString("TrainerFirst"));
+                    appt.setStudentLastName(rs.getString("TrainerLast"));
+                    appt.setLocationName(rs.getString("GymName"));
+                    history.add(appt);
+                }
+            }
+        }
+        return history;
+    }
+
 }

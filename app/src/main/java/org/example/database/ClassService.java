@@ -296,6 +296,7 @@ public class ClassService {
         JOIN Instructor i ON c.InstructorID = i.InstructorID
         WHERE ca.StudentID = ? AND c.StartTime < NOW()
         ORDER BY c.StartTime
+        LIMIT 15;
     """;
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {

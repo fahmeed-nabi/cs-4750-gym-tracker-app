@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.student.UpcomingAppointmentsController"
+      alignment="CENTER"
+      spacing="20">
+
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <Label text="Upcoming Trainer Appointments"
+           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="appointmentsTable" prefWidth="800" prefHeight="400">
+        <columns>
+            <TableColumn fx:id="dateColumn" text="Date" prefWidth="120"/>
+            <TableColumn fx:id="startTimeColumn" text="Start Time" prefWidth="120"/>
+            <TableColumn fx:id="endTimeColumn" text="End Time" prefWidth="120"/>
+            <TableColumn fx:id="trainerNameColumn" text="Trainer Name" prefWidth="200"/>
+            <TableColumn fx:id="locationColumn" text="Gym Location" prefWidth="220"/>
+            <TableColumn fx:id="actionColumn" text="Action" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+    <Separator/>
+
+    <Button text="Back to Trainer Appointments Menu"
+            onAction="#handleBack"
+            prefWidth="300"/>
+</VBox>

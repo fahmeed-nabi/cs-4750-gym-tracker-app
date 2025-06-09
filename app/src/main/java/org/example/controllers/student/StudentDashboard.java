@@ -136,10 +136,22 @@ public class StudentDashboard implements Initializable {
         }
     }
 
-
     @FXML
     private void handleManageTrainerAppointments() {
-        openScene("trainer-appointments.fxml", "Manage Trainer Appointments");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/trainer-appointments.fxml"));
+            Parent root = loader.load();
+
+            TrainerAppointmentsMenuController controller = loader.getController();
+            controller.setStudentEmail(studentEmail);
+
+            Stage stage = (Stage) gymOccupancyContainer.getScene().getWindow(); // assuming you have this container in your FXML
+            stage.setScene(new Scene(root, 800, 700));
+            stage.setTitle("Manage Trainer Appointments");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -202,7 +214,32 @@ public class StudentDashboard implements Initializable {
 
     @FXML
     private void handleRefreshDashboard() {
-        loadGymOccupancy();
+        try {
+            // Reconnect and fetch updated services
+            dbManager = new DBManager();
+            dbManager.connect();
+            Connection conn = dbManager.getConnection();
+            gymService = new GymService(conn);
+            userService = new UserService(conn);
+
+            // Re-load data
+            loadGymOccupancy();
+
+            // Re-display welcome message if necessary
+            if (studentEmail != null) {
+                String fullName = userService.getFullName("Student", studentEmail);
+                if (fullName != null && !fullName.isBlank()) {
+                    String firstName = fullName.split(" ")[0];
+                    welcomeLabel.setText("Welcome, " + firstName + "!");
+                }
+            }
+
+        } catch (SQLException e) {
+            gymOccupancyContainer.getChildren().clear();
+            gymOccupancyContainer.getChildren().add(new Label("Error refreshing dashboard."));
+            e.printStackTrace();
+        }
     }
+
 }
 

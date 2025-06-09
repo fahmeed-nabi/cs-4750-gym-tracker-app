@@ -47,6 +47,8 @@ public class GymService {
             GROUP BY g.Name
         """;
 
+
+
         try (PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
