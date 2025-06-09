@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.admin.TrainerManager"
-      spacing="15" padding="20">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.TrainerManager">
 
-    <Label text="Manage Trainers" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <center>
+        <VBox spacing="15" alignment="CENTER">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
 
-    <GridPane hgap="10" vgap="10">
-        <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="trainerNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <TableView fx:id="trainerTable" prefHeight="300">
+                <columns>
+                    <TableColumn fx:id="nameColumn" text="Name" prefWidth="150"/>
+                    <TableColumn fx:id="specialtyColumn" text="Specialty" prefWidth="150"/>
+                    <TableColumn fx:id="availabilityColumn" text="Availability" prefWidth="200"/>
+                </columns>
+            </TableView>
 
-        <Label text="Specialty:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="specialtyField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-        <Label text="Availability:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="availabilityField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-    </GridPane>
-
-    <HBox spacing="10">
-        <Button text="Add" onAction="#handleAdd"/>
-        <Button text="Delete" onAction="#handleDelete"/>
-    </HBox>
-
-    <TableView fx:id="trainerTable" prefHeight="250">
-        <columns>
-            <TableColumn text="Name" fx:id="nameColumn"/>
-            <TableColumn text="Specialty" fx:id="specialtyColumn"/>
-            <TableColumn text="Availability" fx:id="availabilityColumn"/>
-        </columns>
-    </TableView>
-
-</VBox>
+            <HBox spacing="10" alignment="CENTER">
+                <TextField fx:id="nameField" promptText="Name"/>
+                <TextField fx:id="specialtyField" promptText="Specialty"/>
+                <TextField fx:id="availabilityField" promptText="Availability"/>
+                <Button text="Add" onAction="#handleAdd"/>
+                <Button text="Delete" onAction="#handleDelete"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

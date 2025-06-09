@@ -139,10 +139,27 @@ public class ManagerDashboard implements Initializable {
     @FXML private void handleManageClasses() {
         openWindow("class-manager.fxml", "Manage Classes");
     }
+    @FXML
+    private void handleManageTrainers() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/trainer-manager.fxml"));
+            Parent root = loader.load();
 
-    @FXML private void handleManageTrainers() {
-        openWindow("trainer-manager.fxml", "Manage Trainers");
+            // Optionally get the controller if you want to pass data:
+            TrainerManager controller = loader.getController();
+            // controller.setSomeData(...);
+
+            Stage stage = new Stage();
+            stage.setTitle("Manage Trainers");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL); // Optional: blocks until closed
+            stage.show();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
+
+
 
     @FXML private void handleManageInstructors() {
         try {
@@ -165,7 +182,21 @@ public class ManagerDashboard implements Initializable {
     }
 
     @FXML private void handleManageActivity() {
-        openWindow("manager-activity-dashboard.fxml", "Check-Ins and Occupancy");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/manager-activity-dashboard.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Check-Ins and Occupancy");
+            stage.setScene(new Scene(root));
+            stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Load Error");
+        alert.setHeaderText("Could not load Check-Ins and Occupancy window.");
+        alert.setContentText(e.getMessage());
+        alert.showAndWait();
+    }
     }
 
     @FXML

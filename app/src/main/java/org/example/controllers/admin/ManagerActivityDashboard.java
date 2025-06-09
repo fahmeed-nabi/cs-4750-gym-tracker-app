@@ -2,6 +2,7 @@ package org.example.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import java.util.Map;
 
 public class ManagerActivityDashboard {
 
@@ -17,6 +18,7 @@ public class ManagerActivityDashboard {
     @FXML private Label afcLabel;
     @FXML private Label memorialLabel;
     @FXML private Label northLabel;
+
 
     @FXML
     private void handleCheckIn() {

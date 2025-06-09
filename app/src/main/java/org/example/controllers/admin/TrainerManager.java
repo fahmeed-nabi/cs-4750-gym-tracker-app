@@ -4,7 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.example.database.DBManager;
+import org.example.database.TrainerService;
 import org.example.models.Trainer;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class TrainerManager {
 
@@ -29,25 +34,26 @@ public class TrainerManager {
     @FXML
     private TableColumn<Trainer, String> availabilityColumn;
 
-    private final ObservableList<Trainer> trainerList = FXCollections.observableArrayList();
+    private ObservableList<Trainer> trainerList = FXCollections.observableArrayList();
+    private TrainerService trainerService;
 
     @FXML
     private void initialize() {
-        nameColumn.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getName()));
-        specialtyColumn.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getSpecialty()));
-        availabilityColumn.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getAvailability()));
-
-        trainerTable.setItems(trainerList);
-
-        // TODO: Replace with database pull in the future
-        trainerList.addAll(
-            new Trainer(1, "Jordan Bell", "Strength Training", "Mon/Wed 2–5PM"),
-            new Trainer(2, "Sam Chen", "Yoga", "Tues/Thurs 10–1PM")
-        );
+        try {
+            DBManager dbManager = new DBManager();
+            dbManager.connect();
+            trainerService = new TrainerService(dbManager.getConnection());
+            trainerList.addAll(trainerService.getAllTrainers());
+    } catch (SQLException e) {
+        showAlert("Database Error", "Could not load trainers: " + e.getMessage());
     }
 
+    
+}
+
+
     @FXML
-    private void handleAddTrainer() {
+    private void handleAdd() {
         String name = nameField.getText().trim();
         String specialty = specialtyField.getText().trim();
         String availability = availabilityField.getText().trim();
@@ -57,17 +63,30 @@ public class TrainerManager {
             return;
         }
 
-        // ID = 0 for now, assume auto-generated in future DB schema
+        // This assumes future enhancement to persist to DB
         Trainer newTrainer = new Trainer(0, name, specialty, availability);
         trainerList.add(newTrainer);
 
-        // TODO: Connect with database insert logic here
-        // trainerDAO.insertTrainer(newTrainer);
-
+        // Clear input fields
         nameField.clear();
         specialtyField.clear();
         availabilityField.clear();
     }
+
+    @FXML
+    private void handleDelete() {
+        Trainer selected = trainerTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert("Selection Error", "Please select a trainer to delete.");
+            return;
+    }
+
+        trainerList.remove(selected);
+
+    // Optional: delete from DB (if implemented)
+     //trainerService.deleteTrainerById(selected.getTrainerId());
+}
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
