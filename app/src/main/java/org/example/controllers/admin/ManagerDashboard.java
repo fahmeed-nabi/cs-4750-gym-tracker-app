@@ -136,8 +136,25 @@ public class ManagerDashboard implements Initializable {
         openWindow("facility-manager.fxml", "Manage Facilities");
     }
 
-    @FXML private void handleManageClasses() {
-        openWindow("class-manager.fxml", "Manage Classes");
+    @FXML
+    private void handleManageClasses() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/class-manager.fxml"));
+            Parent root = loader.load();
+
+            ClassManagerController controller = loader.getController();
+            // You can call any controller method here if needed (e.g., controller.setManagerEmail(...))
+
+            Stage stage = new Stage();
+            stage.setTitle("Manage Classes");
+            stage.setScene(new Scene(root, 1000, 700));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(true);
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     @FXML
     private void handleManageTrainers() {
@@ -217,4 +234,7 @@ public class ManagerDashboard implements Initializable {
         }
     }
 
+    public void handleGymReports() {
+
+    }
 }

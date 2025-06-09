@@ -36,6 +36,8 @@
         <Button text="Manage Instructors" onAction="#handleManageInstructors" />
 
         <Button text="Manage Check-Ins / Occupancy" onAction="#handleManageActivity" />
+
+        <Button text="View Gym Reports and Trends" onAction="#handleGymReports" />
     </VBox>
 
     <Separator/>

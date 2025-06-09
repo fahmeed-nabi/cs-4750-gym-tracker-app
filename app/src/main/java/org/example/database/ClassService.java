@@ -128,10 +128,10 @@ public class ClassService {
     }
 
     public boolean addClass(String name, LocalDateTime startTime, LocalDateTime endTime,
-                            int gymId, int instructorId) throws SQLException {
+                            int gymId, int instructorId, int availableSpots) throws SQLException {
         String insert = """
-        INSERT INTO Class (Name, StartTime, EndTime, GymID, InstructorID)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO Class (Name, StartTime, EndTime, GymID, InstructorID, AvailableSpots)
+        VALUES (?, ?, ?, ?, ?, ?)
     """;
         try (PreparedStatement stmt = connection.prepareStatement(insert)) {
             stmt.setString(1, name);
@@ -139,16 +139,25 @@ public class ClassService {
             stmt.setTimestamp(3, Timestamp.valueOf(endTime));
             stmt.setInt(4, gymId);
             stmt.setInt(5, instructorId);
-            return stmt.executeUpdate() == 1;
+            stmt.setInt(6, availableSpots);
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
         }
+        return false;
     }
 
     public boolean deleteClass(int classId) throws SQLException {
         String delete = "DELETE FROM Class WHERE ClassID = ?";
         try (PreparedStatement stmt = connection.prepareStatement(delete)) {
             stmt.setInt(1, classId);
-            return stmt.executeUpdate() == 1;
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
         }
+        return false;
     }
 
     public boolean updateClass(int classId, String name, LocalDateTime startTime,
@@ -165,8 +174,12 @@ public class ClassService {
             stmt.setInt(4, gymId);
             stmt.setInt(5, instructorId);
             stmt.setInt(6, classId);
-            return stmt.executeUpdate() == 1;
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
         }
+        return false;
     }
 
 
