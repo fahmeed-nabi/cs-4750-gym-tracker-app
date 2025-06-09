@@ -14,16 +14,28 @@ public class InstructorService {
 
     public boolean addInstructor(String firstName, String lastName, String email,
                                  String certification, String focusArea) throws SQLException {
+
+        // Check if instructor with the same email already exists
+        String checkEmail = "SELECT 1 FROM Instructor WHERE Email = ?";
+        try (PreparedStatement checkStmt = connection.prepareStatement(checkEmail)) {
+            checkStmt.setString(1, email);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next()) return false; // duplicate found
+            }
+        }
+
         String insert = """
-            INSERT INTO Instructor (FirstName, LastName, Email, Certification, FocusArea)
-            VALUES (?, ?, ?, ?, ?)
-        """;
+        INSERT INTO Instructor (FirstName, LastName, Email, Certification, FocusArea)
+        VALUES (?, ?, ?, ?, ?)
+    """;
+
         try (PreparedStatement stmt = connection.prepareStatement(insert)) {
             stmt.setString(1, firstName);
             stmt.setString(2, lastName);
             stmt.setString(3, email);
             stmt.setString(4, certification);
             stmt.setString(5, focusArea);
+
             if (stmt.executeUpdate() == 1) {
                 connection.commit();
                 return true;
@@ -32,6 +44,7 @@ public class InstructorService {
             connection.rollback();
             throw e;
         }
+
         return false;
     }
 

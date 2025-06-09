@@ -1,37 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.admin.TrainerManager"
-      spacing="15" padding="20">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.TrainerManagerController">
 
-    <Label text="Manage Trainers" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <center>
+        <VBox spacing="20">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
 
-    <GridPane hgap="10" vgap="10">
-        <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="trainerNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <Label text="Trainer Management">
+                <font>
+                    <Font size="20"/>
+                </font>
+            </Label>
 
-        <Label text="Specialty:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="specialtyField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <HBox spacing="30">
+                <!-- Left Panel -->
+                <VBox spacing="15">
+                    <Label text="Trainers"/>
+                    <ListView fx:id="trainerListView" prefHeight="200" prefWidth="200"/>
 
-        <Label text="Availability:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="availabilityField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-    </GridPane>
+                    <Label text="Add New Trainer"/>
+                    <TextField fx:id="firstNameField" promptText="First Name"/>
+                    <TextField fx:id="lastNameField" promptText="Last Name"/>
+                    <TextField fx:id="emailField" promptText="Email"/>
+                    <PasswordField fx:id="passwordField" promptText="Password"/>
+                    <HBox spacing="10">
+                        <Button text="Add Trainer" onAction="#handleAddTrainer"/>
+                        <Button text="Delete Trainer" onAction="#handleDeleteTrainer"/>
+                    </HBox>
+                </VBox>
 
-    <HBox spacing="10">
-        <Button text="Add" onAction="#handleAdd"/>
-        <Button text="Delete" onAction="#handleDelete"/>
-    </HBox>
+                <!-- Right Panel -->
+                <VBox spacing="15">
+                    <Label text="Specialties"/>
+                    <ListView fx:id="specialtiesListView" prefHeight="150" prefWidth="250"/>
 
-    <TableView fx:id="trainerTable" prefHeight="250">
-        <columns>
-            <TableColumn text="Name" fx:id="nameColumn"/>
-            <TableColumn text="Specialty" fx:id="specialtyColumn"/>
-            <TableColumn text="Availability" fx:id="availabilityColumn"/>
-        </columns>
-    </TableView>
+                    <HBox spacing="10">
+                        <TextField fx:id="addSpecialtyField" promptText="New Specialty" prefWidth="150"/>
+                        <Button text="Add" onAction="#handleAddSpecialty"/>
+                    </HBox>
 
-</VBox>
+                    <HBox spacing="10">
+                        <TextField fx:id="updateSpecialtyField" promptText="Update Selected To" prefWidth="150"/>
+                        <Button text="Update Selected" onAction="#handleUpdateSpecialty"/>
+                        <Button text="Remove Selected" onAction="#handleRemoveSpecialty"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

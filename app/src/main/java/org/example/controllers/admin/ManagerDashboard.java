@@ -13,6 +13,7 @@ import org.example.database.DBManager;
 import org.example.database.GymService;
 import org.example.database.UserService;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -157,8 +158,24 @@ public class ManagerDashboard implements Initializable {
         }
     }
 
-    @FXML private void handleManageTrainers() {
-        openWindow("trainer-manager.fxml", "Manage Trainers");
+    @FXML
+    private void handleManageTrainers() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/trainer-manager.fxml"));
+            Parent root = loader.load();
+
+            TrainerManagerController controller = loader.getController();
+            // Optionally pass any dependencies to controller here
+
+            Stage stage = new Stage();
+            stage.setTitle("Manage Trainers");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(true);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML private void handleManageInstructors() {
