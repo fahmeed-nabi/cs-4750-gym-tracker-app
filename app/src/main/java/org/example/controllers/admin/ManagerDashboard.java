@@ -12,6 +12,9 @@ import javafx.stage.Stage;
 import org.example.database.DBManager;
 import org.example.database.GymService;
 import org.example.database.UserService;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -176,7 +179,7 @@ public class ManagerDashboard implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+}
 
     @FXML private void handleManageInstructors() {
         try {
@@ -194,12 +197,26 @@ public class ManagerDashboard implements Initializable {
             stage.setResizable(true);
             stage.show();
     } catch (Exception e) {
-        e.printStackTrace();
-    }
+            e.printStackTrace();
+        }
     }
 
     @FXML private void handleManageActivity() {
-        openWindow("manager-activity-dashboard.fxml", "Check-Ins and Occupancy");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/manager-activity-dashboard.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Check-Ins and Occupancy");
+            stage.setScene(new Scene(root));
+            stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Load Error");
+        alert.setHeaderText("Could not load Check-Ins and Occupancy window.");
+        alert.setContentText(e.getMessage());
+        alert.showAndWait();
+    }
     }
 
     @FXML

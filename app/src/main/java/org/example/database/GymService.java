@@ -177,5 +177,17 @@ public class GymService {
         }
         return false;
     }
+    public int getStudentIdByUsername(String username) throws SQLException {
+        String query = "SELECT StudentID FROM Student WHERE Username = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("StudentID");
+        }
+    }
+    return -1; // not found
+}
+
 
 }
