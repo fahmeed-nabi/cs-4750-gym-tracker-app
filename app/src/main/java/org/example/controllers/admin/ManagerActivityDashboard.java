@@ -2,7 +2,10 @@ package org.example.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import java.util.Map;
+import org.example.database.DBManager;
+// import org.example.services.ActivityService; // Uncomment and implement if needed
+
+import java.sql.SQLException;
 
 public class ManagerActivityDashboard {
 
@@ -19,6 +22,23 @@ public class ManagerActivityDashboard {
     @FXML private Label memorialLabel;
     @FXML private Label northLabel;
 
+    private DBManager dbManager;
+    private GymService gymService; // Optional: implement this if needed
+
+    @FXML
+    private void initialize() {
+        try {
+            dbManager = new DBManager();
+            dbManager.connect();
+            gymService = new GymService(dbManager.getConnection());
+
+            handleRefreshOccupancy(); // Load initial occupancy stats
+
+        } catch (SQLException e) {
+            showAlert("Database Error", "Could not connect to database.");
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void handleCheckIn() {
@@ -40,25 +60,54 @@ public class ManagerActivityDashboard {
             return;
         }
 
-        // Remove trailing comma and log result (replace with DB call later)
-        activities.setLength(activities.length() - 2);
+        activities.setLength(activities.length() - 2); // Trim trailing comma
         showAlert("Check-In Success", username + " checked in for: " + activities.toString());
+
+        // TODO: Insert check-in data into DB via activityService
     }
 
     @FXML
     private void handleCheckOut() {
         String username = checkOutUsernameField.getText().trim();
+
         if (username.isEmpty()) {
-            showAlert("Check-Out Error", "Please enter a username.");
+            showAlert("No Input", "Please enter a student username to check out.");
             return;
+    }
+
+        try {
+            int studentId = gymService.getStudentIdByUsername(username);  
+
+            if (studentId == -1) {
+                showAlert("User Not Found", "No student found with username: " + username);
+                return;
         }
 
-        showAlert("Check-Out Success", username + " has been checked out.");
+        boolean checkedOut = gymService.checkOutStudent(studentId);
+
+        if (checkedOut) {
+            dbManager.commit();
+            showAlert("Success", username + " has been checked out.");
+            checkOutUsernameField.clear();
+        } else {
+            showAlert("Check-Out Failed", "Could not check out student. They may not be checked in.");
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        showAlert("Database Error", "An error occurred during check-out.");
+        try {
+            dbManager.rollback();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
+}
+
 
     @FXML
     private void handleRefreshOccupancy() {
-        // Stub values (you can query a database later)
+        // TODO: Replace with DB query in future
         afcLabel.setText("AFC: 32 users");
         memorialLabel.setText("Memorial: 18 users");
         northLabel.setText("North Grounds: 25 users");

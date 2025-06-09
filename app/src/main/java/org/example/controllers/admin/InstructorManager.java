@@ -95,36 +95,6 @@ public class InstructorManager {
         alert.showAndWait();
     }
 
-    @FXML
-    public void handleDeleteInstructor(ActionEvent actionEvent) {
-        Instructor selected = instructorTable.getSelectionModel().getSelectedItem();
-
-        if (selected == null) {
-            showAlert("No Selection", "Please select an instructor to delete.");
-            return;
-        }
-
-        try {
-            boolean deleted = instructorService.deleteInstructor(selected.getInstructorId());
-
-            if (deleted) {
-                dbManager.commit();
-                instructorList.remove(selected);
-                showAlert("Success", "Instructor deleted successfully.");
-            } else {
-                showAlert("Delete Failed", "Could not delete instructor from the database.");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Database Error", "An error occurred while deleting the instructor.");
-            try {
-                dbManager.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
+    
 
 }
