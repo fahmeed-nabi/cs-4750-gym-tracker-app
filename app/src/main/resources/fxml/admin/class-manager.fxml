@@ -50,6 +50,7 @@
         <Button text="Create Class" onAction="#handleCreateClass"/>
         <Button text="Update Class" onAction="#handleUpdateClass"/>
         <Button text="Clear Form" onAction="#handleClearForm"/>
+        <Button text="Delete Class" onAction="#handleDeleteClass"/>
     </HBox>
 
     <Separator/>
