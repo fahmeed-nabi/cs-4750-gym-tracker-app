@@ -1,20 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.admin.ClassManager"
-      spacing="10" padding="20">
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.admin.ClassManagerController"
+      spacing="15" alignment="TOP_CENTER">
 
-    <Label text="Manage Classes" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <padding>
+        <Insets top="20" right="30" bottom="20" left="30"/>
+    </padding>
+
+    <Label text="Manage Upcoming Classes" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <GridPane hgap="10" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+
+        <Label text="Class Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="classNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Start Date:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="startDatePicker" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Start Time (HH:mm):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="startTimeField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="End Date:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="endDatePicker" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="End Time (HH:mm):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="endTimeField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Available Spots:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <TextField fx:id="availableSpotsField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+        <Label text="Gym:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="gymComboBox" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+        <Label text="Instructor:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="instructorComboBox" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+    </GridPane>
 
     <HBox spacing="10">
-        <TextField fx:id="classNameField" promptText="Enter Class Name"/>
-        <Button text="Add" onAction="#handleAdd"/>
-        <Button text="Delete" onAction="#handleDelete"/>
+        <Button text="Create Class" onAction="#handleCreateClass"/>
+        <Button text="Update Class" onAction="#handleUpdateClass"/>
+        <Button text="Clear Form" onAction="#handleClearForm"/>
     </HBox>
 
-    <ListView fx:id="classList" prefHeight="200"/>
+    <Separator/>
 
+    <Label text="Upcoming Classes" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <ListView fx:id="classListView" prefHeight="250" prefWidth="500"/>
 </VBox>

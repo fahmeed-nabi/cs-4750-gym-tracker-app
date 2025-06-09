@@ -112,8 +112,6 @@ public class GymService {
         return result;
     }
 
-
-
     public boolean canStudentCheckIn(int studentId, int gymId) throws SQLException {
         // 1. Is the student already checked in?
         String checkExisting = "SELECT 1 FROM CheckIn WHERE StudentID = ? AND CheckOutTime IS NULL";
@@ -156,8 +154,12 @@ public class GymService {
         try (PreparedStatement stmt = connection.prepareStatement(insert)) {
             stmt.setInt(1, studentId);
             stmt.setInt(2, gymId);
-            return stmt.executeUpdate() == 1;
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
         }
+        return false;
     }
 
     public boolean checkOutStudent(int studentId) throws SQLException {
@@ -168,8 +170,12 @@ public class GymService {
     """;
         try (PreparedStatement stmt = connection.prepareStatement(update)) {
             stmt.setInt(1, studentId);
-            return stmt.executeUpdate() == 1;
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
         }
+        return false;
     }
 
 }
