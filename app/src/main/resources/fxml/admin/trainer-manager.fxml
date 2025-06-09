@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<<<<<<< HEAD
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
@@ -11,24 +10,10 @@
 
     <center>
         <VBox spacing="20">
-=======
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.controllers.admin.TrainerManager">
-
-    <center>
-        <VBox spacing="15" alignment="CENTER">
->>>>>>> 0cca6443b29ca899ebd651d9268d1d38badda8f0
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>
             </padding>
 
-<<<<<<< HEAD
             <Label text="Trainer Management">
                 <font>
                     <Font size="20"/>
@@ -68,22 +53,6 @@
                         <Button text="Remove Selected" onAction="#handleRemoveSpecialty"/>
                     </HBox>
                 </VBox>
-=======
-            <TableView fx:id="trainerTable" prefHeight="300">
-                <columns>
-                    <TableColumn fx:id="nameColumn" text="Name" prefWidth="150"/>
-                    <TableColumn fx:id="specialtyColumn" text="Specialty" prefWidth="150"/>
-                    <TableColumn fx:id="availabilityColumn" text="Availability" prefWidth="200"/>
-                </columns>
-            </TableView>
-
-            <HBox spacing="10" alignment="CENTER">
-                <TextField fx:id="nameField" promptText="Name"/>
-                <TextField fx:id="specialtyField" promptText="Specialty"/>
-                <TextField fx:id="availabilityField" promptText="Availability"/>
-                <Button text="Add" onAction="#handleAdd"/>
-                <Button text="Delete" onAction="#handleDelete"/>
->>>>>>> 0cca6443b29ca899ebd651d9268d1d38badda8f0
             </HBox>
         </VBox>
     </center>
