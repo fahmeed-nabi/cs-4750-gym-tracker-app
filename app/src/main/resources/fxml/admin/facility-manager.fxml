@@ -2,19 +2,53 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.admin.FacilityManager"
-      spacing="10" padding="20">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controllers.admin.FacilityManager">
 
-    <Label text="Manage Facilities" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <!-- Top: Gym selector and Refresh button -->
+    <top>
+        <HBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label text="Select Gym:" />
+            <ComboBox fx:id="gymComboBox" prefWidth="200"/>
+            <Button text="Refresh" onAction="#onRefresh"/>
+        </HBox>
+    </top>
 
-    <HBox spacing="10">
-        <TextField fx:id="facilityNameField" promptText="Enter Facility Name"/>
-        <Button text="Add" onAction="#handleAdd"/>
-        <Button text="Delete" onAction="#handleDelete"/>
-    </HBox>
+    <!-- Center: Table of facilities -->
+    <center>
+        <TableView fx:id="facilityTable" prefHeight="400">
+            <columns>
+                <TableColumn fx:id="nameColumn" text="Facility Name" prefWidth="250"/>
+                <TableColumn fx:id="maxUsersColumn" text="Max Concurrent Users" prefWidth="250"/>
+            </columns>
+        </TableView>
+    </center>
 
-    <ListView fx:id="facilityList" prefHeight="200"/>
+    <!-- Bottom: Form and action buttons -->
+    <bottom>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
 
-</VBox>
+            <GridPane hgap="10" vgap="10">
+                <Label text="Facility Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="nameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Max Concurrent Users:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="maxUsersField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <HBox spacing="10">
+                <Button text="Add" onAction="#onAdd"/>
+                <Button text="Update" onAction="#onUpdate"/>
+                <Button text="Delete" onAction="#onDelete"/>
+                <Button text="Clear" onAction="#onClear"/>
+            </HBox>
+        </VBox>
+    </bottom>
+</BorderPane>

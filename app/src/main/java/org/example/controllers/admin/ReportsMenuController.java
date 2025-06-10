@@ -12,7 +12,7 @@ public class ReportsMenuController {
     private StackPane reportContentPane;
 
     public void handleTrainerReports() {
-        loadReportView("TrainerReportView.fxml");
+        loadReportView("trainer-report.fxml");
     }
 
     public void handleFacilityReports() {
@@ -20,11 +20,11 @@ public class ReportsMenuController {
     }
 
     public void handleGymReports() {
-        loadReportView("GymReportView.fxml");
+        loadReportView("gym-report.fxml");
     }
 
     public void handleClassReports() {
-        loadReportView("ClassReportView.fxml");
+        loadReportView("class-report.fxml");
     }
 
     private void loadReportView(String fxmlFile) {

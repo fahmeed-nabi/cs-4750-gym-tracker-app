@@ -1,5 +1,6 @@
 package org.example.database;
 
+import org.example.models.Facility;
 import org.example.models.Gym;
 
 import java.sql.Connection;
@@ -186,8 +187,87 @@ public class GymService {
             return rs.getInt("StudentID");
         }
     }
-    return -1; // not found
-}
+        return -1; // not found
+    }
 
+    public List<Facility> getFacilitiesByGym(int gymId) throws SQLException {
+        List<Facility> facilities = new ArrayList<>();
+
+        String query = """
+            SELECT f.FacilityID, f.Name, f.MaxConcurrentUsers, g.Name AS GymName
+            FROM Facility f
+            JOIN Gym g ON f.GymID = g.GymID
+            WHERE f.GymID = ?
+            ORDER BY f.Name
+        """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, gymId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Facility facility = new Facility(
+                            rs.getInt("FacilityID"),
+                            rs.getString("GymName"),  // location = gym name
+                            rs.getString("Name"),
+                            "", // facilityType placeholder (not in DB schema)
+                            rs.getInt("MaxConcurrentUsers")
+                    );
+                    facilities.add(facility);
+                }
+            }
+        }
+
+        return facilities;
+    }
+
+    public boolean updateGym(int gymId, String newName, int newMaxCapacity) throws SQLException {
+        String update = """
+        UPDATE Gym
+        SET Name = ?, MaxCapacity = ?
+        WHERE GymID = ?
+    """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(update)) {
+            stmt.setString(1, newName);
+            stmt.setInt(2, newMaxCapacity);
+            stmt.setInt(3, gymId);
+
+            int rowsAffected = stmt.executeUpdate();
+            connection.commit();
+            return rowsAffected == 1;
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        }
+    }
+
+    public boolean deleteGym(int gymId) throws SQLException {
+        String query = "DELETE FROM Gym WHERE GymID = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, gymId);
+            int rowsAffected = stmt.executeUpdate();
+            connection.commit();
+            return rowsAffected == 1;
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        }
+    }
+
+    public boolean createGym(String name, int maxCapacity) throws SQLException {
+        String query = "INSERT INTO Gym (Name, MaxCapacity) VALUES (?, ?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, name);
+            stmt.setInt(2, maxCapacity);
+            int rowsInserted = stmt.executeUpdate();
+            connection.commit();
+            return rowsInserted == 1;
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        }
+    }
 
 }

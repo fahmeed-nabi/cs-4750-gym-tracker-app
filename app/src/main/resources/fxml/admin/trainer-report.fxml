@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.TrainerReportController"
+            fitToWidth="true"
+            style="-fx-background-color: #f4f6f9;">
+
+    <VBox spacing="30" alignment="TOP_CENTER" style="-fx-background-color: #f4f6f9;" maxWidth="1000">
+        <padding>
+            <Insets top="40" right="40" bottom="40" left="40"/>
+        </padding>
+
+        <Label text="Trainer Reports"
+               style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+        <Label text="Trainer Appointments per Gym"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+        <BarChart fx:id="appointmentChart" title="Trainer Appointments"
+                  prefHeight="400" prefWidth="800"
+                  style="-fx-background-color: white; -fx-padding: 20;">
+            <xAxis>
+                <CategoryAxis fx:id="appointmentXAxis" label="Gym"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="appointmentYAxis" label="Appointments"/>
+            </yAxis>
+        </BarChart>
+    </VBox>
+</ScrollPane>

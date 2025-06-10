@@ -7,7 +7,7 @@
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.controllers.admin.GymManager"
       spacing="15">
-    
+
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
@@ -18,22 +18,20 @@
         <Label text="Gym Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
         <TextField fx:id="gymNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-        <Label text="Location:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="locationField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-        <Label text="Capacity:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="capacityField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <Label text="Capacity:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="capacityField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
     </GridPane>
 
     <HBox spacing="10">
         <Button text="Add" onAction="#handleAdd"/>
+        <Button text="Update" onAction="#handleUpdate"/>
         <Button text="Delete" onAction="#handleDelete"/>
+        <Button text="Clear" onAction="#handleClear"/>
     </HBox>
 
     <TableView fx:id="gymTable" prefHeight="250">
         <columns>
             <TableColumn fx:id="nameColumn" text="Gym Name"/>
-            <TableColumn fx:id="locationColumn" text="Location"/>
             <TableColumn fx:id="capacityColumn" text="Capacity"/>
         </columns>
     </TableView>

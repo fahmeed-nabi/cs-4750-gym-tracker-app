@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.GymReportController"
+            fitToWidth="true"
+            style="-fx-background-color: #f4f6f9;">
+
+    <VBox spacing="30" alignment="TOP_CENTER" style="-fx-background-color: #f4f6f9;" maxWidth="1000">
+        <padding>
+            <Insets top="40" right="40" bottom="40" left="40"/>
+        </padding>
+
+        <!-- Title -->
+        <Label text="Gym Reports"
+               style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+        <!-- Bar Chart for Today's Check-ins -->
+        <Label text="Today's Check-ins per Gym"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+        <BarChart fx:id="checkInBarChart" title="Check-Ins"
+                  prefHeight="400" prefWidth="800"
+                  style="-fx-background-color: white; -fx-padding: 20;">
+            <xAxis>
+                <CategoryAxis fx:id="checkInXAxis" label="Gym"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="checkInYAxis" label="Check-Ins"/>
+            </yAxis>
+        </BarChart>
+
+        <Separator/>
+
+        <!-- Average Duration Table -->
+        <Label text="Average Check-In Duration per Gym (Minutes)"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+        <TableView fx:id="durationTable" prefWidth="600">
+            <columns>
+                <TableColumn fx:id="gymNameColumn" text="Gym" prefWidth="250"/>
+                <TableColumn fx:id="avgDurationColumn" text="Avg. Duration" prefWidth="330"/>
+            </columns>
+        </TableView>
+    </VBox>
+</ScrollPane>

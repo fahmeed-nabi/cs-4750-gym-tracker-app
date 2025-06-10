@@ -253,4 +253,83 @@ public class ReportService {
         return result;
     }
 
+    public Map<String, Integer> getTodayCheckInsPerGym() throws SQLException {
+        Map<String, Integer> result = new LinkedHashMap<>();
+        String query = """
+        SELECT g.Name, COUNT(*) AS CheckIns
+        FROM CheckIn ci
+        JOIN Gym g ON ci.GymID = g.GymID
+        WHERE DATE(ci.CheckInTime) = CURRENT_DATE
+        GROUP BY g.Name
+    """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                result.put(rs.getString("Name"), rs.getInt("CheckIns"));
+            }
+        }
+
+        return result;
+    }
+
+    public Map<String, Double> getAverageCheckInDurationPerGym() throws SQLException {
+        Map<String, Double> result = new LinkedHashMap<>();
+        String query = """
+        SELECT g.Name, AVG(TIMESTAMPDIFF(MINUTE, ci.CheckInTime, ci.CheckOutTime)) AS AvgDuration
+        FROM CheckIn ci
+        JOIN Gym g ON ci.GymID = g.GymID
+        WHERE ci.CheckOutTime IS NOT NULL
+        GROUP BY g.Name
+    """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                result.put(rs.getString("Name"), rs.getDouble("AvgDuration"));
+            }
+        }
+
+        return result;
+    }
+
+    public Map<String, Integer> getClassCountPerGym() throws SQLException {
+        Map<String, Integer> result = new LinkedHashMap<>();
+        String query = """
+        SELECT g.Name, COUNT(*) AS ClassCount
+        FROM Class c
+        JOIN Gym g ON c.GymID = g.GymID
+        GROUP BY g.Name
+    """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                result.put(rs.getString("Name"), rs.getInt("ClassCount"));
+            }
+        }
+
+        return result;
+    }
+
+    public Map<String, Integer> getTrainerAppointmentsPerGym() throws SQLException {
+        Map<String, Integer> result = new LinkedHashMap<>();
+        String query = """
+        SELECT g.Name, COUNT(*) AS AppointmentCount
+        FROM TrainerAppointment ta
+        JOIN Gym g ON ta.LocationID = g.GymID
+        GROUP BY g.Name
+    """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                result.put(rs.getString("Name"), rs.getInt("AppointmentCount"));
+            }
+        }
+
+        return result;
+    }
+
+
 }

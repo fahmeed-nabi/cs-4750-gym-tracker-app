@@ -2,15 +2,17 @@ package org.example.models;
 
 public class Facility {
     private int facilityId;
-    private String location;
+    private String location; // This may map to Gym name
     private String name;
     private String facilityType;
+    private int maxConcurrentUsers;
 
-    public Facility(int facilityId, String location, String name, String facilityType) {
+    public Facility(int facilityId, String location, String name, String facilityType, int maxConcurrentUsers) {
         this.facilityId = facilityId;
         this.location = location;
         this.name = name;
         this.facilityType = facilityType;
+        this.maxConcurrentUsers = maxConcurrentUsers;
     }
 
     public int getFacilityId() {
@@ -43,6 +45,14 @@ public class Facility {
 
     public void setFacilityType(String facilityType) {
         this.facilityType = facilityType;
+    }
+
+    public int getMaxConcurrentUsers() {
+        return maxConcurrentUsers;
+    }
+
+    public void setMaxConcurrentUsers(int maxConcurrentUsers) {
+        this.maxConcurrentUsers = maxConcurrentUsers;
     }
 
     @Override
