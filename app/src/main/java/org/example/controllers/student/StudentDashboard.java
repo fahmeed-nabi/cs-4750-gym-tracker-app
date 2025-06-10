@@ -23,6 +23,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.io.IOException;
 
@@ -128,7 +129,9 @@ public class StudentDashboard implements Initializable {
             controller.setStudentEmail(studentEmail);
 
             Stage stage = (Stage) gymOccupancyContainer.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 700));
+            Scene scene = new Scene(root, 800, 700);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.setTitle("Manage Class Schedule");
             stage.show();
         } catch (IOException e) {
@@ -145,8 +148,10 @@ public class StudentDashboard implements Initializable {
             TrainerAppointmentsMenuController controller = loader.getController();
             controller.setStudentEmail(studentEmail);
 
-            Stage stage = (Stage) gymOccupancyContainer.getScene().getWindow(); // assuming you have this container in your FXML
-            stage.setScene(new Scene(root, 800, 700));
+            Stage stage = (Stage) gymOccupancyContainer.getScene().getWindow();
+            Scene scene = new Scene(root, 800, 700);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.setTitle("Manage Trainer Appointments");
             stage.show();
         } catch (IOException e) {
@@ -167,7 +172,9 @@ public class StudentDashboard implements Initializable {
             
             Stage stage = new Stage();
             stage.setTitle("Gym Check-In");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
@@ -183,7 +190,9 @@ public class StudentDashboard implements Initializable {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Login");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.show();
             ((Stage) gymOccupancyContainer.getScene().getWindow()).close();
         } catch (Exception e) {

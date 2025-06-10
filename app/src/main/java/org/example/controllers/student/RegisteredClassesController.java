@@ -16,6 +16,7 @@ import org.example.models.Instructor;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 public class RegisteredClassesController {
 
@@ -78,7 +79,9 @@ public class RegisteredClassesController {
             controller.setStudentEmail(studentEmail);
 
             Stage stage = (Stage) classTable.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 600));
+            Scene scene = new Scene(root, 800, 600);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.setTitle("Manage Classes");
             stage.show();
         } catch (Exception e) {

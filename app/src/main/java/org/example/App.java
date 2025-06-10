@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class App extends Application {
 
     @Override
@@ -18,6 +20,7 @@ public class App extends Application {
             Parent root = loader.load();
 
             Scene scene = new Scene(root, 600, 400);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
             stage.setTitle("UVA Gym Tracker - Login");
             stage.setScene(scene);
             stage.setResizable(false);

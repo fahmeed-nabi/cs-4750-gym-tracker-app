@@ -24,6 +24,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -145,7 +146,9 @@ public class TrainerDashboard implements Initializable {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Login");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.show();
             ((Stage) welcomeLabel.getScene().getWindow()).close();
         } catch (Exception e) {

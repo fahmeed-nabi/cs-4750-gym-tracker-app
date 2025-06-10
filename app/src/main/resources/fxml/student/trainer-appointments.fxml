@@ -4,33 +4,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.controllers.student.TrainerAppointmentsMenuController"
       alignment="CENTER"
-      spacing="20">
+      spacing="20"
+      style="-fx-background-color: #f4f6f9;">
 
     <padding>
-        <Insets top="30" right="30" bottom="30" left="30"/>
+        <Insets top="40" right="40" bottom="40" left="40"/>
     </padding>
 
     <Label text="Manage Trainer Appointments"
-           style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
 
-    <Button text="View Upcoming Appointments"
-            onAction="#handleViewUpcomingAppointments"
-            prefWidth="250"/>
+    <VBox spacing="12" alignment="CENTER">
+        <Button text="View Upcoming Appointments"
+                onAction="#handleViewUpcomingAppointments"
+                styleClass="nav-button"
+                prefWidth="280"/>
 
-    <Button text="Appointment History"
-            onAction="#handleViewAppointmentHistory"
-            prefWidth="250"/>
+        <Button text="Appointment History"
+                onAction="#handleViewAppointmentHistory"
+                styleClass="nav-button"
+                prefWidth="280"/>
 
-    <Button text="Book a Trainer"
-            onAction="#handleBookTrainer"
-            prefWidth="250"/>
+        <Button text="Book a Trainer"
+                onAction="#handleBookTrainer"
+                styleClass="nav-button"
+                prefWidth="280"/>
+    </VBox>
 
-    <Separator />
+    <Separator style="-fx-background-color: #ccc;" />
 
     <Button text="Back to Dashboard"
             onAction="#handleBackToDashboard"
-            prefWidth="250"/>
+            styleClass="secondary-button"
+            prefWidth="280"/>
 </VBox>

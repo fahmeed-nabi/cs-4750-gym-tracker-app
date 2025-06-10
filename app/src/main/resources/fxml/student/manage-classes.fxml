@@ -4,37 +4,45 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.controllers.student.ManageClassesMenuController"
       alignment="CENTER"
-      spacing="20">
+      spacing="20"
+      style="-fx-background-color: #f4f6f9;">
 
     <padding>
-        <Insets top="30" right="30" bottom="30" left="30"/>
+        <Insets top="40" right="40" bottom="40" left="40"/>
     </padding>
 
-    <Label text="Manage Classes" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+    <Label text="Manage Classes"
+           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
 
-    <Button text="View Upcoming Classes"
-            fx:id="viewUpcomingButton"
-            onAction="#handleViewUpcomingClasses"
-            prefWidth="250"/>
+    <VBox spacing="12" alignment="CENTER">
+        <Button text="View Upcoming Classes"
+                fx:id="viewUpcomingButton"
+                onAction="#handleViewUpcomingClasses"
+                styleClass="nav-button"
+                prefWidth="280"/>
 
-    <Button text="My Registered Classes"
-            fx:id="registeredButton"
-            onAction="#handleMyRegisteredClasses"
-            prefWidth="250"/>
+        <Button text="My Registered Classes"
+                fx:id="registeredButton"
+                onAction="#handleMyRegisteredClasses"
+                styleClass="nav-button"
+                prefWidth="280"/>
 
-    <Button text="Class Attendance History"
-            fx:id="historyButton"
-            onAction="#handleClassHistory"
-            prefWidth="250"/>
+        <Button text="Class Attendance History"
+                fx:id="historyButton"
+                onAction="#handleClassHistory"
+                styleClass="nav-button"
+                prefWidth="280"/>
+    </VBox>
 
-    <Separator/>
+    <Separator style="-fx-background-color: #ccc;"/>
 
     <Button text="Back to Dashboard"
             fx:id="backButton"
             onAction="#handleBackToDashboard"
-            prefWidth="250"/>
-
+            styleClass="secondary-button"
+            prefWidth="280"/>
 </VBox>

@@ -21,6 +21,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ManagerDashboard implements Initializable {
@@ -226,7 +227,9 @@ public class ManagerDashboard implements Initializable {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Login");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.show();
 
             // Close current window
@@ -237,7 +240,29 @@ public class ManagerDashboard implements Initializable {
         }
     }
 
+    @FXML
     public void handleGymReports() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/reports-menu.fxml"));
+            Parent root = loader.load();
 
+            ReportsMenuController controller = loader.getController();
+            // You can pass any context if needed: e.g., controller.setManagerEmail(managerEmail);
+
+            Stage stage = new Stage();
+            stage.setTitle("Reports and Trends");
+            stage.setScene(new Scene(root, 1000, 700));  // Adjust size if needed
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(true);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Load Error");
+            alert.setHeaderText("Could not load Reports and Trends window.");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
+
 }
