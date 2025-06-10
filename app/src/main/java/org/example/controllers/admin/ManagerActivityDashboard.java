@@ -1,11 +1,15 @@
 package org.example.controllers.admin;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import org.example.database.DBManager;
 import org.example.database.GymService;
+import org.example.database.ReportService;
 import java.util.Map;
 import javafx.scene.layout.VBox;
+import java.util.LinkedHashMap;
+
 
 
 import java.sql.SQLException;
@@ -15,6 +19,7 @@ public class ManagerActivityDashboard {
 
     @FXML private TextField checkInUsernameField;
     @FXML private TextField checkOutUsernameField;
+    @FXML private VBox gymFacilityPaneContainer;
 
     @FXML private CheckBox weightLiftingBox;
     @FXML private CheckBox cardioBox;
@@ -28,6 +33,7 @@ public class ManagerActivityDashboard {
 
     private DBManager dbManager;
     private GymService gymService;
+    private ReportService reportService;
 
     @FXML
     private void initialize() {
@@ -37,6 +43,8 @@ public class ManagerActivityDashboard {
             gymService = new GymService(dbManager.getConnection());
 
             updateOccupancyDisplay(); // populate on load
+            reportService = new ReportService(dbManager.getConnection());
+            loadGymFacilityOccupancyPanels();
 
         } catch (SQLException e) {
             showAlert("Database Error", "Could not connect to database.");
@@ -135,6 +143,77 @@ public class ManagerActivityDashboard {
         e.printStackTrace();
     }
 }
+    private void loadGymFacilityOccupancyPanels() {
+        gymFacilityPaneContainer.getChildren().clear();
+
+    try {
+        Map<String, String> flatMap = reportService.getCurrentFacilityOccupancyRate();
+
+        // Group by gym name
+        Map<String, Map<String, String>> grouped = new LinkedHashMap<>();
+        for (Map.Entry<String, String> entry : flatMap.entrySet()) {
+            String fullLabel = entry.getKey(); // e.g. "Weight Room (AFC)"
+            String status = entry.getValue();  // e.g. "12 users (60% occupied)"
+
+            int open = fullLabel.lastIndexOf('(');
+            int close = fullLabel.lastIndexOf(')');
+            if (open != -1 && close != -1 && close > open) {
+                String facilityName = fullLabel.substring(0, open).trim();
+                String gymName = fullLabel.substring(open + 1, close).trim();
+
+                grouped.computeIfAbsent(gymName, k -> new LinkedHashMap<>())
+                       .put(facilityName, status);
+            }
+        }
+
+        // Render panels
+        for (Map.Entry<String, Map<String, String>> gymEntry : grouped.entrySet()) {
+            String gymName = gymEntry.getKey();
+            Map<String, String> facilities = gymEntry.getValue();
+
+            VBox gymBox = new VBox(10);
+            gymBox.setPadding(new Insets(10));
+            gymBox.setStyle("-fx-background-color: #f9f9f9; -fx-border-color: #ccc; -fx-border-radius: 5; -fx-background-radius: 5;");
+
+            for (Map.Entry<String, String> facilityEntry : facilities.entrySet()) {
+                String facility = facilityEntry.getKey();
+                String status = facilityEntry.getValue();
+
+                double percent = 0;
+                int open = status.indexOf('(');
+                int pctIndex = status.indexOf('%');
+                if (open != -1 && pctIndex != -1) {
+                    try {
+                        String number = status.substring(open + 1, pctIndex).trim();
+                        percent = Double.parseDouble(number) / 100.0;
+                    } catch (NumberFormatException ignored) {}
+                }
+
+                Label nameLabel = new Label(facility);
+                nameLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #2e3b4e;");
+
+                ProgressBar progressBar = new ProgressBar(percent);
+                progressBar.setPrefWidth(300);
+                progressBar.setStyle("-fx-accent: #3f8efc;");
+
+                Label statusLabel = new Label(status);
+                statusLabel.setStyle("-fx-text-fill: #555555;");
+
+                VBox entryBox = new VBox(5, nameLabel, progressBar, statusLabel);
+                gymBox.getChildren().add(entryBox);
+            }
+
+            TitledPane gymPane = new TitledPane(gymName, gymBox);
+            gymPane.setExpanded(false);
+            gymFacilityPaneContainer.getChildren().add(gymPane);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        gymFacilityPaneContainer.getChildren().add(new Label("Error loading facility usage data."));
+    }
+}
+
 
 
     private void showAlert(String title, String msg) {

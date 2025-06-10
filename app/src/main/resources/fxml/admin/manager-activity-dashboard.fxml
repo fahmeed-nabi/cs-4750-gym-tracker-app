@@ -4,54 +4,61 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.admin.ManagerActivityDashboard"
-      spacing="20">
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.ManagerActivityDashboard"
+            fitToWidth="true">
 
-    <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
-    </padding>
-
-    <!-- Title -->
-    <Label text="Employee Dashboard" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-
-    <!-- Check-In Panel -->
-    <TitledPane text="Check In Student" expanded="true">
-        <VBox spacing="10">
+    <content>
+        <VBox spacing="20">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <TextField fx:id="checkInUsernameField" promptText="Enter username"/>
-            <Label text="Select activity:" />
-            <CheckBox fx:id="weightLiftingBox" text="Weight Lifting"/>
-            <CheckBox fx:id="cardioBox" text="Cardio"/>
-            <CheckBox fx:id="poolBox" text="Pool"/>
-            <CheckBox fx:id="sportsBox" text="Basketball/Other Sports"/>
-            <CheckBox fx:id="classBox" text="Group Fitness Class"/>
-            <Button text="Check In" onAction="#handleCheckIn"/>
-        </VBox>
-    </TitledPane>
 
-    <!-- Check-Out Panel -->
-    <TitledPane text="Check Out Student" expanded="false">
-        <VBox spacing="10">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
-            <TextField fx:id="checkOutUsernameField" promptText="Enter username"/>
-            <Button text="Check Out" onAction="#handleCheckOut"/>
-        </VBox>
-    </TitledPane>
+            <!-- Title -->
+            <Label text="Occupancy Dashboard" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
 
-    <!-- Occupancy Panel -->
-    <TitledPane text="Current Gym Occupancy" expanded="false">
-        <VBox spacing="10">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
-            <VBox fx:id="occupancyLabelContainer" spacing="5"/>
-            <Button text="Refresh" onAction="#handleRefreshOccupancy"/>
-        </VBox>
-    </TitledPane>
+            <!-- Check-In Panel -->
+            <TitledPane text="Check In Student" expanded="true">
+                <VBox spacing="10">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                    <TextField fx:id="checkInUsernameField" promptText="Enter username"/>
+                    <Label text="Select activity:" />
+                    <CheckBox fx:id="weightLiftingBox" text="Weight Lifting"/>
+                    <CheckBox fx:id="cardioBox" text="Cardio"/>
+                    <CheckBox fx:id="poolBox" text="Pool"/>
+                    <CheckBox fx:id="sportsBox" text="Basketball/Other Sports"/>
+                    <CheckBox fx:id="classBox" text="Group Fitness Class"/>
+                    <Button text="Check In" onAction="#handleCheckIn"/>
+                </VBox>
+            </TitledPane>
 
-</VBox>
+            <!-- Check-Out Panel -->
+            <TitledPane text="Check Out Student" expanded="false">
+                <VBox spacing="10">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                    <TextField fx:id="checkOutUsernameField" promptText="Enter username"/>
+                    <Button text="Check Out" onAction="#handleCheckOut"/>
+                </VBox>
+            </TitledPane>
+
+            <!-- Occupancy Panel -->
+            <TitledPane text="Current Gym Occupancy" expanded="false">
+                <VBox spacing="10">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                    <VBox fx:id="occupancyLabelContainer" spacing="5"/>
+                    <Button text="Refresh" onAction="#handleRefreshOccupancy"/>
+                </VBox>
+            </TitledPane>
+
+            <!-- Facility Occupancy by Gym -->
+            <VBox fx:id="gymFacilityPaneContainer" spacing="10"/>
+
+        </VBox>
+    </content>
+</ScrollPane>
