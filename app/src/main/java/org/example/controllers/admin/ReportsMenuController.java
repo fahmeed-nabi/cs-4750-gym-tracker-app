@@ -16,7 +16,7 @@ public class ReportsMenuController {
     }
 
     public void handleFacilityReports() {
-        loadReportView("FacilityReportView.fxml");
+        loadReportView("facility-report.fxml");
     }
 
     public void handleGymReports() {
@@ -29,8 +29,9 @@ public class ReportsMenuController {
 
     private void loadReportView(String fxmlFile) {
         try {
-            Node reportView = FXMLLoader.load(getClass().getResource(fxmlFile));
-            reportContentPane.getChildren().setAll(reportView);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/" + fxmlFile));
+            Node view = loader.load();
+            reportContentPane.getChildren().setAll(view);
         } catch (IOException e) {
             e.printStackTrace();
         }

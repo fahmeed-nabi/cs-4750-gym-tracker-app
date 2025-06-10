@@ -251,7 +251,9 @@ public class ManagerDashboard implements Initializable {
 
             Stage stage = new Stage();
             stage.setTitle("Reports and Trends");
-            stage.setScene(new Scene(root, 1000, 700));  // Adjust size if needed
+            Scene scene = new Scene(root, 1000, 700);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(true);
             stage.show();

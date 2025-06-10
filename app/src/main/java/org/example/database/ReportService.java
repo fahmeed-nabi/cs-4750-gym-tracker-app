@@ -194,4 +194,63 @@ public class ReportService {
         return result;
     }
 
+    public Map<String, String> getMostPopularFacilitiesWithGym(int limit) throws SQLException {
+        Map<String, String> result = new LinkedHashMap<>();
+        String query = """
+        SELECT f.Name AS FacilityName, g.Name AS GymName, COUNT(*) AS UsageCount
+        FROM FacilityUsage fu
+        JOIN Facility f ON fu.FacilityID = f.FacilityID
+        JOIN Gym g ON f.GymID = g.GymID
+        GROUP BY f.FacilityID
+        ORDER BY UsageCount DESC
+        LIMIT ?
+    """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, limit);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    result.put(rs.getString("FacilityName"), rs.getString("GymName"));
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public Map<String, String> getCurrentFacilityOccupancyRate() throws SQLException {
+        Map<String, String> result = new LinkedHashMap<>();
+        String query = """
+        SELECT f.Name AS FacilityName,
+               g.Name AS GymName,
+               f.MaxConcurrentUsers,
+               COUNT(DISTINCT fu.StudentID) AS CurrentUsers
+        FROM Facility f
+        JOIN Gym g ON f.GymID = g.GymID
+        LEFT JOIN FacilityUsage fu ON f.FacilityID = fu.FacilityID
+        LEFT JOIN CheckIn ci ON fu.StudentID = ci.StudentID AND f.GymID = ci.GymID AND ci.CheckOutTime IS NULL
+        GROUP BY f.FacilityID, f.Name, g.Name, f.MaxConcurrentUsers
+    """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String facilityName = rs.getString("FacilityName");
+                String gymName = rs.getString("GymName");
+                int maxConcurrent = rs.getInt("MaxConcurrentUsers");
+                int currentUsers = rs.getInt("CurrentUsers");
+
+                double occupancyRate = maxConcurrent > 0
+                        ? ((double) currentUsers / maxConcurrent) * 100
+                        : 0;
+
+                String key = facilityName + " (" + gymName + ")";
+                String value = currentUsers + " users (" + String.format("%.0f", occupancyRate) + "% occupied)";
+                result.put(key, value);
+            }
+        }
+
+        return result;
+    }
+
 }

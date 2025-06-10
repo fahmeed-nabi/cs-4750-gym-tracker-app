@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.FacilityReportController"
+            fitToWidth="true"
+            style="-fx-background-color: #f4f6f9;">
+
+    <VBox spacing="30" alignment="TOP_CENTER" style="-fx-background-color: #f4f6f9;" maxWidth="1000">
+        <padding>
+            <Insets top="40" right="40" bottom="40" left="40"/>
+        </padding>
+
+        <!-- Title -->
+        <Label text="Peak Facility Usage Times"
+               style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+        <!-- Usage Table -->
+        <TableView fx:id="usageTable" prefWidth="600"
+                   style="-fx-background-radius: 8; -fx-border-color: #ccc; -fx-border-radius: 8;">
+            <columns>
+                <TableColumn fx:id="hourColumn" text="Hour of Day" prefWidth="200"/>
+                <TableColumn fx:id="countColumn" text="Usage Count" prefWidth="300"/>
+            </columns>
+        </TableView>
+
+        <Separator/>
+
+        <!-- Bar Chart -->
+        <Label text="Top 5 Most Popular Facilities"
+               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+        <BarChart fx:id="facilityBarChart"
+                  title="Most Used Facilities"
+                  prefHeight="400" prefWidth="800"
+                  style="-fx-background-color: white; -fx-padding: 20;">
+            <xAxis>
+                <CategoryAxis fx:id="facilityXAxis" label="Facility"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="facilityYAxis" label="Usage Count"/>
+            </yAxis>
+        </BarChart>
+
+        <Separator/>
+
+        <!-- Occupancy Rate Section -->
+        <Label text="Current Facility Usage"
+               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+        <VBox fx:id="occupancyContainer" spacing="15" alignment="TOP_CENTER"/>
+
+    </VBox>
+</ScrollPane>
