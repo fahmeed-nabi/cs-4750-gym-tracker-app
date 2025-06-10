@@ -7,6 +7,7 @@
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.controllers.admin.ManagerActivityDashboard"
             fitToWidth="true">
+
     <content>
         <VBox spacing="20">
             <padding>
@@ -54,6 +55,10 @@
                     <Button text="Refresh" onAction="#handleRefreshOccupancy"/>
                 </VBox>
             </TitledPane>
+
+            <!-- Facility Occupancy by Gym -->
+            <VBox fx:id="gymFacilityPaneContainer" spacing="10"/>
+
         </VBox>
     </content>
 </ScrollPane>
