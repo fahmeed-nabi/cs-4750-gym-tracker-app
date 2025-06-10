@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.controllers.admin.ManagerActivityDashboard"
-      spacing="20" padding="20">
+      spacing="20">
+
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
 
     <!-- Title -->
     <Label text="Employee Dashboard" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
 
     <!-- Check-In Panel -->
     <TitledPane text="Check In Student" expanded="true">
-        <VBox spacing="10" padding="10">
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
             <TextField fx:id="checkInUsernameField" promptText="Enter username"/>
             <Label text="Select activity:" />
             <CheckBox fx:id="weightLiftingBox" text="Weight Lifting"/>
@@ -26,7 +34,10 @@
 
     <!-- Check-Out Panel -->
     <TitledPane text="Check Out Student" expanded="false">
-        <VBox spacing="10" padding="10">
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
             <TextField fx:id="checkOutUsernameField" promptText="Enter username"/>
             <Button text="Check Out" onAction="#handleCheckOut"/>
         </VBox>
@@ -34,10 +45,11 @@
 
     <!-- Occupancy Panel -->
     <TitledPane text="Current Gym Occupancy" expanded="false">
-        <VBox spacing="5" padding="10">
-            <Label fx:id="afcLabel" text="AFC: 0 users"/>
-            <Label fx:id="memorialLabel" text="Memorial: 0 users"/>
-            <Label fx:id="northLabel" text="North Grounds: 0 users"/>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <VBox fx:id="occupancyLabelContainer" spacing="5"/>
             <Button text="Refresh" onAction="#handleRefreshOccupancy"/>
         </VBox>
     </TitledPane>
