@@ -1,6 +1,10 @@
 package org.example.database;
 
 import java.sql.*;
+import org.example.models.Student;       
+import java.util.List;                   
+import java.util.ArrayList;              
+
 
 public class UserService {
     private final Connection connection;
@@ -114,4 +118,36 @@ public class UserService {
             return rows > 0;
         }
     }
+
+    public List<Student> getAllStudents() throws SQLException {
+        List<Student> students = new ArrayList<>();
+        String query = "SELECT StudentID, FirstName, LastName, Email FROM Student ORDER BY LastName";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                int id = rs.getInt("StudentID");
+                String fullName = rs.getString("FirstName") + " " + rs.getString("LastName");
+                String email = rs.getString("Email");
+                students.add(new Student(id, fullName, email, "Student"));
+        }
+    }
+
+    return students;
+}
+    public boolean deleteStudentById(int studentId) throws SQLException {
+        String query = "DELETE FROM Student WHERE StudentID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, studentId);
+            return stmt.executeUpdate() == 1;
+    }
+}
+    public boolean deleteStudentByEmail(String email) throws SQLException {
+        String query = "DELETE FROM Student WHERE Email = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, email);
+            return stmt.executeUpdate() == 1;
+    }
+}
+
 }

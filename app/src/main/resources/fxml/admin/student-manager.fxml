@@ -2,43 +2,50 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.admin.StudentManager"
-      spacing="15" padding="20">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.StudentManager"
+            prefWidth="600" prefHeight="400">
 
-    <Label text="Manage Students" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label text="Manage Students" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        </VBox>
+    </top>
 
-    <GridPane hgap="10" vgap="10">
-        <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="studentNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
 
-        <Label text="Student ID:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="studentIdField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <HBox spacing="10">
+                <TextField fx:id="studentNameField" promptText="Full Name"/>
+                <TextField fx:id="studentIdField" promptText="Student ID"/>
+                <TextField fx:id="usernameField" promptText="Username"/>
+            </HBox>
 
-        <Label text="Role:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="roleComboBox" GridPane.rowIndex="2" GridPane.columnIndex="1">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Student"/>
-                    <String fx:value="Employee"/>
-                    <String fx:value="Manager"/>
-                </FXCollections>
-            </items>
-        </ComboBox>
-    </GridPane>
+            <HBox spacing="10">
+                <Label text="Search:"/>
+                <TextField fx:id="searchField" promptText="Enter name or email"/>
+            </HBox>
 
-    <HBox spacing="10">
-        <Button text="Add" onAction="#handleAdd"/>
-        <Button text="Delete" onAction="#handleDelete"/>
-    </HBox>
+            <HBox spacing="10">
+                <Button text="Add Student" onAction="#handleAdd"/>
+                <Button text="Delete Selected" onAction="#handleDelete"/>
+            </HBox>
 
-    <TableView fx:id="studentTable" prefHeight="250">
-        <columns>
-            <TableColumn fx:id="nameColumn" text="Name"/>
-            <TableColumn fx:id="idColumn" text="Student ID"/>
-            <TableColumn fx:id="roleColumn" text="Role"/>
-        </columns>
-    </TableView>
-
-</VBox>
+            <TableView fx:id="studentTable" prefHeight="250">
+                <columns>
+                    <TableColumn fx:id="nameColumn" text="Name" prefWidth="150"/>
+                    <TableColumn fx:id="idColumn" text="Student ID" prefWidth="100"/>
+                    <TableColumn fx:id="usernameColumn" text="Username" prefWidth="150"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>
