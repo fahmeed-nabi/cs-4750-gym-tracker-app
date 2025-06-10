@@ -3,11 +3,15 @@ package org.example.controllers.admin;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.database.DBManager;
-// import org.example.services.ActivityService; // Uncomment and implement if needed
+import org.example.database.GymService;
+import java.util.Map;
+import javafx.scene.layout.VBox;
+
 
 import java.sql.SQLException;
 
 public class ManagerActivityDashboard {
+    @FXML private VBox occupancyLabelContainer;
 
     @FXML private TextField checkInUsernameField;
     @FXML private TextField checkOutUsernameField;
@@ -23,7 +27,7 @@ public class ManagerActivityDashboard {
     @FXML private Label northLabel;
 
     private DBManager dbManager;
-    private GymService gymService; // Optional: implement this if needed
+    private GymService gymService;
 
     @FXML
     private void initialize() {
@@ -32,7 +36,7 @@ public class ManagerActivityDashboard {
             dbManager.connect();
             gymService = new GymService(dbManager.getConnection());
 
-            handleRefreshOccupancy(); // Load initial occupancy stats
+            updateOccupancyDisplay(); // populate on load
 
         } catch (SQLException e) {
             showAlert("Database Error", "Could not connect to database.");
@@ -107,11 +111,31 @@ public class ManagerActivityDashboard {
 
     @FXML
     private void handleRefreshOccupancy() {
-        // TODO: Replace with DB query in future
-        afcLabel.setText("AFC: 32 users");
-        memorialLabel.setText("Memorial: 18 users");
-        northLabel.setText("North Grounds: 25 users");
+        updateOccupancyDisplay();
     }
+    private void updateOccupancyDisplay() {
+        try {
+            Map<String, Integer> rawCounts = gymService.getOccupancyForAllGyms();
+            Map<String, Double> pctMap = gymService.getOccupancyPctForAllGyms();
+            occupancyLabelContainer.getChildren().clear();
+
+        if (rawCounts.isEmpty()) {
+            occupancyLabelContainer.getChildren().add(new Label("No occupancy data available."));
+        } else {
+            for (String gym : rawCounts.keySet()) {
+                int count = rawCounts.getOrDefault(gym, 0);
+                double pct = pctMap.getOrDefault(gym, 0.0);
+                String display = String.format("%s: %d currently checked in (%.2f%% full)", gym, count, pct);
+                occupancyLabelContainer.getChildren().add(new Label(display));
+            }
+        }
+    } catch (SQLException e) {
+        occupancyLabelContainer.getChildren().clear();
+        occupancyLabelContainer.getChildren().add(new Label("Error loading occupancy data."));
+        e.printStackTrace();
+    }
+}
+
 
     private void showAlert(String title, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
