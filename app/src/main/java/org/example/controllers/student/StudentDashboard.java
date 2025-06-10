@@ -180,8 +180,29 @@ public class StudentDashboard implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-}
-    
+    }
+
+    @FXML
+    private void handleUpdateInfo() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/update-info.fxml"));
+            Parent root = loader.load();
+
+            UpdateInfoController controller = loader.getController();
+            controller.setCurrentEmail(studentEmail);
+
+            Stage stage = new Stage();
+            stage.setTitle("Update Your Info");
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void handleLogout() {

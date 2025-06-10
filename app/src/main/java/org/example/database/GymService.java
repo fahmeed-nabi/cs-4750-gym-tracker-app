@@ -148,19 +148,35 @@ public class GymService {
         return false; // gym not found or at capacity
     }
 
-    public boolean checkInStudent(int studentId, int gymId) throws SQLException {
+    public boolean checkInStudentWithFacilities(int studentId, int gymId, List<Facility> facilities) throws SQLException {
         if (!canStudentCheckIn(studentId, gymId)) return false;
 
-        String insert = "INSERT INTO CheckIn (StudentID, GymID, CheckInTime) VALUES (?, ?, CURRENT_TIMESTAMP)";
-        try (PreparedStatement stmt = connection.prepareStatement(insert)) {
-            stmt.setInt(1, studentId);
-            stmt.setInt(2, gymId);
-            if (stmt.executeUpdate() == 1) {
-                connection.commit();
-                return true;
+        String checkInSql = "INSERT INTO CheckIn (StudentID, GymID, CheckInTime) VALUES (?, ?, CURRENT_TIMESTAMP)";
+        String usageSql = "INSERT INTO FacilityUsage (FacilityID, StudentID, Timestamp) VALUES (?, ?, CURRENT_TIMESTAMP)";
+
+        try (
+                PreparedStatement checkInStmt = connection.prepareStatement(checkInSql);
+                PreparedStatement usageStmt = connection.prepareStatement(usageSql)
+        ) {
+            // Insert into CheckIn
+            checkInStmt.setInt(1, studentId);
+            checkInStmt.setInt(2, gymId);
+            checkInStmt.executeUpdate();
+
+            // Insert into FacilityUsage for each facility
+            for (Facility facility : facilities) {
+                usageStmt.setInt(1, facility.getFacilityId());
+                usageStmt.setInt(2, studentId);
+                usageStmt.addBatch();
             }
+            usageStmt.executeBatch();
+
+            connection.commit();
+            return true;
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
         }
-        return false;
     }
 
     public boolean checkOutStudent(int studentId) throws SQLException {
@@ -178,6 +194,7 @@ public class GymService {
         }
         return false;
     }
+
     public int getStudentIdByUsername(String username) throws SQLException {
         String query = "SELECT StudentID FROM Student WHERE Username = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {

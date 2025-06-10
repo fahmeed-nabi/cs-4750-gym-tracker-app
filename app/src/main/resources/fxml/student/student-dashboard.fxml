@@ -37,6 +37,7 @@
             <Button text="Manage Classes" onAction="#handleManageClasses" styleClass="nav-button"/>
             <Button text="Trainer Appointments" onAction="#handleManageTrainerAppointments" styleClass="nav-button"/>
             <Button text="Check Into Gym" onAction="#handleCheckIn" styleClass="nav-button"/>
+            <Button text="Update Student Information" onAction="#handleUpdateInfo" styleClass="nav-button"/>
         </VBox>
 
         <Separator style="-fx-background-color: #ccc;" />

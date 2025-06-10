@@ -16,7 +16,7 @@
     </padding>
 
     <!-- Check-In Message -->
-    <Label text="Please see front desk attendant to check into gym"
+    <Label text="Please see front desk attendant to check in and check out of a gym"
            style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e; -fx-wrap-text: true;"
            wrapText="true"
            maxWidth="600"/>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.student.UpdateInfoController"
+      alignment="CENTER"
+      spacing="20"
+      style="-fx-background-color: #f4f6f9;">
+
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <Label text="Update Your Information"
+           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+    <TextField fx:id="nameField" promptText="Full Name" prefWidth="300"/>
+    <TextField fx:id="emailField" promptText="Email" prefWidth="300"/>
+    <PasswordField fx:id="passwordField" promptText="New Password" prefWidth="300"/>
+
+    <Label fx:id="statusLabel" textFill="red" />
+
+    <HBox spacing="15" alignment="CENTER">
+        <Button text="Update Info" onAction="#handleUpdate" styleClass="primary-button"/>
+        <Button text="Close" onAction="#handleClose" styleClass="secondary-button"/>
+    </HBox>
+</VBox>

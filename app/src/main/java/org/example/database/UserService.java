@@ -87,4 +87,31 @@ public class UserService {
         }
         return null; // not found
     }
+
+    public boolean updateStudentInfo(String currentEmail, String newName, String newEmail, String newPassword) throws SQLException {
+        if (currentEmail == null || newEmail == null || newPassword == null || newName == null) {
+            return false;
+        }
+
+        String[] nameParts = newName.trim().split("\\s+", 2);
+        String firstName = nameParts.length > 0 ? nameParts[0] : "";
+        String lastName = nameParts.length > 1 ? nameParts[1] : "";
+
+        String query = """
+        UPDATE Student
+        SET FirstName = ?, LastName = ?, Email = ?, Password = ?
+        WHERE Email = ?
+    """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+            stmt.setString(3, newEmail);
+            stmt.setString(4, newPassword);
+            stmt.setString(5, currentEmail);
+
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+        }
+    }
 }

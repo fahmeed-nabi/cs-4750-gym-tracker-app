@@ -165,6 +165,10 @@ public class ManagerDashboard implements Initializable {
         }
     }
 
+    @FXML
+    private void handleRefreshOccupancy() {
+        updateOccupancyDisplay();
+    }
 
     @FXML
     private void handleManageClasses() {

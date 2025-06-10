@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -7,14 +6,12 @@
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.controllers.admin.ManagerActivityDashboard"
             fitToWidth="true">
-
     <content>
         <VBox spacing="20">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
 
-            <!-- Title -->
             <Label text="Occupancy Dashboard" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
 
             <!-- Check-In Panel -->
@@ -23,13 +20,22 @@
                     <padding>
                         <Insets top="10" right="10" bottom="10" left="10"/>
                     </padding>
-                    <TextField fx:id="checkInUsernameField" promptText="Enter username"/>
-                    <Label text="Select activity:" />
-                    <CheckBox fx:id="weightLiftingBox" text="Weight Lifting"/>
-                    <CheckBox fx:id="cardioBox" text="Cardio"/>
-                    <CheckBox fx:id="poolBox" text="Pool"/>
-                    <CheckBox fx:id="sportsBox" text="Basketball/Other Sports"/>
-                    <CheckBox fx:id="classBox" text="Group Fitness Class"/>
+
+                    <TextField fx:id="checkInUsernameField" promptText="Enter email or username"/>
+
+                    <HBox spacing="10">
+                        <Label text="Select Gym:" />
+                        <ComboBox fx:id="gymComboBox" prefWidth="250"/>
+                    </HBox>
+
+                    <Label text="Select Facilities:" />
+                    <TableView fx:id="facilityTable" prefHeight="200">
+                        <columns>
+                            <TableColumn fx:id="nameColumn" text="Facility Name" prefWidth="250"/>
+                            <TableColumn fx:id="maxUsersColumn" text="Max Concurrent Users" prefWidth="200"/>
+                        </columns>
+                    </TableView>
+
                     <Button text="Check In" onAction="#handleCheckIn"/>
                 </VBox>
             </TitledPane>
@@ -45,7 +51,7 @@
                 </VBox>
             </TitledPane>
 
-            <!-- Occupancy Panel -->
+            <!-- Occupancy Display -->
             <TitledPane text="Current Gym Occupancy" expanded="false">
                 <VBox spacing="10">
                     <padding>
@@ -56,9 +62,8 @@
                 </VBox>
             </TitledPane>
 
-            <!-- Facility Occupancy by Gym -->
+            <!-- Facility Usage Display -->
             <VBox fx:id="gymFacilityPaneContainer" spacing="10"/>
-
         </VBox>
     </content>
 </ScrollPane>
