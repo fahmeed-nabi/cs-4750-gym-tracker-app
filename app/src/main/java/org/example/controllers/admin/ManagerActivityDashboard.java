@@ -28,7 +28,6 @@ public class ManagerActivityDashboard {
 
     private DBManager dbManager;
     private GymService gymService;
-    private GymService gymService;
 
     @FXML
     private void initialize() {
