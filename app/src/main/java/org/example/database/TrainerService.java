@@ -42,6 +42,105 @@ public class TrainerService {
         return trainers;
     }
 
+    public boolean addTrainer(String firstName, String lastName, String email, String password) throws SQLException {
+        String insert = "INSERT INTO Trainer (FirstName, LastName, Email, Password) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(insert)) {
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+            stmt.setString(3, email);
+            stmt.setString(4, password);
+            int rows = stmt.executeUpdate();
+            if (rows == 1) {
+                connection.commit();
+                return true;
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        }
+
+        return false;
+    }
+
+    public boolean deleteTrainer(int trainerId) throws SQLException {
+        String delete = "DELETE FROM Trainer WHERE TrainerID = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(delete)) {
+            stmt.setInt(1, trainerId);
+            int rows = stmt.executeUpdate();
+            if (rows == 1) {
+                connection.commit();
+                return true;
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        }
+
+        return false;
+    }
+
+    public boolean updateTrainerSpecialty(int trainerId, String oldSpecialty, String newSpecialty) throws SQLException {
+        connection.setAutoCommit(false);
+
+        try {
+            // Ensure new specialty exists or insert it
+            String insertNew = """
+            INSERT INTO Specialty (Name)
+            SELECT * FROM (SELECT ?) AS tmp
+            WHERE NOT EXISTS (SELECT 1 FROM Specialty WHERE Name = ?)
+            LIMIT 1
+        """;
+            try (PreparedStatement stmt = connection.prepareStatement(insertNew)) {
+                stmt.setString(1, newSpecialty);
+                stmt.setString(2, newSpecialty);
+                stmt.executeUpdate();
+            }
+
+            // Get IDs for old and new specialties
+            int oldId = -1, newId = -1;
+            String selectId = "SELECT SpecialtyID FROM Specialty WHERE Name = ?";
+            try (PreparedStatement stmt = connection.prepareStatement(selectId)) {
+                stmt.setString(1, oldSpecialty);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) oldId = rs.getInt("SpecialtyID");
+            }
+
+            try (PreparedStatement stmt = connection.prepareStatement(selectId)) {
+                stmt.setString(1, newSpecialty);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) newId = rs.getInt("SpecialtyID");
+            }
+
+            if (oldId == -1 || newId == -1) return false;
+
+            // Update the TrainerSpecialty entry
+            String update = """
+            UPDATE TrainerSpecialty
+            SET SpecialtyID = ?
+            WHERE TrainerID = ? AND SpecialtyID = ?
+        """;
+
+            try (PreparedStatement stmt = connection.prepareStatement(update)) {
+                stmt.setInt(1, newId);
+                stmt.setInt(2, trainerId);
+                stmt.setInt(3, oldId);
+                int rows = stmt.executeUpdate();
+                if (rows == 1) {
+                    connection.commit();
+                    return true;
+                }
+            }
+
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        }
+
+        return false;
+    }
+
     public boolean isTrainerAvailable(int trainerId, LocalDate date, LocalTime start, LocalTime end) throws SQLException {
         String dayOfWeek = date.getDayOfWeek().toString().substring(0, 1).toUpperCase() +
                 date.getDayOfWeek().toString().substring(1, 3).toLowerCase(); // 'Mon', 'Tue', etc.

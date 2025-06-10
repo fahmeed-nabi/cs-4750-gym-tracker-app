@@ -51,6 +51,20 @@ public class InstructorManager {
         focusColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFocusArea()));
 
         instructorTable.setItems(instructorList);
+
+        instructorTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
+            if (newSel != null) {
+                populateFields(newSel);
+            }
+        });
+    }
+
+    private void populateFields(Instructor instructor) {
+        firstNameField.setText(instructor.getFirstName());
+        lastNameField.setText(instructor.getLastName());
+        emailField.setText(instructor.getEmail());
+        certificationField.setText(instructor.getCertification());
+        focusAreaField.setText(instructor.getFocusArea());
     }
 
     @FXML
@@ -72,12 +86,7 @@ public class InstructorManager {
             if (success) {
                 instructorList.clear();
                 instructorList.addAll(instructorService.getAllInstructors());
-
-                firstNameField.clear();
-                lastNameField.clear();
-                emailField.clear();
-                certificationField.clear();
-                focusAreaField.clear();
+                clearFields();
             } else {
                 showAlert("Insert Failed", "Could not add instructor.");
             }
@@ -87,6 +96,86 @@ public class InstructorManager {
         }
     }
 
+    @FXML
+    public void handleDeleteInstructor(ActionEvent actionEvent) {
+        Instructor selected = instructorTable.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            showAlert("No Selection", "Please select an instructor to delete.");
+            return;
+        }
+
+        try {
+            boolean deleted = instructorService.deleteInstructor(selected.getInstructorId());
+
+            if (deleted) {
+                dbManager.commit();
+                instructorList.remove(selected);
+                clearFields();
+                showAlert("Success", "Instructor deleted successfully.");
+            } else {
+                showAlert("Delete Failed", "Could not delete instructor from the database.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Database Error", "An error occurred while deleting the instructor.");
+            try {
+                dbManager.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    public void handleUpdateInstructor() {
+        Instructor selected = instructorTable.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            showAlert("No Selection", "Please select an instructor to update.");
+            return;
+        }
+
+        String firstName = firstNameField.getText().trim();
+        String lastName = lastNameField.getText().trim();
+        String email = emailField.getText().trim();
+        String certification = certificationField.getText().trim();
+        String focusArea = focusAreaField.getText().trim();
+
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()
+                || certification.isEmpty() || focusArea.isEmpty()) {
+            showAlert("Input Error", "Please fill in all fields.");
+            return;
+        }
+
+        try {
+            boolean success = instructorService.updateInstructor(
+                    selected.getInstructorId(), firstName, lastName, email, certification, focusArea
+            );
+
+            if (success) {
+                instructorList.clear();
+                instructorList.addAll(instructorService.getAllInstructors());
+                clearFields();
+                showAlert("Update Successful", "Instructor updated successfully.");
+            } else {
+                showAlert("Update Failed", "Could not update instructor.");
+            }
+        } catch (SQLException e) {
+            showAlert("Database Error", "Failed to update instructor.");
+            e.printStackTrace();
+        }
+    }
+
+    private void clearFields() {
+        firstNameField.clear();
+        lastNameField.clear();
+        emailField.clear();
+        certificationField.clear();
+        focusAreaField.clear();
+    }
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -94,7 +183,4 @@ public class InstructorManager {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-    
-
 }

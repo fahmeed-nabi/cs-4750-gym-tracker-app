@@ -12,7 +12,11 @@ import javafx.stage.Stage;
 import org.example.database.DBManager;
 import org.example.database.GymService;
 import org.example.database.UserService;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
+
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -159,27 +163,26 @@ public class ManagerDashboard implements Initializable {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void handleManageTrainers() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/trainer-manager.fxml"));
             Parent root = loader.load();
 
-            // Optionally get the controller if you want to pass data:
-            TrainerManager controller = loader.getController();
-            // controller.setSomeData(...);
+            TrainerManagerController controller = loader.getController();
+            // Optionally pass any dependencies to controller here
 
             Stage stage = new Stage();
             stage.setTitle("Manage Trainers");
             stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL); // Optional: blocks until closed
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(true);
             stage.show();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 }
-
-
 
     @FXML private void handleManageInstructors() {
         try {
@@ -197,8 +200,8 @@ public class ManagerDashboard implements Initializable {
             stage.setResizable(true);
             stage.show();
     } catch (Exception e) {
-        e.printStackTrace();
-    }
+            e.printStackTrace();
+        }
     }
 
     @FXML private void handleManageActivity() {
