@@ -115,7 +115,18 @@ public class ManagerDashboard implements Initializable {
     }
 
     @FXML private void handleManageStudents() {
-        openWindow("student-manager.fxml", "Manage Students");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/student-manager.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Manage Students");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 
     @FXML private void handleManageGyms() {
