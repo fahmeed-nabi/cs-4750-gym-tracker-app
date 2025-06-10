@@ -41,6 +41,21 @@
     -fx-effect: dropshadow(three-pass-box, rgba(41,121,255,0.2), 6, 0.0, 0, 0);
 }
 
+.combo-box:editable .text-field {
+    -fx-background-color: white;
+    -fx-border-width: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 4 6;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-background-radius: 6;
+}
+
+.combo-box:editable .text-field:focused {
+    -fx-border-color: transparent;
+    -fx-background-color: white;
+}
+
 .nav-button {
     -fx-background-color: #ffffff;
     -fx-border-color: #cccccc;

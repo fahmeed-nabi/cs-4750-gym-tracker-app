@@ -7,23 +7,34 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.controllers.trainer.RescheduleAppointment"
-      spacing="10" alignment="TOP_LEFT">
+      alignment="CENTER"
+      spacing="20"
+      style="-fx-background-color: #f4f6f9;">
 
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="40" right="40" bottom="40" left="40"/>
     </padding>
 
-    <Label fx:id="infoLabel" style="-fx-font-size: 14px;"/>
+    <!-- Info Label -->
+    <Label fx:id="infoLabel"
+           wrapText="true"
+           maxWidth="500"
+           style="-fx-font-size: 16px; -fx-text-fill: #2e3b4e;" />
 
-    <DatePicker fx:id="datePicker" promptText="Select New Date"/>
+    <!-- Date Picker -->
+    <DatePicker fx:id="datePicker"
+                promptText="Select New Date"
+                prefWidth="250"/>
 
-    <HBox spacing="10">
-        <TextField fx:id="startField" promptText="Start Time (HH:MM)"/>
-        <TextField fx:id="endField" promptText="End Time (HH:MM)"/>
+    <!-- Time Fields -->
+    <HBox spacing="15" alignment="CENTER">
+        <TextField fx:id="startField" promptText="Start Time (HH:MM)" prefWidth="120"/>
+        <TextField fx:id="endField" promptText="End Time (HH:MM)" prefWidth="120"/>
     </HBox>
 
-    <HBox spacing="10">
-        <Button text="Save Changes" onAction="#handleSave"/>
-        <Button text="Cancel" onAction="#handleCancel"/>
+    <!-- Action Buttons -->
+    <HBox spacing="15" alignment="CENTER">
+        <Button text="Save Changes" onAction="#handleSave" styleClass="primary-button" prefWidth="140"/>
+        <Button text="Cancel" onAction="#handleCancel" styleClass="secondary-button" prefWidth="140"/>
     </HBox>
 </VBox>

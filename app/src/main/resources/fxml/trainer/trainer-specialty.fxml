@@ -7,24 +7,32 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.controllers.trainer.TrainerSpecialtyController"
-      spacing="15" alignment="TOP_CENTER">
+      spacing="25"
+      alignment="TOP_CENTER"
+      style="-fx-background-color: #f4f6f9;">
 
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="40" right="40" bottom="40" left="40"/>
     </padding>
 
-    <Label text="Manage Your Specialties" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <!-- Header -->
+    <Label text="Manage Your Specialties"
+           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
 
-    <HBox spacing="10">
-        <ComboBox fx:id="specialtyComboBox" promptText="Select Specialty"/>
-        <Button text="Add Specialty" onAction="#handleAdd"/>
+    <!-- Add Specialty -->
+    <HBox spacing="15" alignment="CENTER">
+        <ComboBox fx:id="specialtyComboBox" promptText="Select Specialty" prefWidth="300"/>
+        <Button text="Add Specialty" onAction="#handleAdd" styleClass="primary-button" prefWidth="150"/>
     </HBox>
 
-    <TableView fx:id="specialtyTable" prefWidth="400">
+    <!-- Specialty Table -->
+    <TableView fx:id="specialtyTable" prefWidth="500"
+               style="-fx-background-radius: 8; -fx-border-color: #ccc; -fx-border-radius: 8;">
         <columns>
-            <TableColumn fx:id="specialtyColumn" text="Specialty" prefWidth="300" />
+            <TableColumn fx:id="specialtyColumn" text="Specialty" prefWidth="480" />
         </columns>
     </TableView>
 
-    <Button text="Remove Selected" onAction="#handleRemove"/>
+    <!-- Remove Button -->
+    <Button text="Remove Selected" onAction="#handleRemove" styleClass="secondary-button" prefWidth="200"/>
 </VBox>

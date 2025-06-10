@@ -80,22 +80,6 @@ public class TrainerDashboard implements Initializable {
         loadDashboardDetails();
     }
 
-    private void openModal(String fxml, String title) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + fxml));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle(title);
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UTILITY);
-            stage.setResizable(true);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     private void handleViewAppointments() {
         try {
@@ -107,7 +91,9 @@ public class TrainerDashboard implements Initializable {
 
             Stage stage = new Stage();
             stage.setTitle("Your Appointments");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UTILITY);
             stage.setResizable(true);
@@ -116,7 +102,6 @@ public class TrainerDashboard implements Initializable {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     private void handleUpdateAvailability() {
@@ -129,7 +114,9 @@ public class TrainerDashboard implements Initializable {
 
             Stage stage = new Stage();
             stage.setTitle("Update Availability");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root, 800, 600);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(true);
             stage.show();
@@ -137,7 +124,6 @@ public class TrainerDashboard implements Initializable {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     private void handleLogout() {
@@ -167,7 +153,9 @@ public class TrainerDashboard implements Initializable {
 
             Stage stage = new Stage();
             stage.setTitle("Manage Specialty");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(true);
             stage.show();
@@ -187,7 +175,9 @@ public class TrainerDashboard implements Initializable {
 
             Stage stage = new Stage();
             stage.setTitle("Appointment History");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
