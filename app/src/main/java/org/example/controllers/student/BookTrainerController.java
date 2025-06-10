@@ -169,7 +169,9 @@ public class BookTrainerController {
             controller.setStudentEmail(studentEmail);
 
             Stage stage = (Stage) trainerComboBox.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 700));
+            Scene scene = new Scene(root, 800, 700);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.setTitle("Manage Trainer Appointments");
             stage.show();
         } catch (IOException e) {

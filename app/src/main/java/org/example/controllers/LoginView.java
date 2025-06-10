@@ -16,6 +16,7 @@ import org.example.database.DBManager;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class LoginView implements Initializable {
@@ -139,7 +140,10 @@ public class LoginView implements Initializable {
 
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.setTitle(title);
-            stage.setScene(new Scene(root, 800, 700));
+            Scene scene = new Scene(root, 800, 700);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
+            stage.setResizable(true);
             stage.show();
         } catch (IOException e) {
             errorLabel.setText("Could not load " + title);
@@ -154,7 +158,9 @@ public class LoginView implements Initializable {
 
             Stage stage = new Stage();
             stage.setTitle("Create Account");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

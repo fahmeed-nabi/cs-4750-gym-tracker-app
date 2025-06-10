@@ -7,24 +7,32 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.example.controllers.trainer.UpdateAvailabilityController"
-      spacing="10" alignment="TOP_CENTER">
+      spacing="25"
+      alignment="TOP_CENTER"
+      style="-fx-background-color: #f4f6f9;">
 
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="40" right="40" bottom="40" left="40"/>
     </padding>
 
-    <Label text="Set Weekly Availability" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <!-- Header -->
+    <Label text="Set Weekly Availability"
+           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
 
-    <ScrollPane fitToWidth="true" fitToHeight="true" maxHeight="600">
-        <GridPane fx:id="calendarGrid" hgap="5" vgap="5" style="-fx-background-color: #f0f0f0;">
+    <!-- Availability Grid -->
+    <ScrollPane fitToWidth="true" maxHeight="600"
+                style="-fx-background: white; -fx-border-color: #ccc; -fx-border-radius: 8; -fx-background-radius: 8;">
+        <GridPane fx:id="calendarGrid" hgap="8" vgap="8"
+                  style="-fx-padding: 20; -fx-background-color: #f9f9f9;">
             <padding>
                 <Insets top="10" left="10" right="10" bottom="10"/>
             </padding>
         </GridPane>
     </ScrollPane>
 
-    <HBox spacing="10">
-        <Button text="Save Availability" onAction="#handleSave" />
-        <Button text="Close" onAction="#handleClose" />
+    <!-- Action Buttons -->
+    <HBox spacing="15" alignment="CENTER">
+        <Button text="Save Availability" onAction="#handleSave" styleClass="primary-button" prefWidth="160"/>
+        <Button text="Close" onAction="#handleClose" styleClass="secondary-button" prefWidth="160"/>
     </HBox>
 </VBox>

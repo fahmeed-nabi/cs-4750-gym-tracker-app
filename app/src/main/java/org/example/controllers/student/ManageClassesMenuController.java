@@ -13,6 +13,7 @@ import org.example.database.UserService;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class ManageClassesMenuController {
 
@@ -61,6 +62,7 @@ public class ManageClassesMenuController {
             controller.setDependencies(classService, userService, studentId, studentEmail);
 
             Scene newScene = new Scene(root, 1100, 700);
+            newScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
             Stage stage = getStage(event);
             stage.setTitle("Upcoming Classes");
             stage.setScene(newScene);
@@ -90,7 +92,8 @@ public class ManageClassesMenuController {
             RegisteredClassesController controller = loader.getController();
             controller.setDependencies(classService, userService, studentId, studentEmail);
 
-            Scene newScene = new Scene(root, 1000, 650); // Adjusted window size
+            Scene newScene = new Scene(root, 1000, 650);
+            newScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
             Stage stage = getStage(event);
             stage.setTitle("My Registered Classes");
             stage.setScene(newScene);
@@ -121,6 +124,7 @@ public class ManageClassesMenuController {
             controller.setDependencies(classService, userService, studentId, studentEmail);
 
             Scene newScene = new Scene(root, 1000, 600);
+            newScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("Class Attendance History");
             stage.setScene(newScene);
@@ -142,7 +146,9 @@ public class ManageClassesMenuController {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("Student Dashboard");
-            stage.setScene(new Scene(root, 800, 700));
+            Scene scene = new Scene(root, 800, 700);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

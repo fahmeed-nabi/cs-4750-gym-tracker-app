@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.ReportsMenuController"
+            prefWidth="1000" prefHeight="700"
+            style="-fx-background-color: #f4f6f9;">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox alignment="CENTER_LEFT" style="-fx-background-color: #2e3b4e; -fx-padding: 20;">
+            <Label text="Reports and Trends"
+                   style="-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;" />
+        </HBox>
+    </top>
+
+    <!-- Sidebar -->
+    <left>
+        <VBox spacing="15" alignment="TOP_CENTER"
+              style="-fx-background-color: #e8ecf1; -fx-padding: 20;" prefWidth="220">
+            <Label text="Report Types" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+            <Button text="Facility Usage Reports"
+                    onAction="#handleFacilityReports"
+                    maxWidth="Infinity"
+                    styleClass="nav-button" />
+
+            <Button text="Gym Reports"
+                    onAction="#handleGymReports"
+                    maxWidth="Infinity"
+                    styleClass="nav-button" />
+
+            <Button text="Class Reports"
+                    onAction="#handleClassReports"
+                    maxWidth="Infinity"
+                    styleClass="nav-button" />
+
+            <Button text="Trainer Reports"
+                    onAction="#handleTrainerReports"
+                    maxWidth="Infinity"
+                    styleClass="nav-button" />
+        </VBox>
+    </left>
+
+    <!-- Main Display Panel -->
+    <center>
+        <StackPane fx:id="reportContentPane"
+                   style="-fx-background-color: #ffffff; -fx-padding: 30; -fx-border-radius: 8; -fx-background-radius: 8; -fx-border-color: #cccccc;">
+            <Label text="Select a report type from the left panel to view data."
+                   style="-fx-font-size: 16px; -fx-text-fill: #555555;" />
+        </StackPane>
+    </center>
+</BorderPane>
