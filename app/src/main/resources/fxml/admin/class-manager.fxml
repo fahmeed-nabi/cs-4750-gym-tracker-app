@@ -4,57 +4,74 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.controllers.admin.ClassManagerController"
-      spacing="15" alignment="TOP_CENTER">
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.ClassManagerController"
+            fitToWidth="true"
+            style="-fx-background: #f4f6f9;">
 
-    <padding>
-        <Insets top="20" right="30" bottom="20" left="30"/>
-    </padding>
+    <VBox spacing="25" alignment="TOP_CENTER" style="-fx-background-color: #f4f6f9;">
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
 
-    <Label text="Manage Upcoming Classes" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <!-- Title -->
+        <Label text="Manage Upcoming Classes"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
 
-    <GridPane hgap="10" vgap="10">
-        <columnConstraints>
-            <ColumnConstraints halignment="RIGHT"/>
-            <ColumnConstraints hgrow="ALWAYS"/>
-        </columnConstraints>
+        <!-- Form Section -->
+        <VBox spacing="20" alignment="CENTER_LEFT"
+              style="-fx-background-color: white; -fx-padding: 25; -fx-border-color: #ddd; -fx-background-radius: 6; -fx-border-radius: 6;"
+              maxWidth="700">
 
-        <Label text="Class Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="classNameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <GridPane hgap="15" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
 
-        <Label text="Start Date:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="startDatePicker" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Class Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="classNameField" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="250"/>
 
-        <Label text="Start Time (HH:mm):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="startTimeField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="Start Date:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="startDatePicker" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="250"/>
 
-        <Label text="End Date:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="endDatePicker" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <Label text="Start Time (HH:mm):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="startTimeField" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="250"/>
 
-        <Label text="End Time (HH:mm):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <TextField fx:id="endTimeField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <Label text="End Date:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="endDatePicker" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="250"/>
 
-        <Label text="Available Spots:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-        <TextField fx:id="availableSpotsField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                <Label text="End Time (HH:mm):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="endTimeField" GridPane.rowIndex="4" GridPane.columnIndex="1" prefWidth="250"/>
 
-        <Label text="Gym:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="gymComboBox" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                <Label text="Available Spots:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <TextField fx:id="availableSpotsField" GridPane.rowIndex="5" GridPane.columnIndex="1" prefWidth="250"/>
 
-        <Label text="Instructor:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="instructorComboBox" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-    </GridPane>
+                <Label text="Gym:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="gymComboBox" GridPane.rowIndex="6" GridPane.columnIndex="1" prefWidth="250"/>
 
-    <HBox spacing="10">
-        <Button text="Create Class" onAction="#handleCreateClass"/>
-        <Button text="Update Class" onAction="#handleUpdateClass"/>
-        <Button text="Clear Form" onAction="#handleClearForm"/>
-        <Button text="Delete Class" onAction="#handleDeleteClass"/>
-    </HBox>
+                <Label text="Instructor:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="instructorComboBox" GridPane.rowIndex="7" GridPane.columnIndex="1" prefWidth="250"/>
+            </GridPane>
 
-    <Separator/>
+            <!-- Buttons -->
+            <HBox spacing="15" alignment="CENTER">
+                <Button text="Create Class" onAction="#handleCreateClass" styleClass="primary-button" prefWidth="140"/>
+                <Button text="Update Class" onAction="#handleUpdateClass" styleClass="primary-button" prefWidth="140"/>
+                <Button text="Clear Form" onAction="#handleClearForm" styleClass="secondary-button" prefWidth="140"/>
+                <Button text="Delete Class" onAction="#handleDeleteClass" styleClass="secondary-button" prefWidth="140"/>
+            </HBox>
+        </VBox>
 
-    <Label text="Upcoming Classes" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-    <ListView fx:id="classListView" prefHeight="250" prefWidth="500"/>
-</VBox>
+        <Separator style="-fx-background-color: #ccc;" />
+
+        <!-- Class List -->
+        <Label text="Upcoming Classes"
+               style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;" />
+
+        <ListView fx:id="classListView"
+                  prefHeight="300" prefWidth="700"
+                  style="-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 6; -fx-background-radius: 6;" />
+    </VBox>
+</ScrollPane>

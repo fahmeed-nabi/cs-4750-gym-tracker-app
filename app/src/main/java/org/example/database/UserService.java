@@ -115,8 +115,12 @@ public class UserService {
             stmt.setString(5, currentEmail);
 
             int rows = stmt.executeUpdate();
-            return rows > 0;
+            if (rows > 0) {
+                connection.commit();
+                return true;
+            }
         }
+        return false;
     }
 
     public List<Student> getAllStudents() throws SQLException {
@@ -133,21 +137,31 @@ public class UserService {
         }
     }
 
-    return students;
-}
+        return students;
+    }
+
     public boolean deleteStudentById(int studentId) throws SQLException {
         String query = "DELETE FROM Student WHERE StudentID = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, studentId);
-            return stmt.executeUpdate() == 1;
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
+        }
+        return false;
     }
-}
+
     public boolean deleteStudentByEmail(String email) throws SQLException {
         String query = "DELETE FROM Student WHERE Email = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, email);
-            return stmt.executeUpdate() == 1;
+            if (stmt.executeUpdate() == 1) {
+                connection.commit();
+                return true;
+            }
+        }
+        return false;
     }
-}
 
 }

@@ -121,7 +121,9 @@ public class ManagerDashboard implements Initializable {
 
             Stage stage = new Stage();
             stage.setTitle("Manage Students");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.show();
 
     } catch (Exception e) {
@@ -134,13 +136,11 @@ public class ManagerDashboard implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/gym-manager.fxml"));
             Parent root = loader.load();
 
-            // If you want to access the controller:
-            GymManager controller = loader.getController();
-            // You can pass data to the controller here if needed.
-
             Stage stage = new Stage();
             stage.setTitle("Manage Gyms");
-            stage.setScene(new Scene(root, 300, 450));
+            Scene scene = new Scene(root, 700, 475);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(true);
             stage.show();
@@ -156,12 +156,11 @@ public class ManagerDashboard implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/facility-manager.fxml"));
             Parent root = loader.load();
 
-            // Get the controller instance and inject connection/service if needed
-            FacilityManager controller = loader.getController();
-
             Stage stage = new Stage();
             stage.setTitle("Manage Facilities");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(true);
             stage.show();
@@ -187,12 +186,11 @@ public class ManagerDashboard implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/class-manager.fxml"));
             Parent root = loader.load();
 
-            ClassManagerController controller = loader.getController();
-            // You can call any controller method here if needed (e.g., controller.setManagerEmail(...))
-
             Stage stage = new Stage();
             stage.setTitle("Manage Classes");
-            stage.setScene(new Scene(root, 1000, 700));
+            Scene scene = new Scene(root, 1000, 700);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(true);
             stage.show();
@@ -208,12 +206,11 @@ public class ManagerDashboard implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/trainer-manager.fxml"));
             Parent root = loader.load();
 
-            TrainerManagerController controller = loader.getController();
-            // Optionally pass any dependencies to controller here
-
             Stage stage = new Stage();
             stage.setTitle("Manage Trainers");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(true);
             stage.show();
@@ -227,13 +224,11 @@ public class ManagerDashboard implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/instructor-manager.fxml"));
             Parent root = loader.load();
 
-        // Access and inject state into controller
-            InstructorManager controller = loader.getController();
-            
-
             Stage stage = new Stage();
             stage.setTitle("Manage Instructors");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(true);
             stage.show();
@@ -248,7 +243,9 @@ public class ManagerDashboard implements Initializable {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Check-Ins and Occupancy");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root, 800, 600);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+            stage.setScene(scene);
             stage.show();
     } catch (IOException e) {
         e.printStackTrace();
@@ -285,9 +282,6 @@ public class ManagerDashboard implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/reports-menu.fxml"));
             Parent root = loader.load();
-
-            ReportsMenuController controller = loader.getController();
-            // You can pass any context if needed: e.g., controller.setManagerEmail(managerEmail);
 
             Stage stage = new Stage();
             stage.setTitle("Reports and Trends");

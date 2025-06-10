@@ -4,51 +4,60 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controllers.admin.FacilityManager">
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.FacilityManager"
+            fitToWidth="true"
+            style="-fx-background: #f4f6f9;">
 
-    <!-- Top: Gym selector and Refresh button -->
-    <top>
-        <HBox spacing="10">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
-            <Label text="Select Gym:" />
+    <VBox spacing="25" alignment="TOP_CENTER" style="-fx-background-color: #f4f6f9;">
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
+
+        <!-- Top: Gym Selector and Refresh -->
+        <HBox spacing="15" alignment="CENTER_LEFT"
+              style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #ddd; -fx-background-radius: 6; -fx-border-radius: 6;"
+              maxWidth="700">
+            <Label text="Select Gym:" style="-fx-font-size: 14px; -fx-text-fill: #333;" />
             <ComboBox fx:id="gymComboBox" prefWidth="200"/>
-            <Button text="Refresh" onAction="#onRefresh"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Refresh" onAction="#onRefresh" styleClass="primary-button" prefWidth="120"/>
         </HBox>
-    </top>
 
-    <!-- Center: Table of facilities -->
-    <center>
-        <TableView fx:id="facilityTable" prefHeight="400">
+        <!-- Facility Table -->
+        <TableView fx:id="facilityTable" prefHeight="350" prefWidth="700"
+                   style="-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 6; -fx-background-radius: 6;">
             <columns>
-                <TableColumn fx:id="nameColumn" text="Facility Name" prefWidth="250"/>
-                <TableColumn fx:id="maxUsersColumn" text="Max Concurrent Users" prefWidth="250"/>
+                <TableColumn fx:id="nameColumn" text="Facility Name" prefWidth="350"/>
+                <TableColumn fx:id="maxUsersColumn" text="Max Concurrent Users" prefWidth="350"/>
             </columns>
         </TableView>
-    </center>
 
-    <!-- Bottom: Form and action buttons -->
-    <bottom>
-        <VBox spacing="10">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
+        <!-- Form Section -->
+        <VBox spacing="20" alignment="CENTER_LEFT"
+              style="-fx-background-color: white; -fx-padding: 25; -fx-border-color: #ddd; -fx-background-radius: 6; -fx-border-radius: 6;"
+              maxWidth="700">
 
-            <GridPane hgap="10" vgap="10">
+            <GridPane hgap="15" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="160"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
                 <Label text="Facility Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <TextField fx:id="nameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <TextField fx:id="nameField" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="250"/>
 
                 <Label text="Max Concurrent Users:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <TextField fx:id="maxUsersField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <TextField fx:id="maxUsersField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="250"/>
             </GridPane>
 
-            <HBox spacing="10">
-                <Button text="Add" onAction="#onAdd"/>
-                <Button text="Update" onAction="#onUpdate"/>
-                <Button text="Delete" onAction="#onDelete"/>
-                <Button text="Clear" onAction="#onClear"/>
+            <!-- Action Buttons -->
+            <HBox spacing="15" alignment="CENTER">
+                <Button text="Add" onAction="#onAdd" styleClass="primary-button" prefWidth="120"/>
+                <Button text="Update" onAction="#onUpdate" styleClass="primary-button" prefWidth="120"/>
+                <Button text="Delete" onAction="#onDelete" styleClass="secondary-button" prefWidth="120"/>
+                <Button text="Clear" onAction="#onClear" styleClass="secondary-button" prefWidth="120"/>
             </HBox>
         </VBox>
-    </bottom>
-</BorderPane>
+    </VBox>
+</ScrollPane>
