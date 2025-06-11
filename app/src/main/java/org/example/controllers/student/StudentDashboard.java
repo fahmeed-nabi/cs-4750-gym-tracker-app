@@ -207,6 +207,7 @@ public class StudentDashboard implements Initializable {
     @FXML
     private void handleLogout() {
         try {
+            dbManager.disconnect();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login-screen.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();

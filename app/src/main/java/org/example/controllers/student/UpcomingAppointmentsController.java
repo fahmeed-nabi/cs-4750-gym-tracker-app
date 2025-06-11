@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.example.database.DBManager;
 import org.example.database.TrainerService;
 import org.example.database.UserService;
 import org.example.models.TrainerAppointment;

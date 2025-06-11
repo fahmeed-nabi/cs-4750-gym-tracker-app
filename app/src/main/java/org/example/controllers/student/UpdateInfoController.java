@@ -20,14 +20,15 @@ public class UpdateInfoController implements Initializable {
     @FXML private Label statusLabel;
 
     private String currentEmail;
+    private DBManager dbManager;
     private UserService userService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            DBManager db = new DBManager();
-            db.connect();
-            Connection conn = db.getConnection();
+            dbManager = new DBManager();
+            dbManager.connect();
+            Connection conn = dbManager.getConnection();
             userService = new UserService(conn);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,6 +67,11 @@ public class UpdateInfoController implements Initializable {
 
     @FXML
     private void handleClose() {
+        try {
+            dbManager.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Stage stage = (Stage) nameField.getScene().getWindow();
         stage.close();
     }
