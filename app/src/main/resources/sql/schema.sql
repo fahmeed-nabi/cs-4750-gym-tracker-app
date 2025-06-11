@@ -1,29 +1,26 @@
-USE railway;
-
 -- Gym Table
 CREATE TABLE IF NOT EXISTS Gym (
-                                   GymID INT PRIMARY KEY,
-                                   Name VARCHAR(100) NOT NULL,
-                                   MaxCapacity INT NOT NULL CHECK (MaxCapacity > 0)
+                                   GymID TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                   Name VARCHAR(60) NOT NULL,
+                                   MaxCapacity SMALLINT UNSIGNED NOT NULL CHECK (MaxCapacity > 0)
 );
 
 -- Facility Table
 CREATE TABLE IF NOT EXISTS Facility (
-                                        FacilityID INT PRIMARY KEY AUTO_INCREMENT,
-                                        Name VARCHAR(100) NOT NULL,
-                                        MaxConcurrentUsers INT NOT NULL CHECK (MaxConcurrentUsers > 0),
-                                        GymID INT,
+                                        FacilityID TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                        Name VARCHAR(60) NOT NULL,
+                                        MaxConcurrentUsers TINYINT UNSIGNED NOT NULL CHECK (MaxConcurrentUsers > 0),
+                                        GymID TINYINT UNSIGNED,
                                         FOREIGN KEY (GymID) REFERENCES Gym(GymID)
-                                            ON DELETE CASCADE
-                                            ON UPDATE CASCADE,
+                                            ON DELETE CASCADE ON UPDATE CASCADE,
                                         UNIQUE(Name, GymID)
 );
 
 -- Instructor Table
 CREATE TABLE IF NOT EXISTS Instructor (
-                                          InstructorID INT PRIMARY KEY AUTO_INCREMENT,
-                                          FirstName VARCHAR(100) NOT NULL,
-                                          LastName VARCHAR(100) NOT NULL,
+                                          InstructorID SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                          FirstName VARCHAR(50) NOT NULL,
+                                          LastName VARCHAR(50) NOT NULL,
                                           Email VARCHAR(100),
                                           Certification VARCHAR(100),
                                           FocusArea VARCHAR(100)
@@ -31,142 +28,127 @@ CREATE TABLE IF NOT EXISTS Instructor (
 
 -- Class Table
 CREATE TABLE IF NOT EXISTS Class (
-                                     ClassID INT PRIMARY KEY AUTO_INCREMENT,
-                                     Name VARCHAR(100) NOT NULL,
+                                     ClassID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                     Name VARCHAR(60) NOT NULL,
                                      StartTime DATETIME NOT NULL,
-                                     EndTime DATETIME NOT NULL,
-                                     AvailableSpots INT NOT NULL,
-                                     GymID INT,
-                                     InstructorID INT,
+                                     EndTime DATETIME NOT NULL CHECK (EndTime > StartTime),
+                                     AvailableSpots SMALLINT UNSIGNED NOT NULL,
+                                     GymID TINYINT UNSIGNED,
+                                     InstructorID SMALLINT UNSIGNED,
                                      FOREIGN KEY (GymID) REFERENCES Gym(GymID)
-                                         ON DELETE CASCADE
-                                         ON UPDATE CASCADE,
+                                         ON DELETE CASCADE ON UPDATE CASCADE,
                                      FOREIGN KEY (InstructorID) REFERENCES Instructor(InstructorID)
-                                         ON DELETE CASCADE
-                                         ON UPDATE CASCADE,
-                                     CHECK (EndTime > StartTime)
+                                         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Student Table
 CREATE TABLE IF NOT EXISTS Student (
-                                       StudentID INT PRIMARY KEY AUTO_INCREMENT,
-                                       FirstName VARCHAR(100) NOT NULL,
-                                       LastName VARCHAR(100) NOT NULL,
+                                       StudentID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                       FirstName VARCHAR(50) NOT NULL,
+                                       LastName VARCHAR(50) NOT NULL,
                                        Email VARCHAR(100) NOT NULL,
-                                       Password VARCHAR(255) NOT NULL
+                                       Password VARCHAR(60) NOT NULL
 );
 
--- ClassAttendance Table (Bridge)
+-- ClassAttendance (Bridge)
 CREATE TABLE IF NOT EXISTS ClassAttendance (
-                                               ClassID INT,
-                                               StudentID INT,
+                                               ClassID INT UNSIGNED,
+                                               StudentID INT UNSIGNED,
                                                Date DATE NOT NULL,
                                                PRIMARY KEY (ClassID, StudentID),
                                                FOREIGN KEY (ClassID) REFERENCES Class(ClassID)
-                                                   ON DELETE CASCADE
-                                                   ON UPDATE CASCADE,
+                                                   ON DELETE CASCADE ON UPDATE CASCADE,
                                                FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
-                                                   ON DELETE CASCADE
-                                                   ON UPDATE CASCADE
+                                                   ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- CheckIn Table
 CREATE TABLE IF NOT EXISTS CheckIn (
-                                       CheckInID INT PRIMARY KEY AUTO_INCREMENT,
-                                       StudentID INT,
-                                       GymID INT,
+                                       CheckInID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                       StudentID INT UNSIGNED,
+                                       GymID TINYINT UNSIGNED,
                                        CheckInTime DATETIME NOT NULL,
                                        CheckOutTime DATETIME,
                                        FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
-                                           ON DELETE CASCADE
-                                           ON UPDATE CASCADE,
+                                           ON DELETE CASCADE ON UPDATE CASCADE,
                                        FOREIGN KEY (GymID) REFERENCES Gym(GymID)
-                                           ON DELETE CASCADE
-                                           ON UPDATE CASCADE,
+                                           ON DELETE CASCADE ON UPDATE CASCADE,
                                        CHECK (CheckOutTime IS NULL OR CheckOutTime > CheckInTime)
 );
 
 -- FacilityUsage Table
 CREATE TABLE IF NOT EXISTS FacilityUsage (
-                                             UsageID INT PRIMARY KEY AUTO_INCREMENT,
-                                             FacilityID INT,
-                                             StudentID INT,
+                                             FacilityID TINYINT UNSIGNED,
+                                             StudentID INT UNSIGNED,
                                              Timestamp DATETIME NOT NULL,
+                                             PRIMARY KEY (FacilityID, StudentID, Timestamp),
                                              FOREIGN KEY (FacilityID) REFERENCES Facility(FacilityID)
-                                                 ON DELETE CASCADE
-                                                 ON UPDATE CASCADE,
+                                                 ON DELETE CASCADE ON UPDATE CASCADE,
                                              FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
-                                                 ON DELETE CASCADE
-                                                 ON UPDATE CASCADE
+                                                 ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Trainer Table
 CREATE TABLE IF NOT EXISTS Trainer (
-                                       TrainerID INT PRIMARY KEY AUTO_INCREMENT,
-                                       FirstName VARCHAR(100) NOT NULL,
-                                       LastName VARCHAR(100) NOT NULL,
+                                       TrainerID SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                       FirstName VARCHAR(50) NOT NULL,
+                                       LastName VARCHAR(50) NOT NULL,
                                        Email VARCHAR(100),
-                                       Password VARCHAR(255) NOT NULL
+                                       Password VARCHAR(60) NOT NULL
 );
 
 -- Specialty Table
 CREATE TABLE IF NOT EXISTS Specialty (
-                                         SpecialtyID INT PRIMARY KEY AUTO_INCREMENT,
-                                         Name VARCHAR(100) NOT NULL
+                                         SpecialtyID TINYINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                         Name VARCHAR(60) NOT NULL
 );
 
--- TrainerSpecialty Table (Bridge)
+-- TrainerSpecialty (Bridge)
 CREATE TABLE IF NOT EXISTS TrainerSpecialty (
-                                                TrainerID INT,
-                                                SpecialtyID INT,
+                                                TrainerID SMALLINT UNSIGNED,
+                                                SpecialtyID TINYINT UNSIGNED,
                                                 PRIMARY KEY (TrainerID, SpecialtyID),
                                                 FOREIGN KEY (TrainerID) REFERENCES Trainer(TrainerID)
-                                                    ON DELETE CASCADE
-                                                    ON UPDATE CASCADE,
+                                                    ON DELETE CASCADE ON UPDATE CASCADE,
                                                 FOREIGN KEY (SpecialtyID) REFERENCES Specialty(SpecialtyID)
-                                                    ON DELETE CASCADE
-                                                    ON UPDATE CASCADE
+                                                    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- TrainerAvailability Table
+-- TrainerAvailability
 CREATE TABLE IF NOT EXISTS TrainerAvailability (
-                                                   AvailabilityID INT PRIMARY KEY AUTO_INCREMENT,
-                                                   TrainerID INT,
+                                                   AvailabilityID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                                   TrainerID SMALLINT UNSIGNED,
                                                    DayOfWeek ENUM('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun') NOT NULL,
                                                    StartTime TIME NOT NULL,
                                                    EndTime TIME NOT NULL,
                                                    FOREIGN KEY (TrainerID) REFERENCES Trainer(TrainerID)
-                                                       ON DELETE CASCADE
-                                                       ON UPDATE CASCADE,
+                                                       ON DELETE CASCADE ON UPDATE CASCADE,
                                                    CHECK (EndTime > StartTime)
 );
 
--- TrainerAppointment Table
+-- TrainerAppointment
 CREATE TABLE IF NOT EXISTS TrainerAppointment (
-                                                  AppointmentID INT PRIMARY KEY AUTO_INCREMENT,
-                                                  StudentID INT,
-                                                  TrainerID INT,
-                                                  LocationID INT,
+                                                  AppointmentID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                                  StudentID INT UNSIGNED,
+                                                  TrainerID SMALLINT UNSIGNED,
+                                                  LocationID TINYINT UNSIGNED,
                                                   Date DATE NOT NULL,
                                                   StartTime TIME NOT NULL,
                                                   EndTime TIME NOT NULL,
                                                   FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
-                                                      ON DELETE CASCADE
-                                                      ON UPDATE CASCADE,
+                                                      ON DELETE CASCADE ON UPDATE CASCADE,
                                                   FOREIGN KEY (TrainerID) REFERENCES Trainer(TrainerID)
-                                                      ON DELETE CASCADE
-                                                      ON UPDATE CASCADE,
+                                                      ON DELETE CASCADE ON UPDATE CASCADE,
                                                   FOREIGN KEY (LocationID) REFERENCES Gym(GymID)
-                                                      ON DELETE CASCADE
-                                                      ON UPDATE CASCADE,
+                                                      ON DELETE CASCADE ON UPDATE CASCADE,
                                                   CHECK (EndTime > StartTime)
 );
 
 -- Admin Table
 CREATE TABLE IF NOT EXISTS Admin (
-                                     AdminID INT PRIMARY KEY AUTO_INCREMENT,
-                                     FirstName VARCHAR(100) NOT NULL,
-                                     LastName VARCHAR(100) NOT NULL,
+                                     AdminID SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                     FirstName VARCHAR(50) NOT NULL,
+                                     LastName VARCHAR(50) NOT NULL,
                                      Email VARCHAR(100) NOT NULL,
-                                     Password VARCHAR(255) NOT NULL
+                                     Password VARCHAR(60) NOT NULL
 );
