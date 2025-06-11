@@ -29,6 +29,7 @@ public class AppointmentHistoryController implements Initializable {
 
     private int trainerId;
     private TrainerService trainerService;
+    private DBManager dbManager;
 
     public void setTrainerId(int trainerId) {
         this.trainerId = trainerId;
@@ -48,7 +49,7 @@ public class AppointmentHistoryController implements Initializable {
 
     private void loadHistory() {
         try {
-            DBManager dbManager = new DBManager();
+            dbManager = new DBManager();
             dbManager.connect();
             Connection conn = dbManager.getConnection();
             trainerService = new TrainerService(conn);
@@ -70,7 +71,23 @@ public class AppointmentHistoryController implements Initializable {
 
     @FXML
     private void handleClose() {
+        try {
+            dbManager.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Stage stage = (Stage) historyTable.getScene().getWindow();
         stage.close();
     }
+
+    public void setStage(Stage stage) {
+        stage.setOnCloseRequest(e -> {
+            try {
+                if (dbManager != null) dbManager.disconnect();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
+
 }

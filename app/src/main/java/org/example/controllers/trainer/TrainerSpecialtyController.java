@@ -19,6 +19,7 @@ public class TrainerSpecialtyController {
     @FXML private TableView<TrainerSpecialty> specialtyTable;
     @FXML private TableColumn<TrainerSpecialty, String> specialtyColumn;
 
+    private DBManager dbManager;
     private TrainerService trainerService;
     private int trainerId;
     private final ObservableList<TrainerSpecialty> specialtyList = FXCollections.observableArrayList();
@@ -40,7 +41,7 @@ public class TrainerSpecialtyController {
         specialtyComboBox.setEditable(true);
 
         try {
-            DBManager dbManager = new DBManager();
+            dbManager = new DBManager();
             dbManager.connect();
             trainerService = new TrainerService(dbManager.getConnection());
         } catch (SQLException e) {
@@ -103,5 +104,15 @@ public class TrainerSpecialtyController {
         Alert alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
         alert.setHeaderText("Error");
         alert.showAndWait();
+    }
+
+    public void setStage(Stage stage) {
+        stage.setOnCloseRequest(e -> {
+            try {
+                if (dbManager != null) dbManager.disconnect();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 }

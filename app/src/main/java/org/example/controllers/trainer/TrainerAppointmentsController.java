@@ -34,6 +34,7 @@ public class TrainerAppointmentsController implements Initializable {
     @FXML private TableColumn<TrainerAppointment, Void> actionColumn;
 
     private int trainerId;
+    private DBManager dbManager;
     private TrainerService trainerService;
 
     public void setTrainerId(int trainerId) {
@@ -94,7 +95,7 @@ public class TrainerAppointmentsController implements Initializable {
 
     private void loadAppointments() {
         try {
-            DBManager dbManager = new DBManager();
+            dbManager = new DBManager();
             dbManager.connect();
             Connection conn = dbManager.getConnection();
             trainerService = new TrainerService(conn);
@@ -146,6 +147,7 @@ public class TrainerAppointmentsController implements Initializable {
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
+            controller.setStage(stage);
             stage.showAndWait();
 
             loadAppointments(); // Refresh after modal closes
@@ -164,6 +166,11 @@ public class TrainerAppointmentsController implements Initializable {
 
     @FXML
     private void handleClose() {
+        try {
+            dbManager.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Stage stage = (Stage) appointmentsTable.getScene().getWindow();
         stage.close();
     }
@@ -172,6 +179,16 @@ public class TrainerAppointmentsController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
         alert.setHeaderText("Success");
         alert.showAndWait();
+    }
+
+    public void setStage(Stage stage) {
+        stage.setOnCloseRequest(e -> {
+            try {
+                if (dbManager != null) dbManager.disconnect();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
 }

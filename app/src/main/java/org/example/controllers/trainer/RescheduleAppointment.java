@@ -8,6 +8,7 @@ import org.example.database.TrainerService;
 import org.example.models.TrainerAppointment;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -19,6 +20,7 @@ public class RescheduleAppointment {
     @FXML private TextField endField;
 
     private TrainerAppointment originalAppointment;
+    private DBManager dbManager;
     private TrainerService trainerService;
 
     public void setAppointment(TrainerAppointment appt) {
@@ -30,7 +32,7 @@ public class RescheduleAppointment {
         endField.setText(appt.getEndTime().toString());
 
         try {
-            DBManager dbManager = new DBManager();
+            dbManager = new DBManager();
             dbManager.connect();
             Connection conn = dbManager.getConnection();
             trainerService = new TrainerService(conn);
@@ -68,6 +70,11 @@ public class RescheduleAppointment {
 
     @FXML
     private void handleCancel() {
+        try {
+            dbManager.disconnect();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
         closeWindow();
     }
 
@@ -82,5 +89,15 @@ public class RescheduleAppointment {
 
     private void showInfo(String msg) {
         new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK).showAndWait();
+    }
+
+    public void setStage(Stage stage) {
+        stage.setOnCloseRequest(e -> {
+            try {
+                if (dbManager != null) dbManager.disconnect();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 }

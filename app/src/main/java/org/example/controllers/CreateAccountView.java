@@ -97,16 +97,6 @@ public class CreateAccountView {
         }
     }
 
-    private void showLogin() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/resources/fxml/login-screen.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root, 600, 400);
-        Stage stage = (Stage) messageLabel.getScene().getWindow();
-        stage.setScene(scene);
-        stage.setTitle("Login");
-        stage.show();
-    }
-
     private void showSuccessAndClose(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Success");

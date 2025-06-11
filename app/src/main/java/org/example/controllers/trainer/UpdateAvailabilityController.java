@@ -21,6 +21,7 @@ public class UpdateAvailabilityController {
 
     @FXML private GridPane calendarGrid;
 
+    private DBManager dbManager;
     private int trainerId;
     private TrainerService trainerService;
 
@@ -39,7 +40,7 @@ public class UpdateAvailabilityController {
     @FXML
     public void initialize() {
         try {
-            DBManager dbManager = new DBManager();
+            dbManager = new DBManager();
             dbManager.connect();
             trainerService = new TrainerService(dbManager.getConnection());
         } catch (SQLException e) {
@@ -121,6 +122,11 @@ public class UpdateAvailabilityController {
 
     @FXML
     private void handleClose() {
+        try {
+            dbManager.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         ((Stage) calendarGrid.getScene().getWindow()).close();
     }
 
@@ -130,5 +136,15 @@ public class UpdateAvailabilityController {
 
     private void showInfo(String msg) {
         new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK).showAndWait();
+    }
+
+    public void setStage(Stage stage) {
+        stage.setOnCloseRequest(e -> {
+            try {
+                if (dbManager != null) dbManager.disconnect();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 }

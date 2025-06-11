@@ -97,6 +97,7 @@ public class TrainerDashboard implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UTILITY);
             stage.setResizable(true);
+            controller.setStage(stage);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,6 +120,7 @@ public class TrainerDashboard implements Initializable {
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(true);
+            controller.setStage(stage);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,6 +130,7 @@ public class TrainerDashboard implements Initializable {
     @FXML
     private void handleLogout() {
         try {
+            dbManager.disconnect();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login-screen.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
@@ -158,6 +161,7 @@ public class TrainerDashboard implements Initializable {
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(true);
+            controller.setStage(stage);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -171,7 +175,7 @@ public class TrainerDashboard implements Initializable {
             Parent root = loader.load();
 
             AppointmentHistoryController controller = loader.getController();
-            controller.setTrainerId(trainerId); // assumes you have this field set
+            controller.setTrainerId(trainerId);
 
             Stage stage = new Stage();
             stage.setTitle("Appointment History");
@@ -179,6 +183,7 @@ public class TrainerDashboard implements Initializable {
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
+            controller.setStage(stage);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
