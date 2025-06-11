@@ -9,6 +9,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
     java
+    id("org.openjfx.javafxplugin") version "0.0.13"
 }
 
 repositories {
@@ -16,19 +17,24 @@ repositories {
     mavenCentral()
 }
 
+val javafxVersion = "21"
+
 dependencies {
     // This dependency is used by the application.
     implementation(libs.guava)
 
     // JavaFX
-    implementation("org.openjfx:javafx-controls:20")
-    implementation("org.openjfx:javafx-fxml:20")
+    implementation("org.openjfx:javafx-controls:$javafxVersion")
+    implementation("org.openjfx:javafx-fxml:$javafxVersion")
 
     // MySQL Connector
     implementation("mysql:mysql-connector-java:8.0.33")
 
-    // JUnit for testing
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    // JUnit 4 for testing
+    testImplementation("junit:junit:4.13.2")
+
+    // Library to load .env files
+    implementation("io.github.cdimascio:dotenv-java:3.0.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -38,7 +44,13 @@ java {
     }
 }
 
+javafx {
+    version = javafxVersion
+    modules = listOf("javafx.controls", "javafx.fxml")
+}
+
 application {
     // Define the main class for the application.
     mainClass = "org.example.App"
 }
+

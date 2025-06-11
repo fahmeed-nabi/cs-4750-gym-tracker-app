@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.student.TrainerAppointmentHistoryController"
+      alignment="CENTER"
+      spacing="25"
+      style="-fx-background-color: #f4f6f9;">
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <!-- Header -->
+    <Label text="Trainer Appointment History"
+           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+    <!-- Table -->
+    <TableView fx:id="historyTable" prefWidth="900" prefHeight="400"
+               style="-fx-background-radius: 8; -fx-border-color: #ccc; -fx-border-radius: 8;">
+        <columns>
+            <TableColumn fx:id="dateColumn" text="Date" prefWidth="120"/>
+            <TableColumn fx:id="startTimeColumn" text="Start Time" prefWidth="120"/>
+            <TableColumn fx:id="endTimeColumn" text="End Time" prefWidth="120"/>
+            <TableColumn fx:id="trainerNameColumn" text="Trainer Name" prefWidth="200"/>
+            <TableColumn fx:id="locationColumn" text="Gym Location" prefWidth="220"/>
+        </columns>
+    </TableView>
+
+    <Separator style="-fx-background-color: #ccc;" />
+
+    <!-- Back Button -->
+    <Button text="Back to Trainer Appointments Menu"
+            onAction="#handleBack"
+            styleClass="secondary-button"
+            prefWidth="300"/>
+</VBox>

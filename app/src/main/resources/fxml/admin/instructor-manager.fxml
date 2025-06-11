@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.InstructorManager"
+            fitToWidth="true"
+            style="-fx-background: #f4f6f9;">
+
+    <VBox spacing="25" alignment="TOP_CENTER" style="-fx-background-color: #f4f6f9;">
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
+
+        <!-- Title -->
+        <Label text="Manage Instructors"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+        <!-- Form Section -->
+        <VBox spacing="20" alignment="CENTER_LEFT"
+              style="-fx-background-color: white; -fx-padding: 25; -fx-border-color: #ddd; -fx-background-radius: 6; -fx-border-radius: 6;"
+              maxWidth="700">
+
+            <GridPane hgap="15" vgap="15">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="140"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Label text="First Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="firstNameField" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="250"/>
+
+                <Label text="Last Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="lastNameField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="250"/>
+
+                <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="emailField" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="250"/>
+
+                <Label text="Certification:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="certificationField" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="250"/>
+
+                <Label text="Focus Area:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="focusAreaField" GridPane.rowIndex="4" GridPane.columnIndex="1" prefWidth="250"/>
+            </GridPane>
+
+            <!-- Buttons -->
+            <HBox spacing="15" alignment="CENTER">
+                <Button text="Add" onAction="#handleAddInstructor" styleClass="primary-button" prefWidth="120"/>
+                <Button text="Update" onAction="#handleUpdateInstructor" styleClass="primary-button" prefWidth="120"/>
+                <Button text="Delete" onAction="#handleDeleteInstructor" styleClass="secondary-button" prefWidth="120"/>
+            </HBox>
+        </VBox>
+
+        <!-- Table Section -->
+        <TableView fx:id="instructorTable" prefHeight="300" prefWidth="700"
+                   style="-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 6; -fx-background-radius: 6;">
+            <columns>
+                <TableColumn fx:id="firstNameColumn" text="First Name" prefWidth="140"/>
+                <TableColumn fx:id="lastNameColumn" text="Last Name" prefWidth="140"/>
+                <TableColumn fx:id="emailColumn" text="Email" prefWidth="200"/>
+                <TableColumn fx:id="certColumn" text="Certification" prefWidth="140"/>
+                <TableColumn fx:id="focusColumn" text="Focus Area" prefWidth="140"/>
+            </columns>
+        </TableView>
+    </VBox>
+</ScrollPane>

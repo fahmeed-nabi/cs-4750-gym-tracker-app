@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.student.StudentDashboard"
+            fitToWidth="true"
+            style="-fx-background: #f4f6f9;">
+
+    <VBox spacing="25" alignment="TOP_CENTER" style="-fx-background-color: #f4f6f9;">
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
+
+        <!-- Top bar with refresh -->
+        <HBox alignment="TOP_RIGHT" prefWidth="Infinity">
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Refresh Dashboard" onAction="#handleRefreshDashboard" styleClass="primary-button"/>
+        </HBox>
+
+        <!-- Welcome Header -->
+        <Label text="Student Dashboard"
+               style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;"/>
+        <Label fx:id="welcomeLabel" text="Welcome!"
+               style="-fx-font-size: 16px; -fx-text-fill: #555;" />
+
+        <Separator style="-fx-background-color: #ccc;" />
+
+        <!-- Navigation -->
+        <VBox spacing="10" alignment="CENTER">
+            <Button text="Manage Classes" onAction="#handleManageClasses" styleClass="nav-button"/>
+            <Button text="Trainer Appointments" onAction="#handleManageTrainerAppointments" styleClass="nav-button"/>
+            <Button text="Check Into Gym" onAction="#handleCheckIn" styleClass="nav-button"/>
+            <Button text="Update Student Information" onAction="#handleUpdateInfo" styleClass="nav-button"/>
+        </VBox>
+
+        <Separator style="-fx-background-color: #ccc;" />
+
+        <!-- Chart Section -->
+        <Label text="Current Gym Occupancy"
+               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;" />
+
+        <BarChart fx:id="occupancyChart" title="Current Gym Occupancy"
+                  prefWidth="800" prefHeight="300"
+                  VBox.vgrow="ALWAYS"
+                  style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #ddd; -fx-border-radius: 8; -fx-background-radius: 8;">
+            <xAxis>
+                <CategoryAxis fx:id="gymXAxis" label="Gym"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="occupancyYAxis" label="Occupancy (%)"/>
+            </yAxis>
+        </BarChart>
+
+        <VBox spacing="10" fx:id="gymOccupancyContainer" alignment="CENTER_LEFT"
+              style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #ddd; -fx-background-radius: 6; -fx-border-radius: 6;">
+            <Label text="Loading gym occupancy..." style="-fx-text-fill: #666;" />
+        </VBox>
+
+        <Separator style="-fx-background-color: #ccc;" />
+
+        <!-- Logout -->
+        <Button text="Log Out" onAction="#handleLogout" styleClass="secondary-button"/>
+    </VBox>
+</ScrollPane>

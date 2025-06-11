@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.ManagerActivityDashboard"
+            fitToWidth="true"
+            style="-fx-background: #f4f6f9;">
+
+    <VBox spacing="25" alignment="TOP_CENTER" style="-fx-background-color: #f4f6f9;">
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
+
+        <!-- Title -->
+        <Label text="Occupancy Dashboard"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+        <!-- Check-In Panel -->
+        <TitledPane text="Check In Student" expanded="true"
+                    style="-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 6; -fx-background-radius: 6;">
+            <VBox spacing="15" alignment="TOP_LEFT" style="-fx-padding: 20;">
+                <TextField fx:id="checkInUsernameField" promptText="Enter email or username" prefWidth="300"/>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Select Gym:" style="-fx-font-size: 14px; -fx-text-fill: #333;"/>
+                    <ComboBox fx:id="gymComboBox" prefWidth="250"/>
+                </HBox>
+
+                <Label text="Select Facilities:" style="-fx-font-size: 14px; -fx-text-fill: #333;"/>
+
+                <TableView fx:id="facilityTable" prefHeight="200" prefWidth="600"
+                           style="-fx-background-color: white; -fx-border-color: #ddd;">
+                    <columns>
+                        <TableColumn fx:id="nameColumn" text="Facility Name" prefWidth="300"/>
+                        <TableColumn fx:id="maxUsersColumn" text="Max Concurrent Users" prefWidth="300"/>
+                    </columns>
+                </TableView>
+
+                <Button text="Check In" onAction="#handleCheckIn" styleClass="primary-button" prefWidth="150"/>
+            </VBox>
+        </TitledPane>
+
+        <!-- Check-Out Panel -->
+        <TitledPane text="Check Out Student" expanded="false"
+                    style="-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 6; -fx-background-radius: 6;">
+            <VBox spacing="15" alignment="TOP_LEFT" style="-fx-padding: 20;">
+                <TextField fx:id="checkOutUsernameField" promptText="Enter username" prefWidth="300"/>
+                <Button text="Check Out" onAction="#handleCheckOut" styleClass="secondary-button" prefWidth="150"/>
+            </VBox>
+        </TitledPane>
+
+        <!-- Occupancy Panel -->
+        <TitledPane text="Current Gym Occupancy" expanded="false"
+                    style="-fx-background-color: white; -fx-border-color: #ddd; -fx-border-radius: 6; -fx-background-radius: 6;">
+            <VBox spacing="15" alignment="TOP_LEFT" style="-fx-padding: 20;">
+                <VBox fx:id="occupancyLabelContainer" spacing="8"/>
+                <Button text="Refresh" onAction="#handleRefreshOccupancy" styleClass="primary-button" prefWidth="120"/>
+            </VBox>
+        </TitledPane>
+
+        <!-- Facility Usage Container -->
+        <VBox fx:id="gymFacilityPaneContainer" spacing="20"
+              style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #ddd; -fx-background-radius: 6; -fx-border-radius: 6;"
+              maxWidth="700"/>
+    </VBox>
+</ScrollPane>

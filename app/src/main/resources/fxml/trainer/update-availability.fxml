@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.trainer.UpdateAvailabilityController"
+      spacing="25"
+      alignment="TOP_CENTER"
+      style="-fx-background-color: #f4f6f9;">
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <!-- Header -->
+    <Label text="Set Weekly Availability"
+           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+    <!-- Availability Grid -->
+    <ScrollPane fitToWidth="true" maxHeight="600"
+                style="-fx-background: white; -fx-border-color: #ccc; -fx-border-radius: 8; -fx-background-radius: 8;">
+        <GridPane fx:id="calendarGrid" hgap="8" vgap="8"
+                  style="-fx-padding: 20; -fx-background-color: #f9f9f9;">
+            <padding>
+                <Insets top="10" left="10" right="10" bottom="10"/>
+            </padding>
+        </GridPane>
+    </ScrollPane>
+
+    <!-- Action Buttons -->
+    <HBox spacing="15" alignment="CENTER">
+        <Button text="Save Availability" onAction="#handleSave" styleClass="primary-button" prefWidth="160"/>
+        <Button text="Close" onAction="#handleClose" styleClass="secondary-button" prefWidth="160"/>
+    </HBox>
+</VBox>

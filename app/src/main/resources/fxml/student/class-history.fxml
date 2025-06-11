@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.student.ClassHistoryController"
+            style="-fx-background-color: #f4f6f9;">
+
+    <!-- Top Header -->
+    <top>
+        <HBox alignment="CENTER_LEFT" style="-fx-background-color: #2e3b4e; -fx-padding: 20;">
+            <Label text="Class Attendance History"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;" />
+        </HBox>
+    </top>
+
+    <!-- Table View -->
+    <center>
+        <VBox spacing="15" style="-fx-padding: 30;">
+            <TableView fx:id="classTable" prefHeight="500" prefWidth="1000"
+                       style="-fx-background-radius: 8; -fx-border-color: #ccc; -fx-border-radius: 8;">
+                <columns>
+                    <TableColumn fx:id="nameColumn" text="Class Name" prefWidth="150"/>
+                    <TableColumn fx:id="timeColumn" text="Time" prefWidth="200"/>
+                    <TableColumn fx:id="gymColumn" text="Gym" prefWidth="150"/>
+                    <TableColumn fx:id="instructorColumn" text="Instructor" prefWidth="150"/>
+                    <TableColumn fx:id="emailColumn" text="Instructor Email" prefWidth="200"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- Bottom Navigation -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="10" style="-fx-padding: 20;">
+            <Button text="Back" onAction="#handleBack" styleClass="secondary-button"/>
+        </HBox>
+    </bottom>
+</BorderPane>

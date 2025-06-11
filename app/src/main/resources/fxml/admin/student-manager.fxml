@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.StudentManager"
+            fitToWidth="true"
+            style="-fx-background: #f4f6f9;"
+            prefWidth="700" prefHeight="600">
+
+    <VBox spacing="25" alignment="TOP_CENTER" style="-fx-background-color: #f4f6f9;">
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
+
+        <!-- Title -->
+        <Label text="Manage Students"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+        <!-- Form Fields -->
+        <VBox spacing="15" alignment="CENTER"
+              style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #ddd; -fx-background-radius: 6; -fx-border-radius: 6;"
+              maxWidth="700">
+
+            <HBox spacing="15" alignment="CENTER">
+                <TextField fx:id="studentNameField" promptText="Full Name" prefWidth="220"/>
+                <TextField fx:id="studentIdField" promptText="Student ID" prefWidth="150"/>
+                <TextField fx:id="usernameField" promptText="Username" prefWidth="220"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Search:" style="-fx-font-size: 14px; -fx-text-fill: #555;"/>
+                <TextField fx:id="searchField" promptText="Enter name or email" prefWidth="300"/>
+            </HBox>
+
+            <HBox spacing="15" alignment="CENTER">
+                <Button text="Add Student" onAction="#handleAdd" styleClass="primary-button" prefWidth="140"/>
+                <Button text="Delete Selected" onAction="#handleDelete" styleClass="secondary-button" prefWidth="140"/>
+            </HBox>
+
+            <TableView fx:id="studentTable" prefHeight="300" prefWidth="650">
+                <columns>
+                    <TableColumn fx:id="nameColumn" text="Name" prefWidth="250"/>
+                    <TableColumn fx:id="idColumn" text="Student ID" prefWidth="150"/>
+                    <TableColumn fx:id="usernameColumn" text="Username" prefWidth="250"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </VBox>
+</ScrollPane>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.admin.TrainerManagerController"
+            fitToWidth="true"
+            style="-fx-background: #f4f6f9;">
+
+    <VBox spacing="25" alignment="TOP_CENTER" style="-fx-background-color: #f4f6f9;">
+        <padding>
+            <Insets top="30" right="30" bottom="30" left="30"/>
+        </padding>
+
+        <!-- Title -->
+        <Label text="Trainer Management"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+        <HBox spacing="30" alignment="TOP_CENTER">
+
+            <!-- Trainer Panel -->
+            <VBox spacing="20" alignment="TOP_LEFT"
+                  style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #ddd; -fx-background-radius: 6; -fx-border-radius: 6;"
+                  maxWidth="300">
+
+                <Label text="Trainers" style="-fx-font-weight: bold; -fx-text-fill: #333;"/>
+                <ListView fx:id="trainerListView" prefHeight="200" prefWidth="250"/>
+
+                <Label text="Add New Trainer" style="-fx-font-weight: bold; -fx-text-fill: #333;"/>
+
+                <TextField fx:id="firstNameField" promptText="First Name" prefWidth="250"/>
+                <TextField fx:id="lastNameField" promptText="Last Name" prefWidth="250"/>
+                <TextField fx:id="emailField" promptText="Email" prefWidth="250"/>
+                <PasswordField fx:id="passwordField" promptText="Password" prefWidth="250"/>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="Add Trainer" onAction="#handleAddTrainer" styleClass="primary-button" prefWidth="120"/>
+                    <Button text="Delete Trainer" onAction="#handleDeleteTrainer" styleClass="secondary-button" prefWidth="120"/>
+                </HBox>
+            </VBox>
+
+            <!-- Specialty Panel -->
+            <VBox spacing="20" alignment="TOP_LEFT"
+                  style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #ddd; -fx-background-radius: 6; -fx-border-radius: 6;"
+                  maxWidth="400">
+
+                <Label text="Specialties" style="-fx-font-weight: bold; -fx-text-fill: #333;"/>
+                <ListView fx:id="specialtiesListView" prefHeight="150" prefWidth="300"/>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="addSpecialtyField" promptText="New Specialty" prefWidth="180"/>
+                    <Button text="Add" onAction="#handleAddSpecialty" styleClass="primary-button" prefWidth="80"/>
+                </HBox>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="updateSpecialtyField" promptText="Update Selected To" prefWidth="180"/>
+                    <Button text="Update Selected" onAction="#handleUpdateSpecialty" styleClass="primary-button" prefWidth="130"/>
+                    <Button text="Remove Selected" onAction="#handleRemoveSpecialty" styleClass="secondary-button" prefWidth="130"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </VBox>
+</ScrollPane>

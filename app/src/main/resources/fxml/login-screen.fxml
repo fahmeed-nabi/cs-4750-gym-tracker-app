@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.LoginView"
+      alignment="CENTER"
+      spacing="20"
+      style="-fx-background-color: #f4f6f9; -fx-padding: 40;">
+
+    <Label text="UVA Gym Tracker" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+    <TextField fx:id="usernameField" promptText="Username or Email"
+               style="-fx-pref-width: 300; -fx-background-radius: 6; -fx-padding: 8;" />
+
+    <PasswordField fx:id="passwordField" promptText="Password"
+                   style="-fx-pref-width: 300; -fx-background-radius: 6; -fx-padding: 8;" />
+
+    <ComboBox fx:id="roleBox" promptText="Select Role"
+              style="-fx-pref-width: 300; -fx-background-radius: 6;">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Student"/>
+                <String fx:value="Trainer"/>
+                <String fx:value="Manager"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+    <Label fx:id="errorLabel" textFill="red" style="-fx-font-size: 12px;" />
+
+    <HBox spacing="15" alignment="CENTER">
+        <Button fx:id="loginButton" text="Log In" onAction="#handleLogin"
+                styleClass="primary-button"/>
+        <Button fx:id="createButton" text="Create Account"
+                styleClass="secondary-button"/>
+    </HBox>
+</VBox>

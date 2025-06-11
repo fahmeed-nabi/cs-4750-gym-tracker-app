@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.student.TrainerAppointmentsMenuController"
+      alignment="CENTER"
+      spacing="20"
+      style="-fx-background-color: #f4f6f9;">
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <Label text="Manage Trainer Appointments"
+           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+    <VBox spacing="12" alignment="CENTER">
+        <Button text="View Upcoming Appointments"
+                onAction="#handleViewUpcomingAppointments"
+                styleClass="nav-button"
+                prefWidth="280"/>
+
+        <Button text="Appointment History"
+                onAction="#handleViewAppointmentHistory"
+                styleClass="nav-button"
+                prefWidth="280"/>
+
+        <Button text="Book a Trainer"
+                onAction="#handleBookTrainer"
+                styleClass="nav-button"
+                prefWidth="280"/>
+    </VBox>
+
+    <Separator style="-fx-background-color: #ccc;" />
+
+    <Button text="Back to Dashboard"
+            onAction="#handleBackToDashboard"
+            styleClass="secondary-button"
+            prefWidth="280"/>
+</VBox>

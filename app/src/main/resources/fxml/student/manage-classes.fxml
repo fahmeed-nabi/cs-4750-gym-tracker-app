@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.student.ManageClassesMenuController"
+      alignment="CENTER"
+      spacing="20"
+      style="-fx-background-color: #f4f6f9;">
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <Label text="Manage Classes"
+           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+    <VBox spacing="12" alignment="CENTER">
+        <Button text="View Upcoming Classes"
+                fx:id="viewUpcomingButton"
+                onAction="#handleViewUpcomingClasses"
+                styleClass="nav-button"
+                prefWidth="280"/>
+
+        <Button text="My Registered Classes"
+                fx:id="registeredButton"
+                onAction="#handleMyRegisteredClasses"
+                styleClass="nav-button"
+                prefWidth="280"/>
+
+        <Button text="Class Attendance History"
+                fx:id="historyButton"
+                onAction="#handleClassHistory"
+                styleClass="nav-button"
+                prefWidth="280"/>
+    </VBox>
+
+    <Separator style="-fx-background-color: #ccc;"/>
+
+    <Button text="Back to Dashboard"
+            fx:id="backButton"
+            onAction="#handleBackToDashboard"
+            styleClass="secondary-button"
+            prefWidth="280"/>
+</VBox>

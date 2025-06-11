@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.student.BookTrainerController"
+      spacing="25" alignment="TOP_CENTER"
+      style="-fx-background-color: #f4f6f9;">
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <!-- Header -->
+    <Label text="Book a Trainer"
+           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+    <!-- Trainer Selection -->
+    <HBox spacing="15" alignment="CENTER">
+        <Label text="Select Trainer:" style="-fx-font-size: 14px;"/>
+        <ComboBox fx:id="trainerComboBox" prefWidth="250" />
+    </HBox>
+
+    <!-- Gym Selection -->
+    <HBox spacing="15" alignment="CENTER">
+        <Label text="Select Location:" style="-fx-font-size: 14px;"/>
+        <ComboBox fx:id="gymComboBox" prefWidth="250" />
+    </HBox>
+
+    <!-- Slot Label -->
+    <Label text="Choose a time slot:"
+           style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;" />
+
+    <!-- Scrollable Grid -->
+    <ScrollPane fitToWidth="true" fitToHeight="true" maxHeight="500"
+                style="-fx-background: white; -fx-border-color: #ccc; -fx-border-radius: 6; -fx-background-radius: 6;">
+        <GridPane fx:id="availabilityGrid" hgap="6" vgap="6" style="-fx-padding: 15;">
+            <padding>
+                <Insets top="10" left="10" right="10" bottom="10"/>
+            </padding>
+        </GridPane>
+    </ScrollPane>
+
+    <!-- Action Buttons -->
+    <HBox spacing="15" alignment="CENTER">
+        <Button text="Book Appointment" onAction="#handleBook" styleClass="primary-button" />
+        <Button text="Back" onAction="#handleBack" styleClass="secondary-button" />
+    </HBox>
+</VBox>

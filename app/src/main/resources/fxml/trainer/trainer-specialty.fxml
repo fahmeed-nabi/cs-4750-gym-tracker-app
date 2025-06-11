@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.controllers.trainer.TrainerSpecialtyController"
+      spacing="25"
+      alignment="TOP_CENTER"
+      style="-fx-background-color: #f4f6f9;">
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <!-- Header -->
+    <Label text="Manage Your Specialties"
+           style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+
+    <!-- Add Specialty -->
+    <HBox spacing="15" alignment="CENTER">
+        <ComboBox fx:id="specialtyComboBox" promptText="Select Specialty" prefWidth="300"/>
+        <Button text="Add Specialty" onAction="#handleAdd" styleClass="primary-button" prefWidth="150"/>
+    </HBox>
+
+    <!-- Specialty Table -->
+    <TableView fx:id="specialtyTable" prefWidth="500"
+               style="-fx-background-radius: 8; -fx-border-color: #ccc; -fx-border-radius: 8;">
+        <columns>
+            <TableColumn fx:id="specialtyColumn" text="Specialty" prefWidth="480" />
+        </columns>
+    </TableView>
+
+    <!-- Remove Button -->
+    <Button text="Remove Selected" onAction="#handleRemove" styleClass="secondary-button" prefWidth="200"/>
+</VBox>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.controllers.trainer.AppointmentHistoryController"
+            style="-fx-background-color: #f4f6f9;">
+
+    <!-- Header -->
+    <top>
+        <HBox alignment="CENTER" style="-fx-padding: 25 0 15 0;">
+            <Label text="Past Trainer Appointments"
+                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e3b4e;" />
+        </HBox>
+    </top>
+
+    <!-- Table View -->
+    <center>
+        <VBox spacing="20" style="-fx-padding: 0 30 30 30;">
+            <TableView fx:id="historyTable" prefHeight="500"
+                       style="-fx-background-radius: 8; -fx-border-color: #ccc; -fx-border-radius: 8;">
+                <columns>
+                    <TableColumn fx:id="dateColumn" text="Date" prefWidth="100"/>
+                    <TableColumn fx:id="startTimeColumn" text="Start Time" prefWidth="100"/>
+                    <TableColumn fx:id="endTimeColumn" text="End Time" prefWidth="100"/>
+                    <TableColumn fx:id="studentIdColumn" text="Student ID" prefWidth="100"/>
+                    <TableColumn fx:id="firstNameColumn" text="First Name" prefWidth="150"/>
+                    <TableColumn fx:id="lastNameColumn" text="Last Name" prefWidth="150"/>
+                    <TableColumn fx:id="locationColumn" text="Location" prefWidth="150"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- Footer -->
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-padding: 20;">
+            <Button text="Close" onAction="#handleClose" styleClass="secondary-button" prefWidth="200"/>
+        </HBox>
+    </bottom>
+</BorderPane>
