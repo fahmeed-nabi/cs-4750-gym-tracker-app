@@ -196,7 +196,7 @@ public class GymService {
     }
 
     public int getStudentIdByUsername(String username) throws SQLException {
-        String query = "SELECT StudentID FROM Student WHERE Username = ?";
+        String query = "SELECT StudentID FROM Student WHERE Email = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
